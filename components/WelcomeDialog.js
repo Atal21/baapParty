@@ -163,7 +163,7 @@ export default function WelcomeDialog() {
                     text="Official party membership"
                     tone="banyan"
                     badge="Join Now"
-                    href="https://forms.gle/br5Mi7B4R1mMU7XL9"
+                    href="https://forms.gle/5VxnYrCDLmYTL1859"
                     onNavigate={close}
                   />
                 </div>
