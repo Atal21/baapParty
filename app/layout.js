@@ -6,9 +6,9 @@ import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata = {
   title:
-    "Bharatiya Avijit Awaaz Party (BAAP) — The People's Voice, The People's Right",
+    "Bharatiya Avijit AawazParty (BAAP) — The People's Voice, The People's Right",
   description:
-    "Official website of Bharatiya Avijit Awaaz Party (BAAP) — 18 Resolution for India: a pledge to build a safe, prosperous, just, and dignified India.",
+    "Official website of Bharatiya Avijit AawazParty (BAAP) — 18 Resolution for India: a pledge to build a safe, prosperous, just, and dignified India.",
   keywords: ["election", "political party", "India", "campaign", "manifesto"],
   icons: { icon: "/favicon.ico" },
 };

@@ -15,11 +15,11 @@ export const nav = [
   {
     label: "About Us",
     href: "/about",
-    children: [
-      { label: "About Party", href: "/about" },
-      { label: "Our Ideology", href: "/about#leaders" },
-      { label: "Biography", href: "/about#biography" },
-    ],
+    // children: [
+    //   { label: "About Party", href: "/about" },
+    //   { label: "Our Ideology", href: "/about#leaders" },
+    //   { label: "Biography", href: "/about#biography" },
+    // ],
   },
   {
     label: "Wings",
@@ -382,22 +382,39 @@ export const timeline = [
   },
 ];
 
+// data/faqs.js
 export const faqs = [
   {
-    q: "How can I become a booth-level volunteer?",
-    a: "Fill the Volunteer Form under Pages, choose your constituency, and our district coordinator will contact you within 48 hours.",
+    q: "What is the objective of Bharatiya Avijit Aawaz Party?",
+    a: "To work on the people's issues and to build capable leadership, in order to make India safe, prosperous, just, and dignified.",
   },
   {
-    q: "Where does my contribution actually go?",
-    a: "Every rupee is logged against a public ledger — booth logistics, printed material, transport and venue costs. No contribution is used for the personal expenses of any candidate.",
+    q: "What are the 18 chapters of BAAP?",
+    a: "They are the party's ideas and proposals based on 18 important social, economic, democratic, and administrative challenges facing the country.",
   },
   {
-    q: "Is there a membership fee?",
-    a: "Basic membership is free. Optional annual patron contributions start at ₹500 and come with a digital membership card.",
+    q: "Is the party against any caste or religion?",
+    a: "No. The party is not against any caste, religion, or community. The party is against caste-based discrimination, injustice, exploitation, and social inequality.",
   },
   {
-    q: "Can non-resident Indians contribute or volunteer?",
-    a: "Yes — NRIs can join our digital outreach wing and contribute within Election Commission-permitted limits.",
+    q: "What is Paras Bhai Ji's role in the party?",
+    a: "Paras Bhai Ji's proposed role is that of a guide (Margdarshak). He does not aspire to any formal party post.",
+  },
+  {
+    q: "Who can join the party?",
+    a: "Citizens who believe in the values of the Constitution, democracy, equality, discipline, and public service, and who are willing to follow the organization's rules.",
+  },
+  {
+    q: "Where will the party start?",
+    a: "The proposed organizational start is from Delhi, followed by a plan to expand in Punjab.",
+  },
+  {
+    q: "How can one get party membership?",
+    a: "One can apply through the membership form on the website. Membership will be subject to the organization's prescribed rules and verification.",
+  },
+  {
+    q: "Have all of the party's schemes been implemented?",
+    a: "No. The 18 chapters given on the website are the party's proposed ideas and policy suggestions. Their implementation will require detailed policy, financial resources, and legal process.",
   },
 ];
 

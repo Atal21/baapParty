@@ -101,14 +101,14 @@ export default function Footer() {
                 Resolution Tracker
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href="/volunteer"
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
                 Become a Volunteer
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 href="/donate"
@@ -131,6 +131,14 @@ export default function Footer() {
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
                 Attend a Rally
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/documents"
+                className="text-ivory/60 transition-colors hover:text-ivory"
+              >
+                Documents
               </Link>
             </li>
           </ul>

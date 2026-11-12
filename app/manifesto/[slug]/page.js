@@ -61,11 +61,11 @@ export default async function ChapterPage({ params }) {
     image: c.image,
     author: {
       "@type": "Organization",
-      name: "Bharatiya Avijit Awaaz Party (BAAP)",
+      name: "Bharatiya Avijit AawazParty (BAAP)",
     },
     publisher: {
       "@type": "Organization",
-      name: "Bharatiya Avijit Awaaz Party (BAAP)",
+      name: "Bharatiya Avijit AawazParty (BAAP)",
     },
   };
 
