@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion } from 'framer-motion';
 import { Facebook, Twitter } from 'lucide-react';
 import { leaders } from '@/data/content';
+import { useLang } from '@/context/LanguageContext';
 import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
 
@@ -24,7 +25,7 @@ const sectionsData = [
     title: "Born From the Fields, Built for the Nation",
     description:
       "Bharatiya Avijit Aawaz Party began as a coalition of farmer unions and urban reform groups who believed governance had drifted away from everyday concerns — jobs, school quality and the price of grain.",
-    image: "https://picsum.photos/seed/about-party1/900/1100",
+    image: "/placeholders/portrait.svg",
   },
   {
     id: 2,
@@ -32,7 +33,7 @@ const sectionsData = [
     title: "Empowering Local Communities Directly",
     description:
       "Eight years and four state elections later, we remain the only national party where every candidate is first vetted by local booth committees before the central leadership signs off.",
-    image: "https://picsum.photos/seed/about-party2/900/1100",
+    image: "/placeholders/portrait.svg",
   },
   {
     id: 3,
@@ -40,7 +41,7 @@ const sectionsData = [
     title: "Accountability at Every Level of Governance",
     description:
       "We track every single policy promise on an open public dashboard. Transparency is not just a promise; it is built into our daily operational code.",
-    image: "https://picsum.photos/seed/about-party3/900/1100",
+    image: "/placeholders/portrait.svg",
   },
   {
     id: 4,
@@ -48,12 +49,12 @@ const sectionsData = [
     title: "Decentralized Political Representation",
     description:
       "Our governance model ensures every district has a direct voice in ticket allocation, manifesto drafting, and budget allocation monitoring.",
-    image: "https://picsum.photos/seed/about-party4/900/1100",
+    image: "/placeholders/portrait.svg",
   },
 ];
 
 export default function LeadersSection() {
-
+  const { t } = useLang();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typedInput, setTypedInput] = useState("");
 
@@ -86,14 +87,13 @@ export default function LeadersSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="section-eyebrow text-xs font-bold uppercase text-saffron">
-            Our Leaders
+            {t("Our Leaders")}
           </span>
           <h2 className="mt-3 font-display text-3xl font-extrabold text-ink sm:text-4xl">
-            Faces Behind the Movement
+            {t("Faces Behind the Movement")}
           </h2>
           <p className="mt-4 text-ink-soft">
-            Elected representatives and organisers who spend more time in the
-            field than behind a desk.
+            {t("Elected representatives and organisers who spend more time in the field than behind a desk.")}
           </p>
         </div>
         {/* 
@@ -146,7 +146,7 @@ export default function LeadersSection() {
                     <div className="relative aspect-[4/4.5] w-full max-w-md overflow-hidden rounded-[2rem] border-4 border-gray-100 shadow-md mx-auto lg:mx-0">
                       <ZoomableImage
                         src={leaders.image}
-                        alt={leaders.name}
+                        alt={t(leaders.name)}
                         fill
                         className="object-cover"
                         priority
@@ -157,13 +157,13 @@ export default function LeadersSection() {
                     <div className="flex flex-col justify-between h-full">
                       <div>
                         <span className="section-eyebrow text-xs font-bold uppercase text-saffron tracking-wider">
-                          {leaders.role}
+                          {t(leaders.role)}
                         </span>
                         <h2 className="mt-3 font-display text-3xl font-extrabold text-ink sm:text-4xl">
-                          {leaders.name}
+                          {t(leaders.name)}
                         </h2>
                         <p className="mt-5 text-ink-soft leading-relaxed text-base">
-                          {leaders.bio}
+                          {t(leaders.bio)}
                         </p>
 
                         <ul className="mt-6 space-y-3">
@@ -176,7 +176,7 @@ export default function LeadersSection() {
                                 size={19}
                                 className="mt-0.5 shrink-0 text-banyan"
                               />
-                              {v}
+                              {t(v)}
                             </li>
                           ))}
                         </ul>
@@ -193,7 +193,7 @@ export default function LeadersSection() {
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
-              aria-label="Previous Section"
+              aria-label={t("Previous Section")}
               className="absolute -left-4 sm:-left-7 top-1/2 -translate-y-1/2 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-white text-ink shadow-2xl transition-all duration-300 hover:scale-110 hover:bg-saffron hover:text-white disabled:opacity-0 disabled:pointer-events-none border border-gray-200"
             >
               <ChevronLeft size={28} />
@@ -203,7 +203,7 @@ export default function LeadersSection() {
             <button
               onClick={handleNext}
               disabled={currentIndex === sectionsData.length - 1}
-              aria-label="Next Section"
+              aria-label={t("Next Section")}
               className="absolute -right-4 sm:-right-7 top-1/2 -translate-y-1/2 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-saffron text-white shadow-2xl transition-all duration-300 hover:scale-110 hover:bg-ink disabled:opacity-0 disabled:pointer-events-none"
             >
               <ChevronRight size={28} />
@@ -223,7 +223,7 @@ export default function LeadersSection() {
                       ? "w-8 bg-saffron"
                       : "w-2.5 bg-gray-300"
                   }`}
-                  aria-label={`Go to section ${idx + 1}`}
+                  aria-label={t("Go to section {n}", { n: idx + 1 })}
                 />
               ))}
               <span className="ml-3 text-xs font-semibold uppercase text-gray-400">

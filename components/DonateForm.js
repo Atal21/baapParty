@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, CreditCard, HandCoins, Landmark, Loader2, Smartphone } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { namesOf } from '@/lib/personName';
+import { useLang } from '@/context/LanguageContext';
 
 const AMOUNTS = [500, 1100, 2100, 5100, 11000];
 const METHODS = [
@@ -14,6 +15,7 @@ const METHODS = [
 ];
 
 export default function DonateForm() {
+  const { t, locale } = useLang();
   const [amount, setAmount] = useState(2100);
   const [custom, setCustom] = useState('');
   const [method, setMethod] = useState('upi');
@@ -40,11 +42,11 @@ export default function DonateForm() {
     e.preventDefault();
     if (!finalAmount || finalAmount < 100) return;
     if (!firstName.trim() || !lastName.trim()) {
-      setError('Please enter your first name and last name.');
+      setError(t('Please enter your first name and last name.'));
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setError('Please enter a valid email address.');
+      setError(t('Please enter a valid email address.'));
       return;
     }
     setStatus('loading');
@@ -59,7 +61,7 @@ export default function DonateForm() {
       setStatus('success');
     } catch {
       setStatus('idle');
-      setError('Something went wrong. Please try again.');
+      setError(t('Something went wrong. Please try again.'));
     }
   };
 
@@ -74,18 +76,17 @@ export default function DonateForm() {
           <CheckCircle2 size={30} />
         </span>
         <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">
-          Dhanyavaad, {firstName}!
+          {t('Dhanyavaad, {name}!', { name: firstName })}
         </h3>
         <p className="mt-2 text-ink-soft">
-          Your contribution of ₹{finalAmount.toLocaleString('en-IN')} has been recorded against {email}.
-          A receipt will be logged to the public transparency ledger.
+          {t('Your contribution of ₹{amount} has been recorded against {email}. A receipt will be logged to the public transparency ledger.', { amount: finalAmount.toLocaleString(locale), email })}
         </p>
         <button
           type="button"
           onClick={() => { setStatus('idle'); setFirstName(namesOf(user).firstName); setLastName(namesOf(user).lastName); setEmail(user?.email || ''); setCustom(''); }}
           className="mt-6 rounded-full border-2 border-ink/15 px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:border-ink"
         >
-          Make Another Contribution
+          {t('Make Another Contribution')}
         </button>
       </motion.div>
     );
@@ -93,7 +94,7 @@ export default function DonateForm() {
 
   return (
     <form onSubmit={handlePay} className="rounded-3xl border border-ink/8 bg-white p-8 shadow-card sm:p-10">
-      <p className="mb-3 text-sm font-bold text-ink">Choose an amount</p>
+      <p className="mb-3 text-sm font-bold text-ink">{t('Choose an amount')}</p>
       <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-5">
         {AMOUNTS.map((a) => (
           <button
@@ -106,13 +107,13 @@ export default function DonateForm() {
                 : 'border-ink/10 text-ink-soft hover:border-saffron hover:text-saffron'
             }`}
           >
-            ₹{a.toLocaleString('en-IN')}
+            ₹{a.toLocaleString(locale)}
           </button>
         ))}
       </div>
 
       <div className="mt-4">
-        <label className="mb-2 block text-sm font-bold text-ink">Or enter a custom amount</label>
+        <label className="mb-2 block text-sm font-bold text-ink">{t('Or enter a custom amount')}</label>
         <div className="flex items-center rounded-xl border-2 border-ink/10 bg-ivory px-4 focus-within:border-saffron">
           <span className="mr-1 text-sm font-bold text-ink-soft">₹</span>
           <input
@@ -120,7 +121,7 @@ export default function DonateForm() {
             min={100}
             value={custom}
             onChange={(e) => setCustom(e.target.value)}
-            placeholder="Enter amount"
+            placeholder={t("Enter amount")}
             className="w-full bg-transparent py-3 text-sm text-ink outline-none"
           />
         </div>
@@ -128,31 +129,31 @@ export default function DonateForm() {
 
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
-          <label className="mb-2 block text-sm font-bold text-ink">First name (for your receipt)</label>
+          <label className="mb-2 block text-sm font-bold text-ink">{t('First name (for your receipt)')}</label>
           <input
             type="text"
             autoComplete="given-name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            placeholder="As per PAN / ID"
+            placeholder={t("As per PAN / ID")}
             className="w-full rounded-xl border-2 border-ink/10 bg-ivory px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-saffron"
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-bold text-ink">Last name</label>
+          <label className="mb-2 block text-sm font-bold text-ink">{t('Last name')}</label>
           <input
             type="text"
             autoComplete="family-name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            placeholder="As per PAN / ID"
+            placeholder={t("As per PAN / ID")}
             className="w-full rounded-xl border-2 border-ink/10 bg-ivory px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-saffron"
           />
         </div>
       </div>
 
       <div className="mt-6">
-        <label className="mb-2 block text-sm font-bold text-ink">Email ID (receipt will be sent here)</label>
+        <label className="mb-2 block text-sm font-bold text-ink">{t('Email ID (receipt will be sent here)')}</label>
         <input
           type="email"
           value={email}
@@ -164,7 +165,7 @@ export default function DonateForm() {
       </div>
 
       <div className="mt-6">
-        <p className="mb-3 text-sm font-bold text-ink">Payment method</p>
+        <p className="mb-3 text-sm font-bold text-ink">{t('Payment method')}</p>
         <div className="grid grid-cols-3 gap-2.5">
           {METHODS.map((m) => (
             <button
@@ -178,7 +179,7 @@ export default function DonateForm() {
               }`}
             >
               <m.icon size={20} />
-              {m.label}
+              {t(m.label)}
             </button>
           ))}
         </div>
@@ -193,16 +194,16 @@ export default function DonateForm() {
       >
         {status === 'loading' ? (
           <>
-            <Loader2 size={18} className="animate-spin" /> Processing...
+            <Loader2 size={18} className="animate-spin" /> {t('Processing...')}
           </>
         ) : (
           <>
-            <HandCoins size={18} /> Contribute ₹{finalAmount ? finalAmount.toLocaleString('en-IN') : '0'}
+            <HandCoins size={18} /> {t('Contribute')} ₹{finalAmount ? finalAmount.toLocaleString(locale) : '0'}
           </>
         )}
       </button>
       <p className="mt-3 text-center text-[11px] text-ink-soft/70">
-        Demo checkout — no real payment is processed on this preview site.
+        {t('Demo checkout — no real payment is processed on this preview site.')}
       </p>
     </form>
   );
@@ -239,6 +240,7 @@ export default function DonateForm() {
 // // =====================================================
 
 // export default function DonateForm() {
+  const { t, locale } = useLang();
 //   const [amount, setAmount] = useState(2100);
 //   const [custom, setCustom] = useState('');
 
@@ -325,7 +327,7 @@ export default function DonateForm() {
 //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //     if (!emailRegex.test(email.trim())) {
-//       setError('Please enter a valid email address.');
+//       setError(t('Please enter a valid email address.'));
 //       return;
 //     }
 
@@ -452,7 +454,7 @@ export default function DonateForm() {
 //           onClick={handleAnotherContribution}
 //           className="mt-6 rounded-full border-2 border-ink/15 px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:border-ink"
 //         >
-//           Make Another Contribution
+//           {t('Make Another Contribution')}
 //         </button>
 //       </motion.div>
 //     );
@@ -472,7 +474,7 @@ export default function DonateForm() {
 //             AMOUNT
 //         ================================================= */}
 
-//         <p className="mb-3 text-sm font-bold text-ink">Choose an amount</p>
+//         <p className="mb-3 text-sm font-bold text-ink">{t('Choose an amount')}</p>
 
 //         <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-5">
 //           {AMOUNTS.map((a) => (
@@ -515,7 +517,7 @@ export default function DonateForm() {
 //                 setCustom(e.target.value);
 //                 setError("");
 //               }}
-//               placeholder="Enter amount"
+//               placeholder={t("Enter amount")}
 //               className="w-full bg-transparent py-3 text-sm text-ink outline-none"
 //             />
 //           </div>

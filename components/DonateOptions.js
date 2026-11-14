@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Check, Copy, Landmark, QrCode } from 'lucide-react';
 import { PAYMENT } from '@/data/party';
 import PaymentProofForm from '@/components/PaymentProofForm';
+import { useLang } from '@/context/LanguageContext';
 
 const TABS = [
   { id: 'qr', label: 'Scan QR Code', icon: QrCode },
@@ -12,6 +13,7 @@ const TABS = [
 ];
 
 export default function DonateOptions() {
+  const { t: tr } = useLang();
   const [tab, setTab] = useState('qr');
 
   return (
@@ -30,7 +32,7 @@ export default function DonateOptions() {
                 active ? 'bg-saffron text-white shadow-card' : 'text-ink-soft hover:text-saffron'
               }`}
             >
-              <t.icon size={17} /> {t.label}
+              <t.icon size={17} /> {tr(t.label)}
             </button>
           );
         })}
@@ -46,26 +48,28 @@ export default function DonateOptions() {
 }
 
 function QrPanel() {
+  const { t } = useLang();
   const upiUrl = `upi://pay?${new URLSearchParams({ pa: PAYMENT.upiId, pn: PAYMENT.payeeName, cu: 'INR' }).toString()}`;
   const src = PAYMENT.qrImage || `/api/upi-qr?data=${encodeURIComponent(upiUrl)}`;
 
   return (
     <div className="text-center">
-      <p className="text-sm font-semibold text-ink">Scan with any UPI app to contribute</p>
+      <p className="text-sm font-semibold text-ink">{t('Scan with any UPI app to contribute')}</p>
       <div className="mx-auto mt-5 w-fit rounded-3xl border-2 border-dashed border-saffron/40 bg-white p-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt="UPI payment QR code" width={260} height={260} className="h-64 w-64 object-contain" />
+        <img src={src} alt={t("UPI payment QR code")} width={260} height={260} className="h-64 w-64 object-contain" />
       </div>
-      <p className="mt-4 text-xs text-ink-soft">Google Pay · PhonePe · Paytm · BHIM · any bank app</p>
+      <p className="mt-4 text-xs text-ink-soft">{t('Google Pay · PhonePe · Paytm · BHIM · any bank app')}</p>
 
       <div className="mx-auto mt-6 max-w-sm">
-        <CopyRow label="UPI ID" value={PAYMENT.upiId} />
+        <CopyRow label={t("UPI ID")} value={PAYMENT.upiId} />
       </div>
     </div>
   );
 }
 
 function BankPanel() {
+  const { t } = useLang();
   const b = PAYMENT.bank;
   const rows = [
     ['Account Holder Name', b.accountHolder],
@@ -77,10 +81,10 @@ function BankPanel() {
   ];
   return (
     <div>
-      <p className="mb-4 text-sm font-semibold text-ink">Transfer via NEFT / RTGS / IMPS</p>
+      <p className="mb-4 text-sm font-semibold text-ink">{t('Transfer via NEFT / RTGS / IMPS')}</p>
       <div className="space-y-3">
         {rows.map(([label, value]) => (
-          <CopyRow key={label} label={label} value={value} />
+          <CopyRow key={label} label={t(label)} value={value} />
         ))}
       </div>
     </div>
@@ -88,6 +92,7 @@ function BankPanel() {
 }
 
 function CopyRow({ label, value }) {
+  const { t } = useLang();
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
@@ -107,7 +112,7 @@ function CopyRow({ label, value }) {
       <button
         type="button"
         onClick={copy}
-        aria-label={`Copy ${label}`}
+        aria-label={t('Copy {label}', { label })}
         className="shrink-0 rounded-full p-2 text-ink-soft transition-colors hover:bg-white hover:text-saffron"
       >
         {copied ? <Check size={17} className="text-banyan" /> : <Copy size={17} />}

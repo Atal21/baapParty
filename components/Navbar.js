@@ -16,6 +16,8 @@ import { nav } from "@/data/content";
 import { PARTY } from "@/data/party";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
+import { useLang } from "@/context/LanguageContext";
+import LanguageToggle from "./LanguageToggle";
 
 // =====================================================
 // NAV DATA
@@ -34,6 +36,8 @@ export default function Navbar() {
   const [accountOpen, setAccountOpen] = useState(false);
 
   const { user: authUser, loading: authLoading, logout } = useAuth();
+  const { t, isHindi } = useLang();
+  const partyName = isHindi ? PARTY.hindiName : PARTY.fullName;
 
   const navRef = useRef(null);
   const router = useRouter();
@@ -155,7 +159,7 @@ export default function Navbar() {
         >
           <Image
             src="/logo.png"
-            alt={PARTY.fullName}
+            alt={partyName}
             width={72}
             height={72}
             priority
@@ -170,7 +174,7 @@ export default function Navbar() {
 
             {/* Full name: mobile par short, tablet+ par poora */}
             <p className="mt-0.5 hidden max-w-[260px] truncate font-body text-[11px] font-semibold tracking-wider text-ink sm:block xl:max-w-[320px] xl:text-xs">
-              {PARTY.fullName.toUpperCase()}
+              {partyName.toUpperCase()}
             </p>
           </div>
         </Link>
@@ -183,7 +187,7 @@ export default function Navbar() {
             const isOpen = openIdx === idx;
 
             return (
-              <li key={item.label} className="relative">
+              <li key={t(item.label)} className="relative">
                 <button
                   type="button"
                   onClick={(e) => {
@@ -202,7 +206,7 @@ export default function Navbar() {
                   className={`flex items-center gap-1 rounded-full px-3 py-2 text-[13px] font-bold uppercase tracking-wide transition-colors xl:px-3.5
                     ${isOpen ? "text-saffron" : "text-ink hover:text-saffron"}`}
                 >
-                  {item.label}
+                  {t(item.label)}
 
                   {item.children && (
                     <ChevronDown
@@ -232,13 +236,13 @@ export default function Navbar() {
                       className="absolute left-0 top-full mt-2 w-56 overflow-hidden rounded-xl border border-ink/5 bg-white py-2 shadow-card"
                     >
                       {item.children.map((child) => (
-                        <li key={child.label}>
+                        <li key={t(child.label)}>
                           <Link
                             href={child.href}
                             onClick={() => setOpenIdx(null)}
                             className="block px-5 py-2.5 text-sm font-semibold text-ink-soft transition-colors hover:bg-paper hover:text-saffron"
                           >
-                            {child.label}
+                            {t(child.label)}
                           </Link>
                         </li>
                       ))}
@@ -258,24 +262,24 @@ export default function Navbar() {
                         className="grid w-[600px] grid-cols-3 gap-2 overflow-hidden rounded-2xl border border-ink/5 bg-white p-4 shadow-card"
                       >
                         {item.children.map((group) => (
-                          <div key={group.label} className="min-w-0">
+                          <div key={t(group.label)} className="min-w-0">
                             <Link
                               href={group.href}
                               onClick={() => setOpenIdx(null)}
                               className="mb-1 block rounded-lg border-b-2 border-saffron/30 px-3 pb-2 pt-1 text-xs font-extrabold uppercase tracking-wider text-maroon transition-colors hover:text-saffron"
                             >
-                              {group.label}
+                              {t(group.label)}
                             </Link>
 
                             <ul>
                               {group.children?.map((child) => (
-                                <li key={child.label}>
+                                <li key={t(child.label)}>
                                   <Link
                                     href={child.href}
                                     onClick={() => setOpenIdx(null)}
                                     className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-soft transition-colors hover:bg-paper hover:text-saffron"
                                   >
-                                    {child.label}
+                                    {t(child.label)}
                                   </Link>
                                 </li>
                               ))}
@@ -299,7 +303,7 @@ export default function Navbar() {
             href="/donate"
             className="shrink-0 rounded-full bg-saffron px-5 py-2.5 text-[13px] font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-saffron-dark hover:shadow-card-hover"
           >
-            Contribute
+            {t("Contribute")}
           </Link>
 
           <div className="relative shrink-0">
@@ -356,7 +360,7 @@ export default function Navbar() {
                         className="mt-1 flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm font-semibold text-ink-soft transition-colors hover:bg-paper hover:text-saffron"
                       >
                         <LayoutDashboard size={15} />
-                        My Dashboard
+                        {t("My Dashboard")}
                       </Link>
 
                       <button
@@ -365,7 +369,7 @@ export default function Navbar() {
                         className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm font-semibold text-ink-soft transition-colors hover:bg-paper hover:text-saffron"
                       >
                         <LogOut size={15} />
-                        Log out
+                        {t("Log out")}
                       </button>
                     </motion.div>
                   )}
@@ -376,26 +380,34 @@ export default function Navbar() {
                 href="/login"
                 className="block rounded-full border-2 border-ink/20 px-4 py-1.5 text-sm font-bold text-ink transition hover:border-maroon hover:text-maroon"
               >
-                Login
+                {t("Login")}
               </Link>
             )}
           </div>
+
+          <LanguageToggle />
+          
         </div>
 
         {/* =================================================
             MOBILE HAMBURGER (BELOW LG)
         ================================================= */}
-        <button
-          type="button"
-          onClick={toggleMobileMenu}
-          aria-label={
-            mobileOpen ? "Close navigation menu" : "Open navigation menu"
-          }
-          aria-expanded={mobileOpen}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-black/[0.05] text-ink transition-all hover:bg-black/[0.08] active:scale-95 lg:hidden"
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex shrink-0 items-center gap-2 lg:hidden">
+          <LanguageToggle />
+          <button
+            type="button"
+            onClick={toggleMobileMenu}
+            aria-label={
+              mobileOpen
+                ? t("Close navigation menu")
+                : t("Open navigation menu")
+            }
+            aria-expanded={mobileOpen}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-black/[0.05] text-ink transition-all hover:bg-black/[0.08] active:scale-95"
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {/* =================================================
@@ -419,7 +431,7 @@ export default function Navbar() {
 
                     return (
                       <li
-                        key={item.label}
+                        key={t(item.label)}
                         className="w-full border-b border-black/[0.06]"
                       >
                         {item.children ? (
@@ -429,7 +441,7 @@ export default function Navbar() {
                             aria-expanded={isSubOpen}
                             className="flex min-h-[52px] w-full items-center justify-between gap-4 px-1 py-3 text-left text-[13px] font-bold uppercase tracking-[0.04em] text-ink transition-colors active:text-saffron"
                           >
-                            <span className="truncate">{item.label}</span>
+                            <span className="truncate">{t(item.label)}</span>
 
                             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black/[0.04]">
                               <ChevronDown
@@ -451,7 +463,7 @@ export default function Navbar() {
                             }}
                             className="flex min-h-[52px] w-full items-center px-1 py-3 text-[13px] font-bold uppercase tracking-[0.04em] text-ink transition-colors active:text-saffron"
                           >
-                            {item.label}
+                            {t(item.label)}
                           </Link>
                         )}
 
@@ -468,7 +480,7 @@ export default function Navbar() {
                               <div className="mb-3 ml-1 overflow-hidden rounded-xl border border-black/[0.06] bg-[#fafafa]">
                                 {item.children.map((child, childIndex) => (
                                   <Link
-                                    key={child.label}
+                                    key={t(child.label)}
                                     href={child.href}
                                     onClick={() => {
                                       setMobileOpen(false);
@@ -482,7 +494,7 @@ export default function Navbar() {
                                       }
                                     `}
                                   >
-                                    {child.label}
+                                    {t(child.label)}
                                   </Link>
                                 ))}
                               </div>
@@ -504,7 +516,7 @@ export default function Navbar() {
                     }}
                     className="flex min-h-[48px] w-full items-center justify-center rounded-full border-2 border-saffron px-5 py-3 text-center text-[13px] font-bold tracking-wide text-saffron transition active:scale-[0.98]"
                   >
-                    अपनी समस्या दर्ज करें
+                    {t("Report Your Problem")}
                   </Link>
 
                   <Link
@@ -515,7 +527,7 @@ export default function Navbar() {
                     }}
                     className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-saffron px-5 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-white shadow-card transition hover:bg-saffron-dark active:scale-[0.98]"
                   >
-                    Contribute
+                    {t("Contribute")}
                   </Link>
 
                   {authLoading ? (
@@ -546,7 +558,7 @@ export default function Navbar() {
                         className="mt-4 flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full bg-banyan px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-banyan-dark active:scale-[0.98]"
                       >
                         <LayoutDashboard size={15} />
-                        My Dashboard
+                        {t("My Dashboard")}
                       </Link>
 
                       <button
@@ -555,7 +567,7 @@ export default function Navbar() {
                         className="mt-2 flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full border-2 border-ink/10 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-ink transition hover:border-maroon hover:text-maroon active:scale-[0.98]"
                       >
                         <LogOut size={15} />
-                        Log out
+                        {t("Log out")}
                       </button>
                     </div>
                   ) : (
@@ -567,7 +579,7 @@ export default function Navbar() {
                       }}
                       className="flex min-h-[48px] w-full items-center justify-center rounded-full border-2 border-ink/15 px-5 py-3 text-center text-sm font-bold text-ink transition hover:border-maroon hover:text-maroon active:scale-[0.98]"
                     >
-                      Login / Sign Up
+                      {t("Login / Sign Up")}
                     </Link>
                   )}
                 </div>

@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, PlayCircle, Users2 } from 'lucide-react';
 import img from '@/public/image.png';
+import { useLang } from '@/context/LanguageContext';
 
 export default function Hero() {
+  const { t } = useLang();
   return (
     <section className="relative overflow-hidden bg-ivory">
       <div className="absolute inset-0 bg-sunburst" />
@@ -22,19 +24,19 @@ export default function Hero() {
         >
           <span className="section-eyebrow inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-bold uppercase text-saffron shadow-card">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-saffron" />
-            The People's Voice · The People's Right
+            {t("The People's Voice · The People's Right")}
           </span>
 
           <h1 className="mt-6 font-display text-[2.2rem] font-extrabold leading-[1.1] text-ink sm:text-5xl lg:text-[3.3rem]">
-            Main neta nahi, <span className="text-banyan">Netritva</span>
+            {t("Main neta nahi,")} <span className="text-banyan">{t("Netritva")}</span>
             <br />
-            <span className="text-saffron">Tayyar karna</span>
+            <span className="text-saffron">{t("Tayyar karna")}</span>
             <br />
-            <span className="text-saffron">Chahta hoon.</span>
+            <span className="text-saffron">{t("Chahta hoon.")}</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-xl font-medium leading-relaxed text-ink-soft sm:text">
-            Hamara sankalp ek aise Bharat ka nirmaan hai jo surakshit, samriddh, nyaypoorn aur sammanit ho. Ek aisa rashtra jahan kisan, yuva aur har aam nagrik ko apne sapno ko poora karne ka pura adhikaar mile.
+            {t("Hamara sankalp ek aise Bharat ka nirmaan hai jo surakshit, samriddh, nyaypoorn aur sammanit ho. Ek aisa rashtra jahan kisan, yuva aur har aam nagrik ko apne sapno ko poora karne ka pura adhikaar mile.")}
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -42,7 +44,7 @@ export default function Hero() {
               href="/volunteer"
               className="group inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-saffron-dark hover:shadow-card-hover"
             >
-              Join the Movement
+              {t("Join the Movement")}
               <ArrowRight
                 size={17}
                 className="transition-transform group-hover:translate-x-1"
@@ -53,7 +55,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full border-2 border-ink/15 px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-ink transition-all hover:border-ink hover:bg-ink hover:text-ivory"
             >
               <PlayCircle size={18} />
-              Read 18 Chapters
+              {t("Read 18 Chapters")}
             </Link>
           </div>
 
@@ -62,8 +64,8 @@ export default function Hero() {
               {["a", "b", "c", "d"].map((s) => (
                 <Image
                   key={s}
-                  src={`https://picsum.photos/seed/avatar-${s}/80/80`}
-                  alt="Volunteer"
+                  src={`/placeholders/avatar.svg`}
+                  alt={t("Volunteer")}
                   width={40}
                   height={40}
                   className="h-10 w-10 rounded-full border-2 border-ivory object-cover"
@@ -72,7 +74,7 @@ export default function Hero() {
             </div>
             <p className="text-sm text-ink-soft">
               <span className="font-display font-bold text-ink">96,000+</span>{" "}
-              volunteers already on board
+              {t("volunteers already on board")}
             </p>
           </div>
         </motion.div>
@@ -86,7 +88,7 @@ export default function Hero() {
           <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2.5rem] border-8 border-white shadow-card-hover">
             <ZoomableImage
               src={img}
-              alt="Bharatiya Avijit Aawaz Party rally with supporters holding flags"
+              alt={t("Bharatiya Avijit Aawaz Party rally with supporters holding flags")}
               fill
               priority
               className="object-cover"
@@ -109,7 +111,7 @@ export default function Hero() {
               3,100+
             </p>
             <p className="text-[11px] text-ivory/70">
-              Villages reached this year
+              {t("Villages reached this year")}
             </p>
           </motion.div>
         </motion.div>

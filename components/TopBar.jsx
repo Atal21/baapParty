@@ -1,18 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { useLang } from "@/context/LanguageContext";
 import { Mail, Phone, Youtube, Facebook, Instagram, X, XIcon } from "lucide-react";
 import { PARTY } from "@/data/party";
 const notices = [
     "Bhartiya Avijeet Aawaz Party welcomes you",
     "Become a member of BAAP and join the movement for a united, compassionate Bharat",
-    `Reach us: ${PARTY.phone} · ${PARTY.address}`,
 ];
 export default function TopBar() {
+    const { t } = useLang();
+    const allNotices = [...notices.map((n) => t(n)), `${t("Reach us:")} ${PARTY.phone} · ${t(PARTY.address)}`];
     return (
       <div className="w-full bg-maroon-dark text-black font-bold text-sm">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-0 py-2">
+        <div className="mx-auto flex max-w-7xl items-center gap-4 px-2 py-2">
           <div className="relative flex-1 overflow-hidden">
             <div className="flex w-max animate-marquee gap-16 whitespace-nowrap">
-              {[...notices, ...notices].map((n, i) => (
+              {[...allNotices, ...allNotices].map((n, i) => (
                 <span key={i} className="opacity-90">
                   {n.toUpperCase()}
                 </span>

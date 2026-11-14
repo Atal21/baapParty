@@ -1,10 +1,16 @@
+'use client';
+
 import Link from 'next/link';
+import { useLang } from '@/context/LanguageContext';
+import { PARTY } from '@/data/party';
 import {Flame, Mail, MapPin, Phone,} from 'lucide-react';
 import { nav } from '@/data/content';
 import { socialLinks } from "@/data/content";
 import Image from "next/image";
 
 export default function Footer() {
+  const { t, isHindi } = useLang();
+  const partyName = isHindi ? PARTY.hindiName : 'Bharatiya Avijit Aawaz Party';
   return (
     <footer className="relative overflow-hidden bg-ink pt-16 text-ivory/80">
       <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-saffron/10 blur-3xl" />
@@ -29,12 +35,11 @@ export default function Footer() {
             </div>
 
             <span className="font-display text-l font-extrabold text-ivory">
-              Bharatiya Avijit Aawaz Party
+              {partyName}
             </span>
           </Link>
           <p className="max-w-xs text-sm leading-relaxed text-ivory/60">
-            The People&apos;s Voice | The People&apos;s Right | Accountability to
-            the People.
+            {t("The People's Voice | The People's Right | Accountability to the People.")}
           </p>
           <div className="mt-5 flex gap-3">
             {socialLinks.map(({ icon: Icon, name, url }) => (
@@ -62,18 +67,18 @@ export default function Footer() {
 
         <div>
           <h4 className="section-eyebrow mb-4 text-xs font-bold uppercase text-marigold">
-            Navigate
+            {t("Navigate")}
           </h4>
           <ul className="space-y-2.5 text-sm">
             {nav
               .flatMap((item) => (item.isMore ? item.children : [item]))
               .map((item) => (
-                <li key={item.label}>
+                <li key={t(item.label)}>
                   <Link
                     href={item.href === "#" ? "/volunteer" : item.href}
                     className="text-ivory/60 transition-colors hover:text-ivory"
                   >
-                    {item.label}
+                    {t(item.label)}
                   </Link>
                 </li>
               ))}
@@ -82,7 +87,7 @@ export default function Footer() {
 
         <div>
           <h4 className="section-eyebrow mb-4 text-xs font-bold uppercase text-marigold">
-            Get Involved
+            {t("Get Involved")}
           </h4>
           <ul className="space-y-2.5 text-sm">
             <li>
@@ -90,7 +95,7 @@ export default function Footer() {
                 href="/report-problem"
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
-                Report Your Problem
+                {t("Report Your Problem")}
               </Link>
             </li>
             <li>
@@ -98,7 +103,7 @@ export default function Footer() {
                 href="/resolution-tracker"
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
-                Resolution Tracker
+                {t("Resolution Tracker")}
               </Link>
             </li>
             {/* <li>
@@ -114,7 +119,7 @@ export default function Footer() {
                 href="/donate"
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
-                Contribute to the Campaign
+                {t("Contribute to the Campaign")}
               </Link>
             </li>
             <li>
@@ -122,7 +127,7 @@ export default function Footer() {
                 href="/manifesto"
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
-                Read the 18 Chapters
+                {t("Read the 18 Chapters")}
               </Link>
             </li>
             <li>
@@ -130,7 +135,7 @@ export default function Footer() {
                 href="/events#rally-schedule"
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
-                Attend a Rally
+                {t("Attend a Rally")}
               </Link>
             </li>
             <li>
@@ -138,7 +143,7 @@ export default function Footer() {
                 href="/documents"
                 className="text-ivory/60 transition-colors hover:text-ivory"
               >
-                Documents
+                {t("Documents")}
               </Link>
             </li>
           </ul>
@@ -146,12 +151,12 @@ export default function Footer() {
 
         <div>
           <h4 className="section-eyebrow mb-4 text-xs font-bold uppercase text-marigold">
-            Contact HQ
+            {t("Contact HQ")}
           </h4>
           <ul className="space-y-3 text-sm text-ivory/60">
             <li className="flex gap-2.5">
               <MapPin size={17} className="mt-0.5 shrink-0 text-saffron" />
-              BK-1/54 Ground Floor Shalimar Bagh New Delhi 110088
+              {t("BK-1/54 Ground Floor Shalimar Bagh New Delhi 110088")}
             </li>
             <li className="flex gap-2.5">
               <Phone size={17} className="mt-0.5 shrink-0 text-saffron" /> +91
@@ -168,10 +173,9 @@ export default function Footer() {
       <div className="h-[4px] w-full bg-tricolor-thread" />
       <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-5 text-xs text-ivory/45 sm:flex-row lg:px-8">
         <p>
-          &copy; {new Date().getFullYear()} Bharatiya Avijit Aawaz Party. All
-          Rights Reserved.
+          &copy; {new Date().getFullYear()} {partyName}. {t("All Rights Reserved.")}
         </p>
-        <p>Published on Behalf of Bharatiya Avijit Aawaz Party, New Delhi.</p>
+        <p>{t("Published on Behalf of")} {partyName}, {t("New Delhi")}.</p>
       </div>
     </footer>
   );

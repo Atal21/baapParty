@@ -22,7 +22,7 @@ const sectionsData = [
     title: "Born From the Fields, Built for the Nation",
     description:
       "Bharatiya Avijit Aawaz Party began as a coalition of farmer unions and urban reform groups who believed governance had drifted away from everyday concerns — jobs, school quality and the price of grain.",
-    image: "https://picsum.photos/seed/about-party1/900/1100",
+    image: "/placeholders/portrait.svg",
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const sectionsData = [
     title: "Empowering Local Communities Directly",
     description:
       "Eight years and four state elections later, we remain the only national party where every candidate is first vetted by local booth committees before the central leadership signs off.",
-    image: "https://picsum.photos/seed/about-party2/900/1100",
+    image: "/placeholders/portrait.svg",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const sectionsData = [
     title: "Accountability at Every Level of Governance",
     description:
       "We track every single policy promise on an open public dashboard. Transparency is not just a promise; it is built into our daily operational code.",
-    image: "https://picsum.photos/seed/about-party3/900/1100",
+    image: "/placeholders/portrait.svg",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const sectionsData = [
     title: "Decentralized Political Representation",
     description:
       "Our governance model ensures every district has a direct voice in ticket allocation, manifesto drafting, and budget allocation monitoring.",
-    image: "https://picsum.photos/seed/about-party4/900/1100",
+    image: "/placeholders/portrait.svg",
   },
 ];
 

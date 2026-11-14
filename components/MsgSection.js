@@ -6,6 +6,7 @@ import ZoomableImage from './ZoomableImage';
 import { motion } from 'framer-motion';
 import { Quote, Sparkles } from 'lucide-react';
 import img from '@/public/image.png'; // apni image ka path daal do
+import { useLang } from '@/context/LanguageContext';
 
 const messages = [
     {
@@ -23,6 +24,7 @@ const messages = [
 ];
 
 export default function MsgSection() {
+    const { t } = useLang();
     return (
         <section className="relative overflow-hidden bg-paper py-16 lg:py-24">
             {/* Decorative blurs — theme ke hisaab se */}
@@ -40,15 +42,14 @@ export default function MsgSection() {
                 >
                     <span className="section-eyebrow inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-bold uppercase text-saffron shadow-card">
                         <Sparkles size={14} />
-                        A Message from Paras Bhai ji
+                        {t("A Message from Paras Bhai ji")}
                     </span>
                     <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight text-ink sm:text-4xl lg:text-[2.6rem]">
-                        Main neta nahi, <span className="text-banyan">Netritva</span>{' '}
-                        <span className="text-saffron">Tayyar karna Chahta hoon.</span>
+                        {t("Main neta nahi,")} <span className="text-banyan">{t("Netritva")}</span>{' '}
+                        <span className="text-saffron">{t("Tayyar karna Chahta hoon.")}</span>
                     </h2>
                     <p className="mt-4 text-base text-ink-soft">
-                        My dear citizens of India, my younger brothers and sisters, my children, and my
-                        elders — I wish you all happiness and good health. This is my heartfelt prayer.
+                        {t("My dear citizens of India, my younger brothers and sisters, my children, and my elders — I wish you all happiness and good health. This is my heartfelt prayer.")}
                     </p>
                 </motion.div>
 
@@ -66,7 +67,7 @@ export default function MsgSection() {
                             <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2.5rem] border-8 border-white shadow-card-hover">
                                 <ZoomableImage
                                     src={img}
-                                    alt="Paras Bhai ji addressing the nation"
+                                    alt={t("Paras Bhai ji addressing the nation")}
                                     fill
                                     priority
                                     className="object-cover"
@@ -77,10 +78,10 @@ export default function MsgSection() {
                                 <div className="absolute bottom-0 left-0 right-0 p-6">
                                     <Quote size={28} className="mb-2 text-marigold" />
                                     <p className="font-display text-lg font-bold leading-snug text-ivory">
-                                        Stand up for Dharma and Justice.
+                                        {t("Stand up for Dharma and Justice.")}
                                     </p>
                                     <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ivory/70">
-                                        — Paras Bhai ji
+                                        {t("— Paras Bhai ji")}
                                     </p>
                                 </div>
                             </div>
@@ -93,7 +94,7 @@ export default function MsgSection() {
                             >
                                 <p className="font-display text-2xl font-extrabold text-marigold">18</p>
                                 <p className="text-[11px] text-ivory/70">
-                                    Contradictions of our nation — like the 18 chapters of the Gita
+                                    {t("Contradictions of our nation — like the 18 chapters of the Gita")}
                                 </p>
                             </motion.div>
                         </div>
@@ -112,7 +113,7 @@ export default function MsgSection() {
                             >
                                 <span className="absolute left-0 top-6 h-8 w-1 rounded-r-full bg-saffron transition-all group-hover:h-10" />
                                 <p className="pl-3 text-[15px] leading-relaxed text-ink-soft">
-                                    {m.text}
+                                    {t(m.text)}
                                 </p>
                             </motion.div>
                         ))}
@@ -128,16 +129,13 @@ export default function MsgSection() {
                             <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-saffron/20 blur-2xl" />
                             <div className="relative">
                                 <p className="text-xs font-bold uppercase tracking-wide text-marigold">
-                                    The Call
+                                    {t("The Call")}
                                 </p>
                                 <p className="mt-3 text-[15px] leading-relaxed text-ivory/90">
-                                    I want the good children, good youth, honest women, experienced elders,
-                                    farmers, soldiers, educated people, and social workers of the country to come
-                                    together.
+                                    {t("I want the good children, good youth, honest women, experienced elders, farmers, soldiers, educated people, and social workers of the country to come together.")}
                                 </p>
                                 <p className="mt-3 font-display text-lg font-bold leading-snug text-white">
-                                    Let us build a team that is ready not just to fight elections, but to
-                                    understand the problems of the country and solve them.
+                                    {t("Let us build a team that is ready not just to fight elections, but to understand the problems of the country and solve them.")}
                                 </p>
                             </div>
                         </motion.div>

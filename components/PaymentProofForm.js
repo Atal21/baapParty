@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, FileCheck2, Loader2, Send, Upload, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { namesOf, joinName } from '@/lib/personName';
+import { useLang } from '@/context/LanguageContext';
 
 const METHODS = [
   { id: 'upi', label: 'UPI / QR Code' },
@@ -21,6 +22,7 @@ const emptyForm = () => ({ name: '', amount: '', method: 'upi', paymentDate: tod
 // "I have paid" form: the donor tells us the payment details and uploads a screenshot.
 // The screenshot is stored privately; only the admin can open it from the Contributions page.
 export default function PaymentProofForm() {
+  const { t } = useLang();
   const [form, setForm] = useState(emptyForm);
   const [shot, setShot] = useState(null); // { publicId, resourceType, format, fileName }
   const [uploading, setUploading] = useState(false);
@@ -99,7 +101,7 @@ export default function PaymentProofForm() {
       setStatus('success');
     } catch (err) {
       setStatus('idle');
-      setSendError(err?.message && err.message !== 'Request failed' ? err.message : 'Something went wrong. Please try again.');
+      setSendError(err?.message && err.message !== 'Request failed' ? t(err.message) : t('Something went wrong. Please try again.'));
     }
   };
 
@@ -111,9 +113,9 @@ export default function PaymentProofForm() {
         className="mt-8 rounded-3xl border border-banyan/20 bg-banyan/5 p-8 text-center"
       >
         <CheckCircle2 size={44} className="mx-auto text-banyan" />
-        <h3 className="mt-4 font-display text-xl font-extrabold text-ink">Thank you, {form.name.trim().split(' ')[0]}!</h3>
+        <h3 className="mt-4 font-display text-xl font-extrabold text-ink">{t('Thank you, {name}!', { name: form.name.trim().split(' ')[0] })}</h3>
         <p className="mt-2 text-sm text-ink-soft">
-          We have received your payment details and screenshot. Our team will verify and record your contribution.
+          {t('We have received your payment details and screenshot. Our team will verify and record your contribution.')}
         </p>
         <button
           type="button"
@@ -125,7 +127,7 @@ export default function PaymentProofForm() {
           }}
           className="mt-5 rounded-full border-2 border-ink/15 px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:border-ink"
         >
-          Submit another
+          {t('Submit another')}
         </button>
       </motion.div>
     );
@@ -134,14 +136,14 @@ export default function PaymentProofForm() {
   if (!open) {
     return (
       <div className="mt-8 border-t border-ink/10 pt-8 text-center">
-        <h3 className="font-display text-lg font-extrabold text-ink">Already paid? Upload your payment screenshot</h3>
-        <p className="mt-1 text-xs text-ink-soft">Share your payment details so we can record your contribution.</p>
+        <h3 className="font-display text-lg font-extrabold text-ink">{t('Already paid? Upload your payment screenshot')}</h3>
+        <p className="mt-1 text-xs text-ink-soft">{t('Share your payment details so we can record your contribution.')}</p>
         <button
           type="button"
           onClick={() => setOpen(true)}
           className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-saffron px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-saffron-dark"
         >
-          <Upload size={17} /> Upload Payment Screenshot
+          <Upload size={17} /> {t('Upload Payment Screenshot')}
         </button>
       </div>
     );
@@ -158,10 +160,10 @@ export default function PaymentProofForm() {
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="font-display text-lg font-extrabold text-ink">Already paid? Upload your payment screenshot</h3>
-          <p className="mt-1 text-xs text-ink-soft">Fill in the details below so we can record your contribution.</p>
+          <h3 className="font-display text-lg font-extrabold text-ink">{t('Already paid? Upload your payment screenshot')}</h3>
+          <p className="mt-1 text-xs text-ink-soft">{t('Fill in the details below so we can record your contribution.')}</p>
         </div>
-        <button type="button" onClick={() => setOpen(false)} aria-label="Close form" className="shrink-0 rounded-full p-1.5 text-ink-soft hover:bg-ink/5 hover:text-ink">
+        <button type="button" onClick={() => setOpen(false)} aria-label={t("Close form")} className="shrink-0 rounded-full p-1.5 text-ink-soft hover:bg-ink/5 hover:text-ink">
           <X size={18} />
         </button>
       </div>
@@ -173,7 +175,7 @@ export default function PaymentProofForm() {
             autoComplete="name"
             value={form.name}
             onChange={(e) => set('name', e.target.value)}
-            placeholder="Your full name"
+            placeholder={t("Your full name")}
             className={inputClass(errors.name)}
           />
         </Field>
@@ -184,14 +186,14 @@ export default function PaymentProofForm() {
             min="1"
             value={form.amount}
             onChange={(e) => set('amount', e.target.value)}
-            placeholder="e.g. 2100"
+            placeholder={t("e.g. 2100")}
             className={inputClass(errors.amount)}
           />
         </Field>
         <Field label="Payment Method">
           <select value={form.method} onChange={(e) => set('method', e.target.value)} className={inputClass()}>
             {METHODS.map((m) => (
-              <option key={m.id} value={m.id}>{m.label}</option>
+              <option key={m.id} value={m.id}>{t(m.label)}</option>
             ))}
           </select>
         </Field>
@@ -211,7 +213,7 @@ export default function PaymentProofForm() {
               value={form.transactionId}
               maxLength={60}
               onChange={(e) => set('transactionId', e.target.value)}
-              placeholder="UTR / UPI reference number"
+              placeholder={t("UTR / UPI reference number")}
               className={inputClass()}
             />
           </Field>
@@ -219,14 +221,14 @@ export default function PaymentProofForm() {
       </div>
 
       <div className="mt-4">
-        <label className="mb-2 block text-sm font-bold text-ink">Payment screenshot (JPG, PNG or PDF, up to 5 MB)</label>
+        <label className="mb-2 block text-sm font-bold text-ink">{t('Payment screenshot (JPG, PNG or PDF, up to 5 MB)')}</label>
         {shot ? (
           <div className="flex items-center justify-between gap-3 rounded-xl bg-banyan/10 px-4 py-3 text-sm text-ink">
             <span className="flex min-w-0 items-center gap-2">
               <FileCheck2 size={17} className="shrink-0 text-banyan" />
               <span className="truncate font-semibold">{shot.fileName}</span>
             </span>
-            <button type="button" onClick={() => setShot(null)} aria-label="Remove file" className="shrink-0 text-ink-soft hover:text-saffron-dark">
+            <button type="button" onClick={() => setShot(null)} aria-label={t("Remove file")} className="shrink-0 text-ink-soft hover:text-saffron-dark">
               <X size={16} />
             </button>
           </div>
@@ -237,14 +239,14 @@ export default function PaymentProofForm() {
             }`}
           >
             {uploading ? <Loader2 size={16} className="animate-spin text-ink-soft" /> : <Upload size={16} className="text-ink-soft" />}
-            <span className="text-ink-soft">{uploading ? 'Uploading...' : 'Choose a file...'}</span>
+            <span className="text-ink-soft">{uploading ? t('Uploading...') : t('Choose a file...')}</span>
             <input type="file" accept=".jpg,.jpeg,.png,.pdf" onChange={onFile} disabled={uploading} className="hidden" />
           </label>
         )}
-        {errors.shot && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{errors.shot}</p>}
+        {errors.shot && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{t(errors.shot)}</p>}
       </div>
 
-      {sendError && <p className="mt-4 text-sm font-semibold text-saffron-dark">{sendError}</p>}
+      {sendError && <p className="mt-4 text-sm font-semibold text-saffron-dark">{t(sendError)}</p>}
 
       <button
         type="submit"
@@ -253,11 +255,11 @@ export default function PaymentProofForm() {
       >
         {status === 'loading' ? (
           <>
-            <Loader2 size={18} className="animate-spin" /> Submitting...
+            <Loader2 size={18} className="animate-spin" /> {t('Submitting...')}
           </>
         ) : (
           <>
-            <Send size={17} /> Submit Payment Details
+            <Send size={17} /> {t('Submit Payment Details')}
           </>
         )}
       </button>
@@ -266,11 +268,12 @@ export default function PaymentProofForm() {
 }
 
 function Field({ label, error, children }) {
+  const { t } = useLang();
   return (
     <div>
-      <label className="mb-2 block text-sm font-bold text-ink">{label}</label>
+      <label className="mb-2 block text-sm font-bold text-ink">{t(label)}</label>
       {children}
-      {error && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{error}</p>}
+      {error && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{t(error)}</p>}
     </div>
   );
 }

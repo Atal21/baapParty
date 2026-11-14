@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import CtaBanner from '@/components/CtaBanner';
 import { chapters, getChapter } from '@/data/chapters';
+import { getT } from '@/lib/i18n-server';
 
 export function generateStaticParams() {
   return chapters.map((c) => ({ slug: c.slug }));
@@ -30,13 +31,13 @@ export async function generateMetadata({ params }) {
 
 // Turn paragraphs into bullet points (lists attach under a lead-in line ending
 // with ":"), then split them evenly across the chapter's images.
-function buildSections(c) {
+function buildSections(c, tr) {
   const nodes = [];
   for (const b of c.content) {
-    if (b.type === 'p') nodes.push({ text: b.text, sub: false });
+    if (b.type === 'p') nodes.push({ text: tr(b.text), sub: false });
     else {
       const nested = nodes.length && nodes[nodes.length - 1].text.trim().endsWith(':');
-      b.items.forEach((t) => nodes.push({ text: t, sub: nested }));
+      b.items.forEach((it) => nodes.push({ text: tr(it), sub: nested }));
     }
   }
   const k = Math.min(c.images.length, nodes.length);
@@ -46,10 +47,11 @@ function buildSections(c) {
 
 export default async function ChapterPage({ params }) {
   const { slug } = await params;
+  const { t } = await getT();
   const idx = chapters.findIndex((c) => c.slug === slug);
   if (idx === -1) notFound();
   const c = chapters[idx];
-  const sections = buildSections(c);
+  const sections = buildSections(c, t);
   const prev = chapters[idx - 1];
   const next = chapters[idx + 1];
 
@@ -76,9 +78,9 @@ export default async function ChapterPage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <PageHeader
-        eyebrow={`Chapter ${c.number} of 18`}
-        title={c.title}
-        crumb={`Chapter ${c.number}`}
+        eyebrow={t("Chapter {n} of 18", { n: c.number })}
+        title={t(c.title)}
+        crumb={t("Chapter {n}", { n: c.number })}
       />
 
       <section className="bg-ivory py-16">
@@ -94,7 +96,7 @@ export default async function ChapterPage({ params }) {
                 >
                   <Image
                     src={c.images?.[i] ?? c.image}
-                    alt={`${c.title} — ${i + 1}`}
+                    alt={`${t(c.title)} — ${i + 1}`}
                     fill
                     priority={i === 0}
                     unoptimized
@@ -125,18 +127,18 @@ export default async function ChapterPage({ params }) {
             <div className="mt-10 rounded-2xl bg-ink p-7 text-ivory shadow-card">
               <Quote size={22} className="text-marigold" />
               <p className="mt-3 text-[11px] font-bold uppercase tracking-wide text-marigold">
-                Our Resolve
+                {t("Our Resolve")}
               </p>
               <p className="mt-1 font-display text-xl font-bold leading-snug sm:text-2xl">
-                {c.resolve}
+                {t(c.resolve)}
               </p>
             </div>
           )}
 
           {c.closing.length > 0 && (
             <div className="mt-6 space-y-2 text-center font-display text-lg font-bold text-ink">
-              {c.closing.map((t) => (
-                <p key={t}>{t}</p>
+              {c.closing.map((line, i) => (
+                <p key={i}>{t(line)}</p>
               ))}
             </div>
           )}
@@ -148,10 +150,10 @@ export default async function ChapterPage({ params }) {
                 className="group rounded-2xl border border-ink/8 bg-white p-5 shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover"
               >
                 <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-saffron">
-                  <ArrowLeft size={14} /> Chapter {prev.number}
+                  <ArrowLeft size={14} /> {t("Chapter {n}", { n: prev.number })}
                 </span>
                 <span className="mt-1 block font-display font-bold text-ink">
-                  {prev.title}
+                  {t(prev.title)}
                 </span>
               </Link>
             ) : (
@@ -163,10 +165,10 @@ export default async function ChapterPage({ params }) {
                 className="group rounded-2xl border border-ink/8 bg-white p-5 text-right shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover sm:col-start-2"
               >
                 <span className="flex items-center justify-end gap-1.5 text-[11px] font-bold uppercase tracking-wide text-saffron">
-                  Chapter {next.number} <ArrowRight size={14} />
+                  {t("Chapter {n}", { n: next.number })} <ArrowRight size={14} />
                 </span>
                 <span className="mt-1 block font-display font-bold text-ink">
-                  {next.title}
+                  {t(next.title)}
                 </span>
               </Link>
             )}
@@ -177,7 +179,7 @@ export default async function ChapterPage({ params }) {
               href="/manifesto"
               className="inline-flex items-center gap-2 rounded-full bg-banyan px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-banyan-dark"
             >
-              View All 18 Chapters
+              {t("View All 18 Chapters")}
             </Link>
           </div>
         </article>

@@ -3,14 +3,16 @@
 import { motion } from "framer-motion";
 import { timeline } from "@/data/content";
 import YatraRoadmap from "./YatraRoadmap";
+import { useLang } from "@/context/LanguageContext";
 
 export default function TimelineSection() {
+  const { t: tr } = useLang();
   return (
     <section id="biography" className="scroll-mt-24 bg-ivory py-24">
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
         <div className="text-center">
           <span className="section-eyebrow text-xs font-bold uppercase text-banyan">
-            Our Journey
+            {tr("Our Journey")}
           </span>
           {/* <h2 className="mt-3 font-display text-3xl font-extrabold text-ink sm:text-4xl">
             From a Village Meeting to a National Movement

@@ -23,8 +23,8 @@
 }
 
 :root {
-  --font-baloo: 'Baloo 2', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  --font-baloo: 'Baloo 2', 'Noto Sans Devanagari', sans-serif;
+  --font-inter: 'Inter', 'Noto Sans Devanagari', sans-serif;
   --font-space: 'Space Grotesk', monospace;
   /* Tell browsers this site is light-only. Without this, phones/browsers
      with a system dark-mode or "force dark" setting will auto-invert the
@@ -439,4 +439,14 @@ textarea:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .baap-loader *, .baap-loader { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+
+/* Hindi mode: Devanagari looks broken with wide letter-spacing, and needs more line height */
+html[lang="hi"] body,
+html[lang="hi"] body * {
+  letter-spacing: normal !important;
+}
+html[lang="hi"] body {
+  line-height: 1.7;
 }

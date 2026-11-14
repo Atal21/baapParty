@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { MapPin, SlidersHorizontal, X } from 'lucide-react';
+import { useLang } from '@/context/LanguageContext';
 
 export const ALL_VALUE = 'All';
 export const defaultFilterValue = { state: ALL_VALUE, city: '', category: ALL_VALUE };
@@ -28,6 +29,7 @@ export function matchesFilter(item, value) {
  * suggested cities/categories to that content type only.
  */
 export default function InlineContentFilter({ type, value, onChange }) {
+  const { t } = useLang();
   const [options, setOptions] = useState({ states: [], citiesByState: {}, categories: [] });
   const [open, setOpen] = useState(false);
 
@@ -52,7 +54,7 @@ export default function InlineContentFilter({ type, value, onChange }) {
     <span className="relative inline-flex align-middle z-10">
       <button
         type="button"
-        aria-label="Filter this section"
+        aria-label={t("Filter this section")}
         onClick={() => setOpen((v) => !v)}
         className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 transition-colors sm:h-9 sm:w-9 ${
           active
@@ -80,7 +82,7 @@ export default function InlineContentFilter({ type, value, onChange }) {
                        sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-72 sm:max-w-none sm:translate-x-0 sm:translate-y-0"
           >
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold uppercase tracking-wide text-ink-soft">Filter this section</p>
+              <p className="text-xs font-bold uppercase tracking-wide text-ink-soft">{t("Filter this section")}</p>
               <div className="flex items-center gap-2">
                 {active && (
                   <button
@@ -88,14 +90,14 @@ export default function InlineContentFilter({ type, value, onChange }) {
                     onClick={clear}
                     className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide text-saffron hover:text-saffron-dark"
                   >
-                    <X size={12} /> Clear
+                    <X size={12} /> {t("Clear")}
                   </button>
                 )}
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
                   className="text-ink-soft hover:text-ink sm:hidden"
-                  aria-label="Close filter"
+                  aria-label={t("Close filter")}
                 >
                   <X size={16} />
                 </button>
@@ -105,17 +107,17 @@ export default function InlineContentFilter({ type, value, onChange }) {
             <div className="mt-3 space-y-3">
               <div>
                 <label className="mb-1 block text-[11px] font-bold uppercase tracking-wide text-ink-soft/70">
-                  State
+                  {t("State")}
                 </label>
                 <select
                   value={value.state}
                   onChange={(e) => update({ state: e.target.value, city: '' })}
                   className="w-full rounded-xl border-2 border-ink/10 bg-ivory px-3 py-2.5 text-sm text-ink outline-none focus:border-saffron sm:py-2"
                 >
-                  <option value={ALL_VALUE}>All States</option>
+                  <option value={ALL_VALUE}>{t("All States")}</option>
                   {options.states.map((s) => (
                     <option key={s} value={s}>
-                      {s}
+                      {t(s)}
                     </option>
                   ))}
                 </select>
@@ -123,7 +125,7 @@ export default function InlineContentFilter({ type, value, onChange }) {
 
               <div>
                 <label className="mb-1 block text-[11px] font-bold uppercase tracking-wide text-ink-soft/70">
-                  City / Village / Area
+                  {t("City / Village / Area")}
                 </label>
                 <div className="relative">
                   <MapPin size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-soft/50" />
@@ -132,7 +134,7 @@ export default function InlineContentFilter({ type, value, onChange }) {
                     value={value.city}
                     onChange={(e) => update({ city: e.target.value })}
                     disabled={value.state === ALL_VALUE}
-                    placeholder={value.state === ALL_VALUE ? 'Select a state first' : 'e.g. Rohini'}
+                    placeholder={value.state === ALL_VALUE ? t('Select a state first') : t('e.g. Rohini')}
                     className="w-full rounded-xl border-2 border-ink/10 bg-ivory py-2.5 pl-8 pr-3 text-sm text-ink outline-none focus:border-saffron disabled:cursor-not-allowed disabled:bg-ink/5 sm:py-2"
                   />
                   <datalist id={`jsm-city-suggestions-${type || 'all'}`}>
@@ -146,17 +148,17 @@ export default function InlineContentFilter({ type, value, onChange }) {
               {options.categories.length > 0 && (
                 <div>
                   <label className="mb-1 block text-[11px] font-bold uppercase tracking-wide text-ink-soft/70">
-                    Category
+                    {t("Category")}
                   </label>
                   <select
                     value={value.category}
                     onChange={(e) => update({ category: e.target.value })}
                     className="w-full rounded-xl border-2 border-ink/10 bg-ivory px-3 py-2.5 text-sm text-ink outline-none focus:border-saffron sm:py-2"
                   >
-                    <option value={ALL_VALUE}>All Categories</option>
+                    <option value={ALL_VALUE}>{t("All Categories")}</option>
                     {options.categories.map((c) => (
                       <option key={c} value={c}>
-                        {c}
+                        {t(c)}
                       </option>
                     ))}
                   </select>

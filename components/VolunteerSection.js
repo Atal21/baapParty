@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { CalendarCheck, MapPinned, UsersRound } from 'lucide-react';
 import VolunteerForm from '@/components/VolunteerForm';
+import { useLang } from '@/context/LanguageContext';
 
 const perks = [
   { icon: UsersRound, title: 'Booth-Level Teams', text: 'Join a team of 8-10 volunteers led by your local karyakarta.' },
@@ -11,6 +12,7 @@ const perks = [
 ];
 
 export default function VolunteerSection() {
+  const { t } = useLang();
   const [done, setDone] = useState(false);
 
   return (
@@ -25,15 +27,12 @@ export default function VolunteerSection() {
         {/* Left content is hidden once the success card is showing */}
         {!done && (
           <div className="lg:col-span-2">
-            <span className="section-eyebrow text-xs font-bold uppercase text-banyan">Why Volunteer</span>
+            <span className="section-eyebrow text-xs font-bold uppercase text-banyan">{t("Why Volunteer")}</span>
             <h2 className="mt-3 font-display text-3xl font-extrabold text-ink">
-              Democracy Runs on People Who Show Up
+              {t("Democracy Runs on People Who Show Up")}
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-ink-soft">
-              Every campaign win we&apos;ve had traces back to volunteers who
-              knocked on doors, staffed booths and organised chaupals. Fill in
-              the form and our district coordinator will place you within your
-              own constituency.
+              {t("Every campaign win we've had traces back to volunteers who knocked on doors, staffed booths and organised chaupals. Fill in the form and our district coordinator will place you within your own constituency.")}
             </p>
 
             <div className="mt-8 space-y-5">
@@ -43,8 +42,8 @@ export default function VolunteerSection() {
                     <p.icon size={20} />
                   </span>
                   <div>
-                    <h3 className="font-display text-sm font-bold text-ink">{p.title}</h3>
-                    <p className="mt-1 text-xs leading-relaxed text-ink-soft">{p.text}</p>
+                    <h3 className="font-display text-sm font-bold text-ink">{t(p.title)}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-ink-soft">{t(p.text)}</p>
                   </div>
                 </div>
               ))}

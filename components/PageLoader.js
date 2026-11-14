@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useLang } from '@/context/LanguageContext';
 
 // Full-screen branded splash shown every time the website is opened
 // (full page load / refresh). Client-side navigation does not re-trigger it.
@@ -8,6 +9,7 @@ const MIN_VISIBLE_MS = 2600; // minimum time the loader stays on screen
 const FADE_MS = 700; // must match .baap-loader transition in globals.css
 
 export default function PageLoader() {
+  const { t } = useLang();
   const [phase, setPhase] = useState('show'); // show -> hide -> gone
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function PageLoader() {
       className={`baap-loader ${phase === "hide" ? "baap-loader--hide" : ""}`}
       role="status"
       aria-live="polite"
-      aria-label="Loading Bharatiya Avijit Aawaz Party website"
+      aria-label={t("Loading Bharatiya Avijit Aawaz Party website")}
     >
       <div className="baap-loader__glow" aria-hidden="true" />
       <div className="baap-loader__grid" aria-hidden="true" />
@@ -82,7 +84,7 @@ export default function PageLoader() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/loader-logo.png"
-            alt="Bharatiya Avijit Aawaz Party logo"
+            alt={t("Bharatiya Avijit Aawaz Party logo")}
             className="baap-loader__logo"
             width="480"
             height="480"
@@ -100,8 +102,7 @@ export default function PageLoader() {
         </div>
 
         <p className="baap-loader__tagline">
-          Welcome to the official website of the world&apos;s largest political
-          party
+          {t("Welcome to the official website of the world's largest political party")}
         </p>
 
         <div className="baap-loader__bar" aria-hidden="true">

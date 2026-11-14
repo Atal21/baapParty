@@ -4,7 +4,8 @@ import LeadersSection from "@/components/LeadersSection";
 // import TimelineSection from "@/components/TimelineSection";
 import CtaBanner from "@/components/CtaBanner";
 import { CheckCircle2 } from "lucide-react";
-import GuidanceSection from "@/components/Guidemce";
+import GuidanceSection from "@/components/Guidance";
+import { getT } from "@/lib/i18n-server";
 
 export const metadata = {
   title: "About Us — Bharatiya Avijit Aawaz Party",
@@ -67,13 +68,14 @@ const missionPoints = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { t } = await getT();
   return (
     <>
       <PageHeader
-        eyebrow="Know Us"
-        title="Bharatiya Avijit Aawaz Party"
-        crumb="About Us"
+        eyebrow={t("Know Us")}
+        title={t("Bharatiya Avijit Aawaz Party")}
+        crumb={t("About Us")}
       />
 
       {/* ================= ABOUT PARTY SECTION ================= */}
@@ -86,8 +88,8 @@ export default function AboutPage() {
             <div className="relative">
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-card-hover">
                 <ZoomableImage
-                  src="https://picsum.photos/seed/about-party-1/1000/750"
-                  alt="Party workers at a village meeting"
+                  src="/placeholders/landscape.svg"
+                  alt={t("Party workers at a village meeting")}
                   fill
                   className="object-cover"
                 />
@@ -98,31 +100,31 @@ export default function AboutPage() {
             <div>
               <h2 className="font-display text-2xl font-extrabold text-ink sm:text-3xl">
                 <span className="border-b-4 border-banyan pb-2">
-                  Why Bharatiya Avijit Aawaz Party?
+                  {t("Why Bharatiya Avijit Aawaz Party?")}
                 </span>
               </h2>
 
               <div className="mb-6" />
 
               <p className="text-ink-soft leading-relaxed">
-                India is a great democratic nation. Our country has made progress in science, technology, education, economy, and various other fields. However, even today, the common citizen faces basic challenges like <b>safety, health, employment, education, justice, and social dignity.</b>
+                {t("India is a great democratic nation. Our country has made progress in science, technology, education, economy, and various other fields. However, even today, the common citizen faces basic challenges like")}{" "}<b>{t("safety, health, employment, education, justice, and social dignity.")}</b>
               </p>
 
               <p className="mt-4 text-ink-soft leading-relaxed">
-                We believe that until these problems are solved on a priority basis, the journey of development will remain incomplete.
+                {t("We believe that until these problems are solved on a priority basis, the journey of development will remain incomplete.")}
               </p>
 
               <p className="mt-4 text-ink-soft leading-relaxed">
-                With this thought, the <b>Bharatiya Avijit Aawaz Party (BAAP)</b> presents its thoughts and proposals to the country through 18 important internal chapters.
+                {t("With this thought, the")} <b>{t("Bharatiya Avijit Aawaz Party (BAAP)")}</b> {t("presents its thoughts and proposals to the country through 18 important internal chapters.")}
               </p>
 
               <p className="mt-4 text-ink-soft leading-relaxed">
-                Our effort is to elevate politics above personal ambition and connect it with <b>public service, merit, accountability, and nation-building.</b>
+                {t("Our effort is to elevate politics above personal ambition and connect it with")}{" "}<b>{t("public service, merit, accountability, and nation-building.")}</b>
               </p>
 
               <div className="mt-6 p-5 bg-gray-50 rounded-lg border-l-4 border-saffron">
                 <p className="text-ink font-medium leading-relaxed italic">
-                  "Our path will be the path of the Constitution. The public will be our strength, and our foundation will be education, organization, law, and truth."
+                  "{t("Our path will be the path of the Constitution. The public will be our strength, and our foundation will be education, organization, law, and truth.")}"
                 </p>
               </div>
             </div>
@@ -134,14 +136,14 @@ export default function AboutPage() {
             <div className="order-2 lg:order-1">
               <h2 className="font-display text-2xl font-extrabold text-ink sm:text-3xl">
                 <span className="border-b-4 border-banyan pb-2">
-                  Our Core Values
+                  {t("Our Core Values")}
                 </span>
               </h2>
 
               <div className="mb-8" />
 
               <p className="text-ink-soft leading-relaxed mb-6">
-                We stand against injustice, exploitation, corruption, crime, drugs, caste discrimination, and social inequality. Here are our core thoughts and priorities:
+                {t("We stand against injustice, exploitation, corruption, crime, drugs, caste discrimination, and social inequality. Here are our core thoughts and priorities:")}
               </p>
 
               <ul className="mt-6 space-y-4">
@@ -154,7 +156,7 @@ export default function AboutPage() {
                       size={19}
                       className="mt-0.5 shrink-0 text-banyan"
                     />
-                    <span>{point}</span>
+                    <span>{t(point)}</span>
                   </li>
                 ))}
               </ul>
@@ -164,8 +166,8 @@ export default function AboutPage() {
             <div className="order-1 lg:order-2">
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-card-hover">
                 <ZoomableImage
-                  src="https://picsum.photos/seed/about-party-2/1000/750"
-                  alt="Community participation"
+                  src="/placeholders/landscape.svg"
+                  alt={t("Community participation")}
                   fill
                   className="object-cover"
                 />
@@ -179,8 +181,8 @@ export default function AboutPage() {
             <div className="sticky top-24">
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-card-hover">
                 <ZoomableImage
-                  src="https://picsum.photos/seed/about-party-3/1000/750"
-                  alt="Vision for a better India"
+                  src="/placeholders/landscape.svg"
+                  alt={t("Vision for a better India")}
                   fill
                   className="object-cover"
                 />
@@ -191,18 +193,18 @@ export default function AboutPage() {
             <div>
               <h2 className="font-display text-2xl font-extrabold text-ink sm:text-3xl">
                 <span className="border-b-4 border-banyan pb-2">
-                  Our Vision
+                  {t("Our Vision")}
                 </span>
               </h2>
 
               <div className="mb-6" />
 
               <p className="text-lg font-bold text-ink mb-4">
-                What kind of India is our dream?
+                {t("What kind of India is our dream?")}
               </p>
 
               <p className="text-ink-soft leading-relaxed mb-6">
-                We want an India:
+                {t("We want an India:")}
               </p>
 
               {/* 18 Points Grid */}
@@ -212,7 +214,7 @@ export default function AboutPage() {
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-banyan/10 text-xs font-bold text-banyan">
                       {index + 1}
                     </span>
-                    <span>{point}</span>
+                    <span>{t(point)}</span>
                   </li>
                 ))}
               </ul>
@@ -220,7 +222,7 @@ export default function AboutPage() {
               {/* Highlighted Conclusion */}
               <div className="mt-8 p-6 bg-saffron/10 rounded-xl border-l-4 border-saffron">
                 <p className="text-ink font-bold text-base leading-relaxed">
-                  Our goal is not just a developed India, but a <span className="text-saffron">Secure, Prosperous, Just, and Dignified India.</span>
+                  {t("Our goal is not just a developed India, but a")} <span className="text-saffron">{t("Secure, Prosperous, Just, and Dignified India.")}</span>
                 </p>
               </div>
             </div>
@@ -232,16 +234,16 @@ export default function AboutPage() {
             <div className="order-2 lg:order-1">
               <h2 className="font-display text-2xl font-extrabold text-ink sm:text-3xl">
                 <span className="border-b-4 border-banyan pb-2">
-                  Our Mission
+                  {t("Our Mission")}
                 </span>
               </h2>
 
               <div className="mb-6" />
 
               <p className="text-ink-soft leading-relaxed mb-6">
-                Our mission is that the country's problems should not just be made into election issues, but actual work should be done for their permanent solutions.
+                {t("Our mission is that the country's problems should not just be made into election issues, but actual work should be done for their permanent solutions.")}
                 <br /><br />
-                To achieve this, we want to move forward in five major ways:
+                {t("To achieve this, we want to move forward in five major ways:")}
               </p>
 
               <div className="space-y-6 mt-8">
@@ -251,8 +253,8 @@ export default function AboutPage() {
                       {index + 1}
                     </div>
                     <div>
-                      <h4 className="font-bold text-ink text-base">{item.title}</h4>
-                      <p className="text-sm text-ink-soft leading-relaxed mt-1">{item.desc}</p>
+                      <h4 className="font-bold text-ink text-base">{t(item.title)}</h4>
+                      <p className="text-sm text-ink-soft leading-relaxed mt-1">{t(item.desc)}</p>
                     </div>
                   </div>
                 ))}
@@ -263,8 +265,8 @@ export default function AboutPage() {
             <div className="order-1 lg:order-2">
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-card-hover">
                 <ZoomableImage
-                  src="https://picsum.photos/seed/about-party-4/1000/750"
-                  alt="Mission and Organization Building"
+                  src="/placeholders/landscape.svg"
+                  alt={t("Mission and Organization Building")}
                   fill
                   className="object-cover"
                 />

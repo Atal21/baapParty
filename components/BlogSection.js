@@ -6,13 +6,15 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { PlayCircle } from 'lucide-react';
 import VideoLightbox from './VideoLightbox';
+import { useLang } from '@/context/LanguageContext';
 import { getYouTubeThumbnail } from '@/lib/youtube';
 import InlineContentFilter, {defaultFilterValue,isFilterActive,matchesFilter,} from "./InlineContentFilter";
 
-const formatDate = (d) =>
-  new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+const formatDate = (d, locale) =>
+  new Date(d).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 
 export default function BlogSection({ full = false }) {
+  const { t, locale } = useLang();
   const [blogPosts, setBlogPosts] = useState([]);
   const [activeVideo, setActiveVideo] = useState(null);
   const [locationFilter, setLocationFilter] = useState(defaultFilterValue);
@@ -40,10 +42,10 @@ export default function BlogSection({ full = false }) {
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="max-w-xl text-center sm:text-left">
             <span className="section-eyebrow text-xs font-bold uppercase text-saffron">
-              From the Newsroom
+              {t("From the Newsroom")}
             </span>
             <h2 className="mt-3 flex flex-wrap items-center justify-center gap-3 font-display text-3xl font-extrabold text-ink sm:text-4xl">
-              Latest News &amp; Press
+              {t("Latest News & Press")}
               <InlineContentFilter
                 type="blog"
                 value={locationFilter}
@@ -56,7 +58,7 @@ export default function BlogSection({ full = false }) {
               href="/blog"
               className="rounded-full border-2 border-ink/15 px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink transition-all hover:border-ink hover:bg-ink hover:text-ivory"
             >
-              Visit Blog
+              {t("Visit Blog")}
             </Link>
           )}
         </div>
@@ -64,8 +66,8 @@ export default function BlogSection({ full = false }) {
         {shown.length === 0 && (
           <p className="mt-14 text-center text-sm text-ink-soft">
             {active
-              ? "No posts match the selected filter."
-              : "No posts published yet — check back soon."}
+              ? t("No posts match the selected filter.")
+              : t("No posts published yet — check back soon.")}
           </p>
         )}
 
@@ -90,7 +92,7 @@ export default function BlogSection({ full = false }) {
                   src={
                     b.image ||
                     getYouTubeThumbnail(b.videoUrl) ||
-                    "https://picsum.photos/seed/blog-placeholder/700/500"
+                    "/placeholders/landscape.svg"
                   }
                   alt={b.title}
                   fill
@@ -102,12 +104,12 @@ export default function BlogSection({ full = false }) {
                   </span>
                 )}
                 <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-banyan">
-                  {b.category}
+                  {t(b.category)}
                 </span>
               </div>
               <div className="p-6">
                 <p className="text-xs font-semibold uppercase tracking-wide text-ink-soft/70">
-                  {formatDate(b.date)} · {b.author}
+                  {formatDate(b.date, locale)} · {b.author}
                 </p>
                 <h3 className="mt-2 line-clamp-2 font-display text-lg font-bold leading-snug text-ink">
                   {b.title}
@@ -119,7 +121,7 @@ export default function BlogSection({ full = false }) {
                   href={`/blog/${b.id}`}
                   className="mt-4 inline-block text-sm font-bold text-saffron transition-colors hover:text-saffron-dark"
                 >
-                  Read More →
+                  {t("Read More →")}
                 </Link>
               </div>
             </motion.article>

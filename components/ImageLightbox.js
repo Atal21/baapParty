@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Minus, Plus, RotateCcw, X } from 'lucide-react';
+import { useLang } from '@/context/LanguageContext';
 
 const MIN = 1;
 const MAX = 4;
@@ -12,6 +13,7 @@ const STEP = 0.5;
 // Rendered through a portal so parent transforms (framer-motion, overflow-hidden)
 // can never clip it.
 export default function ImageLightbox({ open, src, alt = '', caption, onClose }) {
+  const { t } = useLang();
   const [scale, setScale] = useState(1);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [mounted, setMounted] = useState(false);
@@ -74,7 +76,7 @@ export default function ImageLightbox({ open, src, alt = '', caption, onClose })
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Image viewer"
+      aria-label={t("Image viewer")}
     >
       {/* toolbar */}
       <div
@@ -82,18 +84,18 @@ export default function ImageLightbox({ open, src, alt = '', caption, onClose })
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2">
-          <button type="button" className={btn} onClick={() => zoomTo(scale - STEP)} disabled={scale <= MIN} aria-label="Zoom out">
+          <button type="button" className={btn} onClick={() => zoomTo(scale - STEP)} disabled={scale <= MIN} aria-label={t("Zoom out")}>
             <Minus size={18} />
           </button>
           <span className="w-12 text-center text-xs font-bold text-white/80">{Math.round(scale * 100)}%</span>
-          <button type="button" className={btn} onClick={() => zoomTo(scale + STEP)} disabled={scale >= MAX} aria-label="Zoom in">
+          <button type="button" className={btn} onClick={() => zoomTo(scale + STEP)} disabled={scale >= MAX} aria-label={t("Zoom in")}>
             <Plus size={18} />
           </button>
-          <button type="button" className={btn} onClick={() => zoomTo(1)} disabled={scale === 1} aria-label="Reset zoom">
+          <button type="button" className={btn} onClick={() => zoomTo(1)} disabled={scale === 1} aria-label={t("Reset zoom")}>
             <RotateCcw size={16} />
           </button>
         </div>
-        <button type="button" className={btn} onClick={onClose} aria-label="Close image">
+        <button type="button" className={btn} onClick={onClose} aria-label={t("Close image")}>
           <X size={22} />
         </button>
       </div>

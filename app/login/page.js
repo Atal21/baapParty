@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { LogIn, UserPlus, Mail, Lock, User, Phone } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { encodePassword } from "@/lib/passwordCodec";
+import { useLang } from '@/context/LanguageContext';
 
 const emptyLogin = { email: '', password: '' };
 const emptySignup = { firstName: '', lastName: '', email: '', phone: '', password: '' };
@@ -22,6 +23,7 @@ function LoginPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login } = useAuth();
+  const { t } = useLang();
   const [tab, setTab] = useState('login'); // 'login' | 'signup'
   const [loginForm, setLoginForm] = useState(emptyLogin);
   const [signupForm, setSignupForm] = useState(emptySignup);
@@ -46,14 +48,14 @@ function LoginPageInner() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data?.error || 'Something went wrong. Please try again.');
+        setError(data?.error ? t(data.error) : t('Something went wrong. Please try again.'));
         return;
       }
       login(data.user); // updates the navbar instantly (no manual refresh needed)
       router.push(redirectTo);
       router.refresh();
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError(t('Something went wrong. Please try again.'));
     } finally {
       setLoading(false);
     }
@@ -77,19 +79,19 @@ function LoginPageInner() {
         // If an account already exists, nudge them to the Login tab instead
         // of making them re-type everything.
         if (res.status === 409) {
-          setError(data?.error || 'An account already exists — please log in.');
+          setError(data?.error ? t(data.error) : t('An account already exists — please log in.'));
           setTab('login');
           setLoginForm((f) => ({ ...f, email: signupForm.email }));
           return;
         }
-        setError(data?.error || 'Something went wrong. Please try again.');
+        setError(data?.error ? t(data.error) : t('Something went wrong. Please try again.'));
         return;
       }
       login(data.user); // updates the navbar instantly (no manual refresh needed)
       router.push(redirectTo);
       router.refresh();
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError(t('Something went wrong. Please try again.'));
     } finally {
       setLoading(false);
     }
@@ -99,9 +101,9 @@ function LoginPageInner() {
     <section className="flex min-h-[70vh] items-center justify-center bg-paper px-4 py-16">
       <div className="w-full max-w-md rounded-2xl border border-ink/8 bg-white p-6 shadow-card sm:p-8">
         <div className="text-center">
-          <h1 className="font-display text-2xl font-extrabold text-ink">Welcome</h1>
+          <h1 className="font-display text-2xl font-extrabold text-ink">{t("Welcome")}</h1>
           <p className="mt-1 text-sm text-ink-soft">
-            Log in to your account, or create a new one in a few seconds.
+            {t("Log in to your account, or create a new one in a few seconds.")}
           </p>
         </div>
 
@@ -117,7 +119,7 @@ function LoginPageInner() {
               tab === 'login' ? 'bg-saffron text-white shadow-card' : 'text-ink-soft hover:text-ink'
             }`}
           >
-            <LogIn size={15} /> Login
+            <LogIn size={15} /> {t("Login")}
           </button>
           <button
             type="button"
@@ -129,7 +131,7 @@ function LoginPageInner() {
               tab === 'signup' ? 'bg-saffron text-white shadow-card' : 'text-ink-soft hover:text-ink'
             }`}
           >
-            <UserPlus size={15} /> Sign Up
+            <UserPlus size={15} /> {t("Sign Up")}
           </button>
         </div>
 
@@ -144,8 +146,8 @@ function LoginPageInner() {
             <LabeledInput
               icon={Mail}
               type="email"
-              placeholder="you@example.com"
-              label="Email"
+              placeholder={t("you@example.com")}
+              label={t("Email")}
               value={loginForm.email}
               onChange={(v) => setLoginForm((f) => ({ ...f, email: v }))}
               required
@@ -154,7 +156,7 @@ function LoginPageInner() {
               icon={Lock}
               type="password"
               placeholder="••••••••"
-              label="Password"
+              label={t("Password")}
               value={loginForm.password}
               onChange={(v) => setLoginForm((f) => ({ ...f, password: v }))}
               required
@@ -164,12 +166,12 @@ function LoginPageInner() {
               disabled={loading}
               className="mt-2 w-full rounded-full bg-saffron py-3 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-saffron-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? 'Logging in...' : 'Log In'}
+              {loading ? t('Logging in...') : t('Log In')}
             </button>
             <p className="text-center text-xs text-ink-soft">
-              New here?{' '}
+              {t("New here?")}{' '}
               <button type="button" onClick={() => setTab('signup')} className="font-bold text-saffron hover:text-saffron-dark">
-                Create an account
+                {t("Create an account")}
               </button>
             </p>
           </form>
@@ -180,8 +182,8 @@ function LoginPageInner() {
                 icon={User}
                 type="text"
                 autoComplete="given-name"
-                placeholder="First name"
-                label="First Name"
+                placeholder={t("First name")}
+                label={t("First Name")}
                 value={signupForm.firstName}
                 onChange={(v) => setSignupForm((f) => ({ ...f, firstName: v }))}
                 required
@@ -190,8 +192,8 @@ function LoginPageInner() {
                 icon={User}
                 type="text"
                 autoComplete="family-name"
-                placeholder="Last name"
-                label="Last Name"
+                placeholder={t("Last name")}
+                label={t("Last Name")}
                 value={signupForm.lastName}
                 onChange={(v) => setSignupForm((f) => ({ ...f, lastName: v }))}
                 required
@@ -200,8 +202,8 @@ function LoginPageInner() {
             <LabeledInput
               icon={Mail}
               type="email"
-              placeholder="you@example.com"
-              label="Email"
+              placeholder={t("you@example.com")}
+              label={t("Email")}
               value={signupForm.email}
               onChange={(v) => setSignupForm((f) => ({ ...f, email: v }))}
               required
@@ -209,16 +211,16 @@ function LoginPageInner() {
             <LabeledInput
               icon={Phone}
               type="tel"
-              placeholder="10-digit mobile number"
-              label="Phone (optional)"
+              placeholder={t("10-digit mobile number")}
+              label={t("Phone (optional)")}
               value={signupForm.phone}
               onChange={(v) => setSignupForm((f) => ({ ...f, phone: v }))}
             />
             <LabeledInput
               icon={Lock}
               type="password"
-              placeholder="At least 6 characters"
-              label="Password"
+              placeholder={t("At least 6 characters")}
+              label={t("Password")}
               value={signupForm.password}
               onChange={(v) => setSignupForm((f) => ({ ...f, password: v }))}
               required
@@ -228,12 +230,12 @@ function LoginPageInner() {
               disabled={loading}
               className="mt-2 w-full rounded-full bg-saffron py-3 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-saffron-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? 'Creating account...' : 'Create Account'}
+              {loading ? t('Creating account...') : t('Create Account')}
             </button>
             <p className="text-center text-xs text-ink-soft">
-              Already have an account?{' '}
+              {t("Already have an account?")}{' '}
               <button type="button" onClick={() => setTab('login')} className="font-bold text-saffron hover:text-saffron-dark">
-                Log in
+                {t("Log in")}
               </button>
             </p>
           </form>
@@ -241,7 +243,7 @@ function LoginPageInner() {
 
         <p className="mt-6 text-center text-[11px] text-ink-soft/70">
           <Link href="/" className="hover:text-ink">
-            ← Back to Home
+            {t("← Back to Home")}
           </Link>
         </p>
       </div>

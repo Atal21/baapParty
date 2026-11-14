@@ -1,3 +1,5 @@
+import { getT } from '@/lib/i18n-server';
+
 const SLOGANS = [
   "The People's Voice",
   "The People's Right",
@@ -7,7 +9,8 @@ const SLOGANS = [
   "Bharatiya Avijit AawazParty (BAAP)",
 ];
 
-export default function MarqueeTicker() {
+export default async function MarqueeTicker() {
+  const { t } = await getT();
   const items = [...SLOGANS, ...SLOGANS];
 
   return (
@@ -19,7 +22,7 @@ export default function MarqueeTicker() {
             className="mx-6 flex items-center gap-3 whitespace-nowrap font-display text-sm font-bold uppercase tracking-wide text-ivory/90"
           >
             <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-marigold" />
-            {s}
+            {t(s)}
           </span>
         ))}
       </div>

@@ -4,11 +4,13 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Maximize2 } from 'lucide-react';
 import ImageLightbox from './ImageLightbox';
+import { useLang } from '@/context/LanguageContext';
 
 // Drop-in replacement for <Image fill ... /> inside a `relative` container.
 // Adds a zoom icon (always visible, works on touch) and opens the viewer when
 // the icon OR the image itself is tapped.
 export default function ZoomableImage({ src, alt = '', caption, buttonClassName = '', zoomable = true, ...imageProps }) {
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const { className = '', ...rest } = imageProps;
 
@@ -31,7 +33,7 @@ export default function ZoomableImage({ src, alt = '', caption, buttonClassName 
           e.stopPropagation();
           setOpen(true);
         }}
-        aria-label="View larger image"
+        aria-label={t("View larger image")}
         className={`zoom-btn absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm ${buttonClassName}`}
       >
         <Maximize2 size={15} />

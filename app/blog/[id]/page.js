@@ -5,19 +5,21 @@ import { ArrowLeft } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import CtaBanner from '@/components/CtaBanner';
 import { getBlogPost } from '@/lib/db/blog';
+import { getT } from '@/lib/i18n-server';
 import { getYouTubeEmbedUrl, isYouTubeUrl } from '@/lib/youtube';
 
-const formatDate = (d) =>
-  new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
+const formatDate = (d, locale) =>
+  new Date(d).toLocaleDateString(locale, { day: '2-digit', month: 'long', year: 'numeric' });
 
 export default async function BlogDetailPage({ params }) {
+  const { t, locale } = await getT();
   const post = await getBlogPost(params.id);
   if (!post) return notFound();
   const isVideo = post.mediaType === 'video' && post.videoUrl;
 
   return (
     <>
-      <PageHeader eyebrow={post.category} title={post.title} crumb="Blog" />
+      <PageHeader eyebrow={post.category} title={post.title} crumb={t("Blog")} />
 
       <section className="bg-paper py-16">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
@@ -25,11 +27,11 @@ export default async function BlogDetailPage({ params }) {
             href="/blog"
             className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-ink-soft transition-colors hover:text-saffron"
           >
-            <ArrowLeft size={16} /> Back to all posts
+            <ArrowLeft size={16} /> {t("Back to all posts")}
           </Link>
 
           <p className="mt-6 text-xs font-semibold uppercase tracking-wide text-ink-soft/70">
-            {formatDate(post.date)} · {post.author}
+            {formatDate(post.date, locale)} · {post.author}
           </p>
 
           <div className="mt-6 overflow-hidden rounded-2xl bg-ink shadow-card">
@@ -45,7 +47,7 @@ export default async function BlogDetailPage({ params }) {
                   />
                 ) : (
                   <video src={post.videoUrl} controls className="h-full w-full">
-                    Your browser does not support the video tag.
+                    {t("Your browser does not support the video tag.")}
                   </video>
                 )}
               </div>

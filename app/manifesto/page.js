@@ -7,24 +7,24 @@ import CtaBanner from '@/components/CtaBanner';
 import Link from 'next/link';
 import { manifestoDetails, faqs } from '@/data/content';
 import { ChevronDown, ChevronRight, Download } from 'lucide-react';
+import { useLang } from '@/context/LanguageContext';
 
 export default function ManifestoPage() {
   const [openFaq, setOpenFaq] = useState(null);
+  const { t } = useLang();
 
   return (
     <>
       <PageHeader
-        eyebrow="Sankalp 2026"
-        title="18 Resolution for India "
-        crumb="Manifesto"
+        eyebrow={t("Sankalp 2026")}
+        title={t("18 Resolution for India ")}
+        crumb={t("Manifesto")}
       />
 
       <section className="bg-ivory py-20">
         <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
           <p className="text-ink-soft leading-relaxed">
-            This Is Not the Gita — These Are Our 18 Chapters. We present 18
-            important challenges facing the country as 18 chapters. They form
-            the basis of our ideas, policy proposals, and future action plan.
+            {t("This Is Not the Gita — These Are Our 18 Chapters. We present 18 important challenges facing the country as 18 chapters. They form the basis of our ideas, policy proposals, and future action plan.")}
           </p>
           {/* <button
             type="button"
@@ -45,7 +45,7 @@ export default function ManifestoPage() {
             }}
             className="mt-7 inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-saffron-dark"
           >
-            <Download size={17} /> Download Full PDF
+            <Download size={17} /> {t("Download Full PDF")}
           </button>
         </div>
 
@@ -64,12 +64,12 @@ export default function ManifestoPage() {
                     {m.number}
                   </p>
                   <p className="mt-1 text-[11px] uppercase tracking-wide text-ivory/70">
-                    Chapter
+                    {t("Chapter")}
                   </p>
                 </div>
                 <div className="flex items-center justify-between gap-4">
                   <h3 className="font-display text-xl font-bold text-ink transition-colors group-hover:text-saffron">
-                    {m.title}
+                    {t(m.title)}
                   </h3>
                   <ChevronRight size={20} className="shrink-0 text-saffron" />
                 </div>
@@ -83,10 +83,10 @@ export default function ManifestoPage() {
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <div className="text-center">
             <span className="section-eyebrow text-xs font-bold uppercase text-banyan">
-              Questions
+              {t("Questions")}
             </span>
             <h2 className="mt-3 font-display text-3xl font-extrabold text-ink">
-              Frequently Asked
+              {t("Frequently Asked")}
             </h2>
           </div>
 
@@ -102,7 +102,7 @@ export default function ManifestoPage() {
                   className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
                 >
                   <span className="font-display text-sm font-bold text-ink sm:text-base">
-                    {f.q}
+                    {t(f.q)}
                   </span>
                   <ChevronDown
                     size={18}
@@ -119,7 +119,7 @@ export default function ManifestoPage() {
                       className="overflow-hidden"
                     >
                       <p className="px-6 pb-5 text-sm leading-relaxed text-ink-soft">
-                        {f.a}
+                        {t(f.a)}
                       </p>
                     </motion.div>
                   )}

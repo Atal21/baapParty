@@ -2,7 +2,9 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { LEADER } from "@/data/party";
+import { useLang } from "@/context/LanguageContext";
 export default function YatraRoadmap() {
+    const { t } = useLang();
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "end 0.3"] });
     const pathLength = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
@@ -12,10 +14,10 @@ export default function YatraRoadmap() {
     return (
       <section ref={ref} className="relative mx-auto max-w-3xl px-4 py-4">
         <h2 className="mb-2 text-center font-display text-3xl font-bold text-maroon">
-          The Yatra So Far
+          {t("The Yatra So Far")}
         </h2>
         <p className="mb-12 text-center font-body text-ink/60">
-          A path of seva, from Punjab to a movement across Bharat
+          {t("A path of seva, from Punjab to a movement across Bharat")}
         </p>
 
         <div className="relative">
@@ -55,9 +57,9 @@ export default function YatraRoadmap() {
                   className={`w-[46%] ${i % 2 === 0 ? "text-right pr-6" : "text-left pl-6"}`}
                 >
                   <p className="font-display text-xl font-bold text-saffron">
-                    {s.year}
+                    {t(s.year)}
                   </p>
-                  <p className="font-body text-sm text-ink/70">{s.event}</p>
+                  <p className="font-body text-sm text-ink/70">{t(s.event)}</p>
                 </div>
               </div>
             ))}

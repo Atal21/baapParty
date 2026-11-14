@@ -2,17 +2,19 @@
 
 import { Quote } from 'lucide-react';
 import { testimonials } from '@/data/content';
+import { useLang } from '@/context/LanguageContext';
 
 export default function TestimonialsSection() {
+  const { t: tr } = useLang();
   const items = [...testimonials, ...testimonials];
   return (
     <section className="overflow-hidden bg-ink py-24">
       <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
         <span className="section-eyebrow text-xs font-bold uppercase text-marigold">
-          Voices From the Ground
+          {tr("Voices From the Ground")}
         </span>
         <h2 className="mt-3 font-display text-3xl font-extrabold text-ivory sm:text-4xl">
-          What People Are Telling Us
+          {tr("What People Are Telling Us")}
         </h2>
       </div>
 
@@ -27,11 +29,11 @@ export default function TestimonialsSection() {
             >
               <Quote className="mb-3 text-marigold" size={26} />
               <blockquote className="flex-1 text-sm leading-relaxed text-ivory/80">
-                &ldquo;{t.quote}&rdquo;
+                &ldquo;{tr(t.quote)}&rdquo;
               </blockquote>
               <figcaption className="mt-5 border-t border-ivory/10 pt-4">
-                <p className="font-display text-sm font-bold text-ivory">{t.name}</p>
-                <p className="text-xs text-ivory/50">{t.role}</p>
+                <p className="font-display text-sm font-bold text-ivory">{tr(t.name)}</p>
+                <p className="text-xs text-ivory/50">{tr(t.role)}</p>
               </figcaption>
             </figure>
           ))}

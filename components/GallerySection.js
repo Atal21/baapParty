@@ -8,7 +8,6 @@
 // import VideoLightbox from './VideoLightbox';
 
 // export default function GallerySection({ full = false }) {
-//   const [activeTab, setActiveTab] = useState('all');
 //   const [galleryPhotos, setGalleryPhotos] = useState([]);
 //   const [galleryVideos, setGalleryVideos] = useState([]);
 //   const [activeVideo, setActiveVideo] = useState(null);
@@ -46,13 +45,13 @@
 //           <div>
 //             <span className="inline-flex items-center gap-2 rounded-full border border-banyan/20 bg-banyan/5 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-banyan">
 //               <Camera size={14} />
-//               Ground Coverage
+//               {t("Ground Coverage")}
 //             </span>
 //             <h2 id="photos" className="scroll-mt-24 mt-4 font-display text-3xl font-black tracking-tight text-ink sm:text-4xl">
-//               Campaign Photo Gallery
+//               {t("Campaign Photo Gallery")}
 //             </h2>
 //             <p className="mt-2 text-sm text-ink-soft">
-//               Real moments from our booth-level padyatras and ground meetings.
+//               {t("Real moments from our booth-level padyatras and ground meetings.")}
 //             </p>
 //           </div>
 
@@ -61,7 +60,7 @@
 //               href="/gallery"
 //               className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-xs font-bold uppercase tracking-widest text-ivory transition-all hover:bg-saffron hover:shadow-lg active:scale-95"
 //             >
-//               View Full Gallery
+//               {t("View Full Gallery")}
 //               <Sparkles size={14} className="transition-transform group-hover:rotate-12" />
 //             </Link>
 //           )}
@@ -79,7 +78,7 @@
 //                     : 'bg-white text-ink-soft hover:bg-ink/5 hover:text-ink'
 //                   }`}
 //               >
-//                 {cat}
+//                 {t(cat)}
 //               </button>
 //             ))}
 //           </div>
@@ -137,10 +136,10 @@
 //           <div className="mt-20 pt-16 border-t border-ink/10">
 //             <div className="flex items-center gap-2 text-saffron font-bold text-xs uppercase tracking-wider">
 //               <Video size={16} />
-//               Video Highlights
+//               {t("Video Highlights")}
 //             </div>
 //             <h2 id="videos" className="scroll-mt-24 mt-2 font-display text-3xl font-black text-ink sm:text-4xl">
-//               Campaign Speeches & Coverage
+//               {t("Campaign Speeches & Coverage")}
 //             </h2>
 
 //             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -155,7 +154,7 @@
 //                   className="group relative aspect-video w-full overflow-hidden rounded-2xl bg-ink shadow-md cursor-pointer"
 //                 >
 //                   <Image
-//                     src={v.thumb || 'https://picsum.photos/seed/video-placeholder/700/420'}
+//                     src={v.thumb || '/placeholders/landscape.svg'}
 //                     alt={v.title}
 //                     fill
 //                     sizes="(max-width: 640px) 100vw, 50vw"
@@ -216,8 +215,10 @@ import InlineContentFilter, {
   matchesFilter,
 } from "./InlineContentFilter";
 import { useContentFilter } from "@/context/FilterContext";
+import { useLang } from "@/context/LanguageContext";
 
 export default function GallerySection({ full = false }) {
+  const { t } = useLang();
   const [activeTab, setActiveTab] = useState("all");
   const [galleryPhotos, setGalleryPhotos] = useState([]);
   const [galleryVideos, setGalleryVideos] = useState([]);
@@ -270,13 +271,13 @@ export default function GallerySection({ full = false }) {
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-banyan/20 bg-banyan/5 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-banyan">
               <Camera size={14} />
-              Ground Coverage
+              {t("Ground Coverage")}
             </span>
             <h2
               id="photos"
               className="scroll-mt-24 mt-4 flex flex-wrap items-center gap-3 font-display text-3xl font-black tracking-tight text-ink sm:text-4xl"
             >
-              Campaign Photo Gallery
+              {t("Campaign Photo Gallery")}
               <InlineContentFilter
                 type="gallery"
                 value={locationFilter}
@@ -284,7 +285,7 @@ export default function GallerySection({ full = false }) {
               />
             </h2>
             <p className="mt-2 text-sm text-ink-soft">
-              Real moments from our booth-level padyatras and ground meetings.
+              {t("Real moments from our booth-level padyatras and ground meetings.")}
             </p>
           </div>
 
@@ -293,7 +294,7 @@ export default function GallerySection({ full = false }) {
               href="/gallery"
               className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-xs font-bold uppercase tracking-widest text-ivory transition-all hover:bg-saffron hover:shadow-lg active:scale-95"
             >
-              View Full Gallery
+              {t("View Full Gallery")}
               <Sparkles
                 size={14}
                 className="transition-transform group-hover:rotate-12"
@@ -315,7 +316,7 @@ export default function GallerySection({ full = false }) {
                     : "bg-white text-ink-soft hover:bg-ink/5 hover:text-ink"
                 }`}
               >
-                {cat}
+                {t(cat)}
               </button>
             ))}
           </div>
@@ -323,7 +324,7 @@ export default function GallerySection({ full = false }) {
 
         {isActive && filteredPhotos.length === 0 && (
           <p className="mt-10 text-center text-sm text-ink-soft">
-            No gallery items match the selected filter.
+            {t("No gallery items match the selected filter.")}
           </p>
         )}
 
@@ -347,7 +348,7 @@ export default function GallerySection({ full = false }) {
                 {/* Image with object-cover for perfect alignment */}
                 <Image
                   src={p.src}
-                  alt={p.caption || "Campaign Moment"}
+                  alt={p.caption || t("Campaign Moment")}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
@@ -360,7 +361,7 @@ export default function GallerySection({ full = false }) {
                     ev.stopPropagation();
                     setZoomPhoto(p);
                   }}
-                  aria-label="View larger image"
+                  aria-label={t("View larger image")}
                   className="zoom-btn absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm"
                 >
                   <Maximize2 size={15} />
@@ -392,14 +393,14 @@ export default function GallerySection({ full = false }) {
         <div className="mt-20 pt-16 border-t border-ink/10">
           <div className="flex items-center gap-2 text-saffron font-bold text-xs uppercase tracking-wider">
             <Video size={16} />
-            Video Highlights
+            {t("Video Highlights")}
           </div>
 
           <h2
             id="videos"
             className="scroll-mt-24 mt-2 font-display text-3xl font-black text-ink sm:text-4xl"
           >
-            Campaign Speeches & Coverage
+            {t("Campaign Speeches & Coverage")}
           </h2>
 
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -418,7 +419,7 @@ export default function GallerySection({ full = false }) {
               >
                 <Image
                   src={v.thumb || "/images/video-placeholder.jpg"}
-                  alt={v.title || "Campaign video"}
+                  alt={v.title || t("Campaign video")}
                   fill
                   sizes="(max-width: 640px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 opacity-80 group-hover:scale-105 group-hover:opacity-60"
@@ -453,7 +454,7 @@ export default function GallerySection({ full = false }) {
                 href="/gallery#videos"
                 className="rounded-full bg-ink px-6 py-3 text-xs font-bold uppercase tracking-widest text-ivory transition hover:bg-saffron"
               >
-                View All Videos
+                {t("View All Videos")}
               </Link>
             </div>
           )}
@@ -471,7 +472,7 @@ export default function GallerySection({ full = false }) {
         open={!!zoomPhoto}
         onClose={() => setZoomPhoto(null)}
         src={zoomPhoto?.src}
-        alt={zoomPhoto?.caption || "Campaign Moment"}
+        alt={zoomPhoto?.caption || t("Campaign Moment")}
         caption={zoomPhoto?.caption}
       />
     </section>

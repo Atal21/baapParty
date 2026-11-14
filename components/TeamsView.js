@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Facebook, Instagram, Mail, Phone } from 'lucide-react';
+import { useLang } from '@/context/LanguageContext';
 
 // Lucide has no X (Twitter) logo, so it is drawn here.
 function XIcon({ size = 20 }) {
@@ -15,6 +16,7 @@ function XIcon({ size = 20 }) {
 const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
 
 function TeamCard({ m }) {
+  const { t } = useLang();
   const socials = [
     { key: 'facebook', label: 'Facebook', url: m.facebook, icon: <Facebook size={20} /> },
     { key: 'instagram', label: 'Instagram', url: m.instagram, icon: <Instagram size={20} /> },
@@ -42,7 +44,7 @@ function TeamCard({ m }) {
       {socials.length > 0 && (
         <div className="mt-4 flex items-center justify-center gap-5 text-ink">
           {socials.map((x) => (
-            <a key={x.key} href={x.url} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on ${x.label}`} className="transition-colors hover:text-saffron">
+            <a key={x.key} href={x.url} target="_blank" rel="noopener noreferrer" aria-label={t('{name} on {label}', { name: m.name, label: x.label })} className="transition-colors hover:text-saffron">
               {x.icon}
             </a>
           ))}
@@ -55,6 +57,7 @@ function TeamCard({ m }) {
 const field = 'rounded-xl border-2 border-ink/10 bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-saffron';
 
 export default function TeamsView({ members }) {
+  const { t } = useLang();
   const [state, setState] = useState('');
   const [district, setDistrict] = useState('');
   const [q, setQ] = useState('');
@@ -88,24 +91,24 @@ export default function TeamsView({ members }) {
   }, [members, state, district, q]);
 
   if (members.length === 0) {
-    return <p className="rounded-2xl border-2 border-dashed border-ink/10 bg-white/60 p-10 text-center text-sm text-ink-soft">District teams are being formed. Please check back soon.</p>;
+    return <p className="rounded-2xl border-2 border-dashed border-ink/10 bg-white/60 p-10 text-center text-sm text-ink-soft">{t('District teams are being formed. Please check back soon.')}</p>;
   }
 
   return (
     <div>
       <div className="mb-8 flex flex-wrap gap-3">
         <select value={state} onChange={(e) => { setState(e.target.value); setDistrict(''); }} className={field}>
-          <option value="">All states</option>
+          <option value="">{t('All states')}</option>
           {states.map((s) => <option key={s}>{s}</option>)}
         </select>
         <select value={district} onChange={(e) => setDistrict(e.target.value)} className={field}>
-          <option value="">All districts</option>
+          <option value="">{t('All districts')}</option>
           {districts.map((d) => <option key={d}>{d}</option>)}
         </select>
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search city, district or name" className={`${field} min-w-[220px]`} />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("Search city, district or name")} className={`${field} min-w-[220px]`} />
       </div>
       {tree.length === 0 ? (
-        <p className="text-sm text-ink-soft">No team found for this search.</p>
+        <p className="text-sm text-ink-soft">{t('No team found for this search.')}</p>
       ) : (
         <div className="space-y-12">
           {tree.map(([st, dists]) => (
@@ -114,7 +117,7 @@ export default function TeamsView({ members }) {
               <div className="mt-6 space-y-10 sm:pl-4">
                 {dists.map(([d, cities]) => (
                   <div key={d}>
-                    <h3 className="font-display text-xl font-extrabold text-chakra">{d} <span className="text-sm font-semibold text-ink-soft">District</span></h3>
+                    <h3 className="font-display text-xl font-extrabold text-chakra">{d} <span className="text-sm font-semibold text-ink-soft">{t('District')}</span></h3>
                     <div className="mt-4 space-y-7 sm:pl-4">
                       {cities.map(([c, list]) => (
                         <div key={c || '_'}>

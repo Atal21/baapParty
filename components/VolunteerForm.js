@@ -9,6 +9,7 @@ import { useAuth } from '@/context/AuthContext';
 import { namesOf } from '@/lib/personName';
 import LimitedTextarea from '@/components/LimitedTextarea';
 import FormPreview from '@/components/FormPreview';
+import { useLang } from '@/context/LanguageContext';
 
 const INTERESTS = ['Booth Management', 'Social Media', 'Ground Campaigning', 'Fundraising', 'Content & Design', 'Legal & Compliance'];
 
@@ -25,6 +26,7 @@ const EMPTY_FORM = {
 };
 
 export default function VolunteerForm({ onSuccessChange }) {
+  const { t, isHindi } = useLang();
   const [form, setForm] = useState(EMPTY_FORM);
   const [idProof, setIdProof] = useState(null); // { publicId, resourceType, format, fileName }
   const [uploading, setUploading] = useState(false);
@@ -59,7 +61,7 @@ export default function VolunteerForm({ onSuccessChange }) {
     e.target.value = '';
     if (!file) return;
     setErrors((er) => ({ ...er, idProof: undefined }));
-    if (file.size > 5 * 1024 * 1024) return setErrors((er) => ({ ...er, idProof: 'File is larger than 5 MB' }));
+    if (file.size > 5 * 1024 * 1024) return setErrors((er) => ({ ...er, idProof: t('File is larger than 5 MB') }));
     setUploading(true);
     try {
       const fd = new FormData();
@@ -69,7 +71,7 @@ export default function VolunteerForm({ onSuccessChange }) {
       if (!res.ok) throw new Error(data.error || 'Upload failed. Please try again.');
       setIdProof({ ...data.idProof, fileName: file.name });
     } catch (err) {
-      setErrors((er) => ({ ...er, idProof: err.message }));
+      setErrors((er) => ({ ...er, idProof: t(err.message) }));
     } finally {
       setUploading(false);
     }
@@ -92,14 +94,14 @@ export default function VolunteerForm({ onSuccessChange }) {
 
   const validate = () => {
     const e = {};
-    if (!form.firstName.trim()) e.firstName = 'Please enter your first name';
-    if (!form.lastName.trim()) e.lastName = 'Please enter your last name';
-    if (!/^[6-9]\d{9}$/.test(form.phone.trim())) e.phone = 'Enter a valid 10-digit mobile number';
-    if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) e.email = 'Enter a valid email address';
-    if (!form.constituency.trim()) e.constituency = 'Please tell us your constituency';
-    if (!form.isAdult) e.isAdult = 'Please confirm that you are 18 or above to volunteer';
-    if (form.isAdult && !form.idProofType) e.idProofType = 'Choose which ID you are uploading';
-    if (form.isAdult && !idProof) e.idProof = 'Please upload your 18+ ID proof';
+    if (!form.firstName.trim()) e.firstName = t('Please enter your first name');
+    if (!form.lastName.trim()) e.lastName = t('Please enter your last name');
+    if (!/^[6-9]\d{9}$/.test(form.phone.trim())) e.phone = t('Enter a valid 10-digit mobile number');
+    if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) e.email = t('Enter a valid email address');
+    if (!form.constituency.trim()) e.constituency = t('Please tell us your constituency');
+    if (!form.isAdult) e.isAdult = t('Please confirm that you are 18 or above to volunteer');
+    if (form.isAdult && !form.idProofType) e.idProofType = t('Choose which ID you are uploading');
+    if (form.isAdult && !idProof) e.idProof = t('Please upload your 18+ ID proof');
     return e;
   };
 
@@ -109,7 +111,7 @@ export default function VolunteerForm({ onSuccessChange }) {
     const eObj = validate();
     setErrors(eObj);
     if (Object.keys(eObj).length > 0) return;
-    if (uploading) return setErrors({ idProof: 'Please wait - your file is still uploading' });
+    if (uploading) return setErrors({ idProof: t('Please wait - your file is still uploading') });
     setSendError('');
     setPreview(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -135,7 +137,7 @@ export default function VolunteerForm({ onSuccessChange }) {
       setStatus('success');
     } catch (err) {
       setStatus('idle');
-      setSendError(err?.message && err.message !== 'Request failed' ? err.message : 'Something went wrong. Please try again.');
+      setSendError(err?.message && err.message !== 'Request failed' ? t(err.message) : t('Something went wrong. Please try again.'));
     }
   };
 
@@ -150,21 +152,20 @@ export default function VolunteerForm({ onSuccessChange }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/email-logo.png"
-          alt={`${PARTY.fullName} logo`}
+          alt={t('{name} logo', { name: isHindi ? PARTY.hindiName : PARTY.fullName })}
           width={84}
           height={84}
           className="mx-auto h-20 w-20 rounded-full bg-white object-contain p-1 shadow-card"
         />
         <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">
-          Welcome to the B.A.A.P. family,
+          {t('Welcome to the B.A.A.P. family,')}
           <br />
           <span className="mt-2 inline-block rounded-xl bg-marigold/25 px-4 py-1 text-4xl font-black text-saffron-dark sm:text-5xl">
             {form.firstName} {form.lastName}!
           </span>
         </h3>
         <p className="mt-2 text-ink-soft">
-          Your district coordinator will call you on {form.phone} within 48 hours.
-          Keep an eye on your inbox at {form.email} too.
+          {t('Your district coordinator will call you on {phone} within 48 hours. Keep an eye on your inbox at {email} too.', { phone: form.phone, email: form.email })}
         </p>
         <button
           type="button"
@@ -183,7 +184,7 @@ export default function VolunteerForm({ onSuccessChange }) {
           }}
           className="mt-6 rounded-full border-2 border-ink/15 px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:border-ink"
         >
-          Submit Another Response
+          {t('Submit Another Response')}
         </button>
       </motion.div>
     );
@@ -197,9 +198,9 @@ export default function VolunteerForm({ onSuccessChange }) {
           ['Mobile', form.phone.trim()],
           ['Email', form.email.trim()],
           ['Constituency / City', form.constituency.trim()],
-          ['Where you would help', form.interests.join(', ')],
-          ['Age declaration', 'I am 18 years or older'],
-          ['ID proof', form.idProofType && idProof ? `${form.idProofType} - ${idProof.fileName}` : ''],
+          ['Where you would help', form.interests.map((i) => t(i)).join(', ')],
+          ['Age declaration', t('I am 18 years or older')],
+          ['ID proof', form.idProofType && idProof ? `${t(form.idProofType)} - ${idProof.fileName}` : ''],
         ]}
         longText={form.message.trim()}
         loading={status === 'loading'}
@@ -220,7 +221,7 @@ export default function VolunteerForm({ onSuccessChange }) {
             autoComplete="given-name"
             value={form.firstName}
             onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
-            placeholder="Ramesh"
+            placeholder={t("Ramesh")}
             className={inputClass(errors.firstName)}
           />
         </Field>
@@ -230,7 +231,7 @@ export default function VolunteerForm({ onSuccessChange }) {
             autoComplete="family-name"
             value={form.lastName}
             onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
-            placeholder="Kumar"
+            placeholder={t("Kumar")}
             className={inputClass(errors.lastName)}
           />
         </Field>
@@ -239,7 +240,7 @@ export default function VolunteerForm({ onSuccessChange }) {
             type="tel"
             value={form.phone}
             onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
-            placeholder="98XXXXXXXX"
+            placeholder={t("98XXXXXXXX")}
             className={inputClass(errors.phone)}
           />
         </Field>
@@ -257,14 +258,14 @@ export default function VolunteerForm({ onSuccessChange }) {
             type="text"
             value={form.constituency}
             onChange={(e) => setForm((f) => ({ ...f, constituency: e.target.value }))}
-            placeholder="e.g. Nagpur North"
+            placeholder={t("e.g. Nagpur North")}
             className={inputClass(errors.constituency)}
           />
         </Field>
       </div>
 
       <div className="mt-6">
-        <p className="mb-3 text-sm font-bold text-ink">Where would you like to help?</p>
+        <p className="mb-3 text-sm font-bold text-ink">{t('Where would you like to help?')}</p>
         <div className="flex flex-wrap gap-2.5">
           {INTERESTS.map((i) => {
             const active = form.interests.includes(i);
@@ -279,7 +280,7 @@ export default function VolunteerForm({ onSuccessChange }) {
                     : 'border-ink/15 text-ink-soft hover:border-saffron hover:text-saffron'
                 }`}
               >
-                {i}
+                {t(i)}
               </button>
             );
           })}
@@ -296,16 +297,16 @@ export default function VolunteerForm({ onSuccessChange }) {
             className="mt-1 h-4 w-4 shrink-0 accent-saffron"
           />
           <span>
-            <b>I am 18 years or older (an adult) and I am happy to volunteer for the party of my own free will.</b>
-            <span className="mt-0.5 block text-xs text-ink-soft/80">Only adults can join as volunteers.</span>
+            <b>{t('I am 18 years or older (an adult) and I am happy to volunteer for the party of my own free will.')}</b>
+            <span className="mt-0.5 block text-xs text-ink-soft/80">{t('Only adults can join as volunteers.')}</span>
           </span>
         </label>
-        {errors.isAdult && <p className="mt-2 text-xs font-semibold text-saffron-dark">{errors.isAdult}</p>}
+        {errors.isAdult && <p className="mt-2 text-xs font-semibold text-saffron-dark">{t(errors.isAdult)}</p>}
 
         {form.isAdult && (
           <div className="mt-5 space-y-4 border-t border-ink/10 pt-5">
             <p className="flex items-center gap-2 text-sm font-bold text-ink">
-              <ShieldCheck size={17} className="text-banyan" /> Upload your 18+ proof
+              <ShieldCheck size={17} className="text-banyan" /> {t('Upload your 18+ proof')}
             </p>
             <Field label="Which ID are you uploading?" error={errors.idProofType}>
               <select
@@ -313,15 +314,15 @@ export default function VolunteerForm({ onSuccessChange }) {
                 onChange={(e) => setForm((f) => ({ ...f, idProofType: e.target.value }))}
                 className={inputClass(errors.idProofType)}
               >
-                <option value="">Select an ID</option>
-                {ID_PROOF_TYPES.map((t) => (
-                  <option key={t} value={t}>{t}</option>
+                <option value="">{t('Select an ID')}</option>
+                {ID_PROOF_TYPES.map((idt) => (
+                  <option key={idt} value={idt}>{t(idt)}</option>
                 ))}
               </select>
             </Field>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-ink">ID proof (PDF, JPG or PNG, up to 5 MB)</label>
+              <label className="mb-2 block text-sm font-bold text-ink">{t('ID proof (PDF, JPG or PNG, up to 5 MB)')}</label>
               {idProof ? (
                 <div className="flex items-center justify-between gap-3 rounded-xl bg-banyan/10 px-4 py-3 text-sm text-ink">
                   <span className="flex min-w-0 items-center gap-2">
@@ -331,7 +332,7 @@ export default function VolunteerForm({ onSuccessChange }) {
                   <button
                     type="button"
                     onClick={() => setIdProof(null)}
-                    aria-label="Remove file"
+                    aria-label={t('Remove file')}
                     className="shrink-0 text-ink-soft hover:text-saffron-dark"
                   >
                     <X size={16} />
@@ -344,13 +345,13 @@ export default function VolunteerForm({ onSuccessChange }) {
                   }`}
                 >
                   {uploading ? <Loader2 size={16} className="animate-spin text-ink-soft" /> : <Upload size={16} className="text-ink-soft" />}
-                  <span className="text-ink-soft">{uploading ? 'Uploading...' : 'Choose a file...'}</span>
+                  <span className="text-ink-soft">{uploading ? t('Uploading...') : t('Choose a file...')}</span>
                   <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={onProofFile} disabled={uploading} className="hidden" />
                 </label>
               )}
-              {errors.idProof && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{errors.idProof}</p>}
+              {errors.idProof && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{t(errors.idProof)}</p>}
               <p className="mt-1.5 text-xs text-ink-soft/70">
-                Used only to confirm your age. It is stored privately and can be opened only by the party's admin team.
+                {t("Used only to confirm your age. It is stored privately and can be opened only by the party's admin team.")}
               </p>
             </div>
           </div>
@@ -358,12 +359,12 @@ export default function VolunteerForm({ onSuccessChange }) {
       </div>
 
       <div className="mt-6">
-        <label className="mb-2 block text-sm font-bold text-ink">Message (optional)</label>
+        <label className="mb-2 block text-sm font-bold text-ink">{t('Message (optional)')}</label>
         <LimitedTextarea
           rows={4}
           value={form.message}
           onChange={(message) => setForm((f) => ({ ...f, message }))}
-          placeholder="Tell us about any past organising experience..."
+          placeholder={t("Tell us about any past organising experience...")}
           className="w-full rounded-xl border-2 border-ink/10 bg-ivory px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-saffron"
         />
       </div>
@@ -375,11 +376,11 @@ export default function VolunteerForm({ onSuccessChange }) {
       >
         {status === 'loading' ? (
           <>
-            <Loader2 size={18} className="animate-spin" /> Submitting...
+            <Loader2 size={18} className="animate-spin" /> {t('Submitting...')}
           </>
         ) : (
           <>
-            <Send size={17} /> Preview & Continue
+            <Send size={17} /> {t('Preview & Continue')}
           </>
         )}
       </button>
@@ -388,11 +389,12 @@ export default function VolunteerForm({ onSuccessChange }) {
 }
 
 function Field({ label, error, children }) {
+  const { t } = useLang();
   return (
     <div>
-      <label className="mb-2 block text-sm font-bold text-ink">{label}</label>
+      <label className="mb-2 block text-sm font-bold text-ink">{t(label)}</label>
       {children}
-      {error && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{error}</p>}
+      {error && <p className="mt-1.5 text-xs font-semibold text-saffron-dark">{t(error)}</p>}
     </div>
   );
 }

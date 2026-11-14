@@ -1,3 +1,4 @@
+import { getT } from '@/lib/i18n-server';
 import PageHeader from '@/components/PageHeader';
 import ContactForm from '@/components/ContactForm';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
@@ -17,13 +18,14 @@ const info = [
   { icon: Clock, title: "Office Hours", text: "Mon – Sat, 9:00 AM – 7:00 PM" },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { t } = await getT();
   return (
     <>
       <PageHeader
-        eyebrow="Reach Out"
-        title="Get in Touch With Us"
-        crumb="Contact"
+        eyebrow={t("Reach Out")}
+        title={t("Get in Touch With Us")}
+        crumb={t("Contact")}
       />
 
       <section className="bg-ivory py-24">
@@ -38,9 +40,9 @@ export default function ContactPage() {
                   <i.icon size={20} />
                 </span>
                 <h3 className="mt-4 font-display text-sm font-bold text-ink">
-                  {i.title}
+                  {t(i.title)}
                 </h3>
-                <p className="mt-1 text-xs text-ink-soft">{i.text}</p>
+                <p className="mt-1 text-xs text-ink-soft">{t(i.text)}</p>
               </div>
             ))}
           </div>
@@ -51,7 +53,7 @@ export default function ContactPage() {
             </div>
             <div className="overflow-hidden rounded-3xl border border-ink/8 shadow-card lg:col-span-2">
               <iframe
-                title="Party head office location map"
+                title={t("Party head office location map")}
                 // src="https://www.google.com/maps?q=New+Delhi&output=embed"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.283675272632!2d77.15655602451334!3d28.71106718051176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d0187c2f65bf7%3A0x80971e43ca1eeffc!2sBlock%20BK%2C%20West%20Shalimar%20Bagh%2C%20Shalimar%20Bagh%2C%20Delhi%2C%20110088!5e0!3m2!1sen!2sin!4v1789557737920!5m2!1sen!2sin"
                 width="100%"

@@ -25,6 +25,7 @@ import PageHeader from "@/components/PageHeader";
 import { PARTY } from "@/data/party";
 import { useAuth } from "@/context/AuthContext";
 import { namesOf } from "@/lib/personName";
+import { useLang } from "@/context/LanguageContext";
 
 const TABS = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
@@ -35,18 +36,19 @@ const TABS = [
   { id: "volunteer", label: "Volunteer", icon: HeartHandshake },
 ];
 
-const fmtDate = (d) =>
+const fmtDate = (d, locale = "en-IN") =>
   d
-    ? new Date(d).toLocaleDateString("en-IN", {
+    ? new Date(d).toLocaleDateString(locale, {
         day: "2-digit",
         month: "short",
         year: "numeric",
       })
     : "—";
-const fmtMoney = (n) => `₹${Number(n || 0).toLocaleString("en-IN")}`;
+const fmtMoney = (n, locale = "en-IN") => `₹${Number(n || 0).toLocaleString(locale)}`;
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { t } = useLang();
   const { refresh } = useAuth();
   const [tab, setTab] = useState("overview");
   const [data, setData] = useState(null);
@@ -78,9 +80,9 @@ export default function DashboardPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Member Area"
-        title="My Dashboard"
-        crumb="Dashboard"
+        eyebrow={t("Member Area")}
+        title={t("My Dashboard")}
+        crumb={t("Dashboard")}
       />
 
       <section className="bg-paper py-10 sm:py-14">
@@ -91,7 +93,7 @@ export default function DashboardPage() {
             </div>
           ) : error ? (
             <div className="rounded-2xl bg-white p-10 text-center shadow-card">
-              <p className="font-semibold text-saffron-dark">{error}</p>
+              <p className="font-semibold text-saffron-dark">{t(error)}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -100,31 +102,31 @@ export default function DashboardPage() {
                 }}
                 className="mt-5 rounded-full bg-saffron px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-white"
               >
-                Try again
+                {t("Try again")}
               </button>
             </div>
           ) : (
             <>
               <p className="mb-6 text-lg font-bold text-ink sm:text-xl">
-                Namaste, {data.profile.firstName || data.profile.name} 🙏
+                {t("Namaste, {name}", { name: data.profile.firstName || data.profile.name })} 🙏
               </p>
 
               {/* Tabs */}
               <div className="-mx-4 mb-8 overflow-x-auto px-4 sm:mx-0 sm:px-0">
                 <div className="flex w-max gap-2 sm:w-auto sm:flex-wrap">
-                  {TABS.map((t) => (
+                  {TABS.map((tb) => (
                     <button
-                      key={t.id}
+                      key={tb.id}
                       type="button"
-                      onClick={() => setTab(t.id)}
+                      onClick={() => setTab(tb.id)}
                       className={`flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors ${
-                        tab === t.id
+                        tab === tb.id
                           ? "bg-saffron text-white shadow-card"
                           : "bg-white text-ink-soft hover:text-saffron"
                       }`}
                     >
-                      <t.icon size={15} />
-                      {t.label}
+                      <tb.icon size={15} />
+                      {t(tb.label)}
                     </button>
                   ))}
                 </div>
@@ -159,34 +161,35 @@ export default function DashboardPage() {
 /* Overview: membership card + quick stats                             */
 /* ------------------------------------------------------------------ */
 function Overview({ data, goTo }) {
+  const { t, locale } = useLang();
   const { profile, membership, stats } = data;
 
   const cards = [
     {
-      label: "Total Contributed",
-      value: fmtMoney(stats.totalContributed),
-      sub: `${stats.contributionCount} contribution(s)`,
+      label: t("Total Contributed"),
+      value: fmtMoney(stats.totalContributed, locale),
+      sub: t("{count} contribution(s)", { count: stats.contributionCount }),
       tab: "contributions",
       icon: HandCoins,
     },
     {
-      label: "Complaints Raised",
+      label: t("Complaints Raised"),
       value: stats.complaintCount,
-      sub: "View status",
+      sub: t("View status"),
       tab: "messages",
       icon: MessageSquare,
     },
     {
-      label: "Queries Sent",
+      label: t("Queries Sent"),
       value: stats.queryCount,
-      sub: "View status",
+      sub: t("View status"),
       tab: "messages",
       icon: MessageSquare,
     },
     {
-      label: "Volunteer Applications",
+      label: t("Volunteer Applications"),
       value: stats.volunteerCount,
-      sub: "View details",
+      sub: t("View details"),
       tab: "volunteer",
       icon: HeartHandshake,
     },
@@ -226,6 +229,7 @@ function Overview({ data, goTo }) {
 }
 
 function MembershipCard({ profile, membership }) {
+  const { t, locale } = useLang();
   const [qr, setQr] = useState("");
   // Which layout is shown on screen. The print buttons switch it, then print that layout.
   const [orientation, setOrientation] = useState("horizontal"); // 'horizontal' | 'vertical'
@@ -252,7 +256,7 @@ function MembershipCard({ profile, membership }) {
     setTimeout(() => window.print(), 250);
   };
 
-  const card = { profile, membership, qr };
+  const card = { profile, membership, qr, t, locale };
   const printBtn =
     "inline-flex items-center gap-2 rounded-full border-2 border-ink/15 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-ink transition-colors hover:border-ink";
   const tab = (active) =>
@@ -296,20 +300,23 @@ function MembershipCard({ profile, membership }) {
           onClick={() => printCard("horizontal")}
           className={printBtn}
         >
-          <Printer size={15} /> Print Horizontal
+          <Printer size={15} /> {t("Print Horizontal")}
         </button>
         <button
           type="button"
           onClick={() => printCard("vertical")}
           className={printBtn}
         >
-          <Printer size={15} /> Print Vertical
+          <Printer size={15} /> {t("Print Vertical")}
         </button>
       </div>
       <p className="mt-2 text-[11px] text-ink-soft/70">
-        Prints at ID-card size ({CARD_MM.horizontal.w} × {CARD_MM.horizontal.h}{" "}
-        mm horizontal, {CARD_MM.vertical.w} × {CARD_MM.vertical.h} mm vertical).
-        Choose “Save as PDF” in the print window to keep a copy.
+        {t("Prints at ID-card size ({hw} × {hh} mm horizontal, {vw} × {vh} mm vertical). Choose “Save as PDF” in the print window to keep a copy.", {
+          hw: CARD_MM.horizontal.w,
+          hh: CARD_MM.horizontal.h,
+          vw: CARD_MM.vertical.w,
+          vh: CARD_MM.vertical.h,
+        })}
       </p>
 
       {/* Print-only copy of the card, placed directly under <body>. The print stylesheet removes everything
@@ -386,7 +393,7 @@ function StatusBadge({ status, size }) {
 }
 
 // Horizontal (85.6 x 34 mm): brand + name + IDs on the left, status badge and QR on the right.
-function HorizontalCard({ profile, membership, qr }) {
+function HorizontalCard({ profile, membership, qr, t, locale }) {
   return (
     <CardShell orient="horizontal">
       <div className="absolute inset-0 flex justify-between"
@@ -396,7 +403,7 @@ function HorizontalCard({ profile, membership, qr }) {
           <div className="flex items-center" style={{ gap: cqw(2) }}>
             <Image
               src="/logo.png"
-              alt={PARTY.fullName}
+              alt={t(PARTY.fullName)}
               width={70}
               height={70}
               className="shrink-0 rounded-full bg-white object-cover"
@@ -413,7 +420,7 @@ function HorizontalCard({ profile, membership, qr }) {
                 className="truncate font-semibold uppercase tracking-wider text-white/70"
                 style={{ fontSize: cqw(3) }}
               >
-                {PARTY.fullName}
+                {t(PARTY.fullName)}
               </p>
             </div>
           </div>
@@ -423,7 +430,7 @@ function HorizontalCard({ profile, membership, qr }) {
               className="font-bold uppercase text-marigold"
               style={{ fontSize: cqw(1.7), letterSpacing: "0.4em" }}
             >
-              Member Card
+              {t("Member Card")}
             </p>
             <h3
               className="truncate font-display font-extrabold"
@@ -445,7 +452,7 @@ function HorizontalCard({ profile, membership, qr }) {
                 className="font-semibold uppercase tracking-wide text-white/50"
                 style={{ fontSize: cqw(1.6) }}
               >
-                Membership ID
+                {t("Membership ID")}
               </dt>
               <dd
                 className="font-mono font-bold tracking-wider"
@@ -459,10 +466,10 @@ function HorizontalCard({ profile, membership, qr }) {
                 className="font-semibold uppercase tracking-wide text-white/50"
                 style={{ fontSize: cqw(1.6) }}
               >
-                Member Since
+                {t("Member Since")}
               </dt>
               <dd className="font-bold" style={{ fontSize: cqw(2.8) }}>
-                {fmtDate(membership.since)}
+                {fmtDate(membership.since, locale)}
               </dd>
             </div>
           </dl>
@@ -474,7 +481,7 @@ function HorizontalCard({ profile, membership, qr }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={qr}
-              alt="Membership QR"
+              alt={t("Membership QR")}
               className="bg-white"
               style={{
                 width: cqw(17),
@@ -540,7 +547,7 @@ function HorizontalCard({ profile, membership, qr }) {
 // }
 
 // Vertical (54 x 85.6 mm): everything centred, QR at the bottom.
-function VerticalCard({ profile, membership, qr }) {
+function VerticalCard({ profile, membership, qr, t, locale }) {
   return (
     <CardShell orient="vertical">
       <div
@@ -549,7 +556,7 @@ function VerticalCard({ profile, membership, qr }) {
       >
         <Image
           src="/logo.png"
-          alt={PARTY.fullName}
+          alt={t(PARTY.fullName)}
           width={96}
           height={96}
           className="rounded-full bg-white object-cover"
@@ -565,7 +572,7 @@ function VerticalCard({ profile, membership, qr }) {
           className="font-semibold uppercase tracking-wider text-white/70"
           style={{ marginTop: cqw(2), fontSize: cqw(4) }}
         >
-          {PARTY.fullName}
+          {t(PARTY.fullName)}
         </p>
 
         {/* <div style={{ marginTop: cqw(5) }}>
@@ -580,7 +587,7 @@ function VerticalCard({ profile, membership, qr }) {
             marginTop: cqw(8),
           }}
         >
-          Member Card
+          {t("Member Card")}
         </p>
         <h3
           className="w-full break-words font-display font-extrabold"
@@ -600,7 +607,7 @@ function VerticalCard({ profile, membership, qr }) {
             className="font-semibold uppercase tracking-wide text-white/50"
             style={{ fontSize: cqw(4) }}
           >
-            Membership ID
+            {t("Membership ID")}
           </dt>
           <dd
             className="font-mono font-bold tracking-wider"
@@ -612,10 +619,10 @@ function VerticalCard({ profile, membership, qr }) {
             className="font-semibold uppercase tracking-wide text-white/50"
             style={{ fontSize: cqw(4), marginTop: cqw(5) }}
           >
-            Member Since
+            {t("Member Since")}
           </dt>
           <dd className="font-bold" style={{ fontSize: cqw(3.8) }}>
-            {fmtDate(membership.since)}
+            {fmtDate(membership.since, locale)}
           </dd>
         </dl>
 
@@ -623,7 +630,7 @@ function VerticalCard({ profile, membership, qr }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={qr}
-            alt="Membership QR"
+            alt={t("Membership QR")}
             className="mt-auto bg-white"
             style={{
               width: cqw(30),
@@ -642,6 +649,7 @@ function VerticalCard({ profile, membership, qr }) {
 /* Profile (view + edit)                                               */
 /* ------------------------------------------------------------------ */
 function Profile({ profile, onSaved }) {
+  const { t, locale } = useLang();
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState(profile);
   const [saving, setSaving] = useState(false);
@@ -681,7 +689,7 @@ function Profile({ profile, onSaved }) {
     ["City", profile.city],
     ["State", profile.state],
     ["Address", profile.address],
-    ["Joined On", fmtDate(profile.joinedAt)],
+    ["Joined On", fmtDate(profile.joinedAt, locale)],
   ];
 
   const input =
@@ -691,7 +699,7 @@ function Profile({ profile, onSaved }) {
     <div className="rounded-3xl bg-white p-6 shadow-card sm:p-8">
       <div className="flex items-center justify-between gap-4">
         <h2 className="font-display text-xl font-extrabold text-ink">
-          My Profile
+          {t("My Profile")}
         </h2>
         {!editing && (
           <button
@@ -702,14 +710,14 @@ function Profile({ profile, onSaved }) {
             }}
             className="inline-flex items-center gap-2 rounded-full border-2 border-ink/15 px-4 py-2 text-xs font-bold uppercase tracking-wide text-ink transition-colors hover:border-saffron hover:text-saffron"
           >
-            <Pencil size={14} /> Edit
+            <Pencil size={14} /> {t("Edit")}
           </button>
         )}
       </div>
 
       {saved && (
         <p className="mt-4 flex items-center gap-2 rounded-xl bg-banyan/10 px-4 py-2.5 text-sm font-semibold text-banyan">
-          <CheckCircle2 size={16} /> Profile updated.
+          <CheckCircle2 size={16} /> {t("Profile updated.")}
         </p>
       )}
 
@@ -718,7 +726,7 @@ function Profile({ profile, onSaved }) {
           {rows.map(([k, v]) => (
             <div key={k} className="border-b border-ink/8 pb-3">
               <dt className="text-[11px] font-bold uppercase tracking-wide text-ink-soft/70">
-                {k}
+                {t(k)}
               </dt>
               <dd className="mt-1 break-words text-sm font-semibold text-ink">
                 {v || "—"}
@@ -729,7 +737,7 @@ function Profile({ profile, onSaved }) {
       ) : (
         <form onSubmit={save} className="mt-6">
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <Field label="First Name">
+            <Field label={t("First Name")}>
               <input
                 className={input}
                 value={form.firstName || ""}
@@ -737,7 +745,7 @@ function Profile({ profile, onSaved }) {
                 required
               />
             </Field>
-            <Field label="Last Name">
+            <Field label={t("Last Name")}>
               <input
                 className={input}
                 value={form.lastName || ""}
@@ -745,14 +753,14 @@ function Profile({ profile, onSaved }) {
                 required
               />
             </Field>
-            <Field label="Email (cannot be changed)">
+            <Field label={t("Email (cannot be changed)")}>
               <input
                 className={`${input} cursor-not-allowed opacity-60`}
                 value={form.email}
                 disabled
               />
             </Field>
-            <Field label="Phone">
+            <Field label={t("Phone")}>
               <input
                 className={input}
                 value={form.phone}
@@ -760,21 +768,21 @@ function Profile({ profile, onSaved }) {
                 type="tel"
               />
             </Field>
-            <Field label="City">
+            <Field label={t("City")}>
               <input
                 className={input}
                 value={form.city}
                 onChange={set("city")}
               />
             </Field>
-            <Field label="State">
+            <Field label={t("State")}>
               <input
                 className={input}
                 value={form.state}
                 onChange={set("state")}
               />
             </Field>
-            <Field label="Address">
+            <Field label={t("Address")}>
               <input
                 className={input}
                 value={form.address}
@@ -785,7 +793,7 @@ function Profile({ profile, onSaved }) {
 
           {error && (
             <p className="mt-4 text-sm font-semibold text-saffron-dark">
-              {error}
+              {t(error)}
             </p>
           )}
 
@@ -800,14 +808,14 @@ function Profile({ profile, onSaved }) {
               ) : (
                 <Save size={15} />
               )}{" "}
-              Save
+              {t("Save")}
             </button>
             <button
               type="button"
               onClick={() => setEditing(false)}
               className="inline-flex items-center gap-2 rounded-full border-2 border-ink/15 px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-ink transition-colors hover:border-ink"
             >
-              <X size={15} /> Cancel
+              <X size={15} /> {t("Cancel")}
             </button>
           </div>
         </form>
@@ -873,6 +881,7 @@ function ActionLink({ href, children }) {
 }
 
 function Messages({ items, stats }) {
+  const { t, locale } = useLang();
   const badge = {
     complaint: "bg-saffron/10 text-saffron-dark",
     query: "bg-chakra/10 text-chakra",
@@ -881,15 +890,15 @@ function Messages({ items, stats }) {
 
   return (
     <Panel
-      title="Complaints & Queries"
-      summary={`${stats.complaintCount} complaint(s) · ${stats.queryCount} other message(s)`}
-      action={<ActionLink href="/contact">Raise New</ActionLink>}
+      title={t("Complaints & Queries")}
+      summary={t("{complaints} complaint(s) · {queries} other message(s)", { complaints: stats.complaintCount, queries: stats.queryCount })}
+      action={<ActionLink href="/contact">{t("Raise New")}</ActionLink>}
     >
       {items.length === 0 ? (
         <Empty
-          text="You haven't sent any complaint or query yet."
+          text={t("You haven't sent any complaint or query yet.")}
           href="/contact"
-          cta="Contact Us"
+          cta={t("Contact Us")}
         />
       ) : (
         <ul className="space-y-4">
@@ -901,7 +910,7 @@ function Messages({ items, stats }) {
                   <span
                     className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${badge[type] || badge.query}`}
                   >
-                    {m.type || "Query"}
+                    {t(m.type || "Query")}
                   </span>
                   <span
                     className={`flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${
@@ -911,10 +920,10 @@ function Messages({ items, stats }) {
                     }`}
                   >
                     {m.read ? <CheckCircle2 size={12} /> : <Clock size={12} />}
-                    {m.read ? "Seen by team" : "Pending"}
+                    {m.read ? t("Seen by team") : t("Pending")}
                   </span>
                   <span className="ml-auto text-xs font-semibold text-ink-soft/70">
-                    {fmtDate(m.submittedAt)}
+                    {fmtDate(m.submittedAt, locale)}
                   </span>
                 </div>
                 {m.subject && (
@@ -935,44 +944,45 @@ function Messages({ items, stats }) {
 }
 
 function Tickets({ items }) {
+  const { t, locale } = useLang();
   return (
     <Panel
-      title="My Tickets"
-      summary={`${items.length} problem(s) reported through the Youth / Women Wing help desk`}
-      action={<ActionLink href="/report-problem">Report a Problem</ActionLink>}
+      title={t("My Tickets")}
+      summary={t("{count} problem(s) reported through the Youth / Women Wing help desk", { count: items.length })}
+      action={<ActionLink href="/report-problem">{t("Report a Problem")}</ActionLink>}
     >
       {items.length === 0 ? (
         <Empty
-          text="You haven't reported any problem while logged in."
+          text={t("You haven't reported any problem while logged in.")}
           href="/report-problem"
-          cta="Report Your Problem"
+          cta={t("Report Your Problem")}
         />
       ) : (
         <ul className="space-y-4">
-          {items.map((t) => (
-            <li key={t.id} className="rounded-2xl border border-ink/8 p-5">
+          {items.map((tk) => (
+            <li key={tk.id} className="rounded-2xl border border-ink/8 p-5">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-mono text-sm font-bold tracking-wider text-ink">
-                  {t.ticketId}
+                  {tk.ticketId}
                 </span>
                 <span
-                  className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${t.status === "Resolved" ? "bg-banyan/10 text-banyan" : "bg-saffron/10 text-saffron-dark"}`}
+                  className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${tk.status === "Resolved" ? "bg-banyan/10 text-banyan" : "bg-saffron/10 text-saffron-dark"}`}
                 >
-                  {t.status}
+                  {t(tk.status)}
                 </span>
                 <span className="ml-auto text-xs font-semibold text-ink-soft/70">
-                  {fmtDate(t.submittedAt)}
+                  {fmtDate(tk.submittedAt, locale)}
                 </span>
               </div>
               <p className="mt-2 text-sm text-ink-soft">
-                {t.category}
-                {t.district ? ` · ${t.district}` : ""}
+                {t(tk.category)}
+                {tk.district ? ` · ${tk.district}` : ""}
               </p>
               <Link
                 href="/track"
                 className="mt-2 inline-block text-xs font-bold uppercase tracking-wide text-saffron hover:underline"
               >
-                Full status →
+                {t("Full status →")}
               </Link>
             </li>
           ))}
@@ -983,26 +993,27 @@ function Tickets({ items }) {
 }
 
 function Contributions({ items, stats }) {
+  const { t, locale } = useLang();
   return (
     <Panel
-      title="My Contributions"
-      summary={`Total contributed: ${fmtMoney(stats.totalContributed)} across ${stats.contributionCount} contribution(s)`}
-      action={<ActionLink href="/donate">Contribute</ActionLink>}
+      title={t("My Contributions")}
+      summary={t("Total contributed: {amount} across {count} contribution(s)", { amount: fmtMoney(stats.totalContributed, locale), count: stats.contributionCount })}
+      action={<ActionLink href="/donate">{t("Contribute")}</ActionLink>}
     >
       {items.length === 0 ? (
         <Empty
-          text="You haven't made any contribution yet."
+          text={t("You haven't made any contribution yet.")}
           href="/donate"
-          cta="Contribute Now"
+          cta={t("Contribute Now")}
         />
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[420px] text-left text-sm">
             <thead>
               <tr className="border-b border-ink/10 text-[11px] font-bold uppercase tracking-wide text-ink-soft/70">
-                <th className="py-3 pr-4">Date</th>
-                <th className="py-3 pr-4">Amount</th>
-                <th className="py-3">Method</th>
+                <th className="py-3 pr-4">{t("Date")}</th>
+                <th className="py-3 pr-4">{t("Amount")}</th>
+                <th className="py-3">{t("Method")}</th>
               </tr>
             </thead>
             <tbody>
@@ -1012,10 +1023,10 @@ function Contributions({ items, stats }) {
                   className="border-b border-ink/5 last:border-none"
                 >
                   <td className="py-3 pr-4 font-semibold text-ink-soft">
-                    {fmtDate(c.submittedAt)}
+                    {fmtDate(c.submittedAt, locale)}
                   </td>
                   <td className="py-3 pr-4 font-bold text-banyan">
-                    {fmtMoney(c.amount)}
+                    {fmtMoney(c.amount, locale)}
                   </td>
                   <td className="py-3 font-semibold uppercase text-ink-soft">
                     {c.method || "—"}
@@ -1031,19 +1042,20 @@ function Contributions({ items, stats }) {
 }
 
 function Volunteers({ items }) {
+  const { t, locale } = useLang();
   return (
     <Panel
-      title="Volunteer Applications"
+      title={t("Volunteer Applications")}
       summary={
-        items.length ? `${items.length} application(s) submitted` : undefined
+        items.length ? t("{count} application(s) submitted", { count: items.length }) : undefined
       }
-      action={<ActionLink href="/volunteer">Join as Volunteer</ActionLink>}
+      action={<ActionLink href="/volunteer">{t("Join as Volunteer")}</ActionLink>}
     >
       {items.length === 0 ? (
         <Empty
-          text="You haven't applied as a volunteer yet."
+          text={t("You haven't applied as a volunteer yet.")}
           href="/volunteer"
-          cta="Volunteer Form"
+          cta={t("Volunteer Form")}
         />
       ) : (
         <ul className="space-y-4">
@@ -1051,10 +1063,10 @@ function Volunteers({ items }) {
             <li key={v.id} className="rounded-2xl border border-ink/8 p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="font-display text-base font-bold text-ink">
-                  {v.constituency || "Constituency not specified"}
+                  {v.constituency || t("Constituency not specified")}
                 </p>
                 <span className="text-xs font-semibold text-ink-soft/70">
-                  {fmtDate(v.submittedAt)}
+                  {fmtDate(v.submittedAt, locale)}
                 </span>
               </div>
               {v.interests?.length > 0 && (

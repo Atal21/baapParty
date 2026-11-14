@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { pillars } from '@/data/content';
+import { useLang } from '@/context/LanguageContext';
 
 const ICONS = {
   apple: Apple,
@@ -30,20 +31,19 @@ const ICONS = {
 };
 
 export default function PillarsSection() {
+  const { t } = useLang();
   return (
     <section className="bg-ivory py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="section-eyebrow text-xs font-bold uppercase text-banyan">
-            This Is Not the Gita — These Are Our 18 Chapters
+            {t("This Is Not the Gita — These Are Our 18 Chapters")}
           </span>
           <h2 className="mt-3 font-display text-3xl font-extrabold text-ink sm:text-4xl">
-            18 Resolution for India
+            {t("18 Resolution for India")}
           </h2>
           <p className="mt-4 text-ink-soft">
-            We present 18 important challenges facing the country as 18
-            chapters. They form the basis of our ideas, policy proposals, and
-            future action plan.
+            {t("We present 18 important challenges facing the country as 18 chapters. They form the basis of our ideas, policy proposals, and future action plan.")}
           </p>
         </div>
 
@@ -67,10 +67,10 @@ export default function PillarsSection() {
                     <Icon size={22} />
                   </span>
                   <p className="mt-5 text-[11px] font-bold uppercase tracking-wide text-saffron">
-                    Chapter {p.number}
+                    {t("Chapter {number}", { number: p.number })}
                   </p>
                   <h3 className="mt-1 font-display text-lg font-bold text-ink">
-                    {p.title}
+                    {t(p.title)}
                   </h3>
                 </motion.div>
               </Link>
@@ -83,7 +83,7 @@ export default function PillarsSection() {
             href="/manifesto"
             className="inline-flex items-center gap-2 rounded-full bg-banyan px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-banyan-dark"
           >
-            View All 18 Chapters
+            {t("View All 18 Chapters")}
           </Link>
         </div>
       </div>

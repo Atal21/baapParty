@@ -25,6 +25,7 @@ export const nav = [
     label: "Wings",
     href: "/youth",
     children: [
+      { label: "Organization", href: "/organization" },
       { label: "Youth Wing", href: "/youth" },
       { label: "Women Wing", href: "/women" },
       { label: "Report Your Problem", href: "/report-problem" },
@@ -100,25 +101,25 @@ export const manifestoDetails = chapters;
 //     name: 'Arvind Deshmukh',
 //     role: 'National President',
 //     bio: 'Two-term MLA from Nagpur North, known for turning around the state irrigation department and a grassroots padyatra covering 4,200 km.',
-//     image: 'https://picsum.photos/seed/leader-arvind/600/700',
+//     image: '/placeholders/portrait.svg',
 //   },
 //   {
 //     name: 'Sunita Rathore',
 //     role: 'General Secretary',
 //     bio: 'Former panchayat sarpanch who built India\'s largest women self-help group network across 900 villages in Rajasthan.',
-//     image: 'https://picsum.photos/seed/leader-sunita/600/700',
+//     image: '/placeholders/portrait.svg',
 //   },
 //   {
 //     name: 'Farhan Qureshi',
 //     role: 'Youth Wing President',
 //     bio: 'Ex-civil engineer leading the party\'s 18-25 outreach with over 8,000 campus units nationwide.',
-//     image: 'https://picsum.photos/seed/leader-farhan/600/700',
+//     image: '/placeholders/portrait.svg',
 //   },
 //   {
 //     name: 'Lata Iyer',
 //     role: 'Spokesperson',
 //     bio: 'Economist and columnist, the party\'s primary voice on television debates and policy explainers.',
-//     image: 'https://picsum.photos/seed/leader-lata/600/700',
+//     image: '/placeholders/portrait.svg',
 //   },
 // ];
 
@@ -128,7 +129,7 @@ export const leaders = [
     name: "Mr. Dharam Pal",
     role: "National President",
     bio: "Two-term MLA from Nagpur North, known for turning around the state irrigation department and a grassroots padyatra covering 4,200 km.",
-    image: "https://picsum.photos/seed/leader-arvind/600/700",
+    image: "/placeholders/portrait.svg",
   },
 
   {
@@ -136,7 +137,7 @@ export const leaders = [
     name: "Mrs. Surender Kaur",
     role: "Vice President",
     bio: "Two-term MLA from Nagpur North, known for turning around the state irrigation department and a grassroots padyatra covering 4,200 km.",
-    image: "https://picsum.photos/seed/leader-arvind/600/700",
+    image: "/placeholders/portrait.svg",
   },
 
   {
@@ -144,14 +145,14 @@ export const leaders = [
     name: "Ms. Khushi",
     role: "General Secretary",
     bio: "Former panchayat sarpanch who built India's largest women self-help group network across 900 villages in Rajasthan.",
-    image: "https://picsum.photos/seed/leader-sunita/600/700",
+    image: "/placeholders/portrait.svg",
   },
   {
     id: 4,
     name: "Mrs. Namrata Suri",
     role: "Treasurer",
     bio: "Ex-civil engineer leading the party's 18-25 outreach with over 8,000 campus units nationwide.",
-    image: "https://picsum.photos/seed/leader-farhan/600/700",
+    image: "/placeholders/portrait.svg",
   },
 ];
 
@@ -162,7 +163,7 @@ export const events = [
     time: "4:00 PM",
     location: "Ambedkar Maidan, Lucknow",
     category: "Rally",
-    image: "https://picsum.photos/seed/event-lucknow/700/500",
+    image: "/placeholders/landscape.svg",
     desc: "A mega public rally addressing farmer distress and the new employment guarantee scheme.",
   },
   {
@@ -171,7 +172,7 @@ export const events = [
     time: "11:00 AM",
     location: "Delhi University, North Campus",
     category: "Conference",
-    image: "https://picsum.photos/seed/event-campus/700/500",
+    image: "/placeholders/landscape.svg",
     desc: "An open-mic dialogue with first-time voters on jobs, startups and campus safety.",
   },
   {
@@ -180,7 +181,7 @@ export const events = [
     time: "9:00 AM",
     location: "Karnal Grain Market, Haryana",
     category: "Rally",
-    image: "https://picsum.photos/seed/event-kisan/700/500",
+    image: "/placeholders/landscape.svg",
     desc: "Village-level roundtable on MSP guarantees and cold-storage infrastructure.",
   },
   {
@@ -189,7 +190,7 @@ export const events = [
     time: "2:00 PM",
     location: "Town Hall, Pune",
     category: "Conference",
-    image: "https://picsum.photos/seed/event-mahila/700/500",
+    image: "/placeholders/landscape.svg",
     desc: "Launch of the interest-free loan scheme for women-led self-help groups.",
   },
   {
@@ -198,7 +199,7 @@ export const events = [
     time: "5:30 PM",
     location: "Party Headquarters, New Delhi",
     category: "Conference",
-    image: "https://picsum.photos/seed/event-press/700/500",
+    image: "/placeholders/landscape.svg",
     desc: "National media briefing unveiling the full election manifesto and costed roadmap.",
   },
   {
@@ -207,7 +208,7 @@ export const events = [
     time: "7:00 AM",
     location: "Marine Drive, Mumbai",
     category: "Rally",
-    image: "https://picsum.photos/seed/event-padyatra/700/500",
+    image: "/placeholders/landscape.svg",
     desc: "Closing leg of the 4,200 km foot march, culminating in a dawn tricolour rally.",
   },
 ];
@@ -219,7 +220,7 @@ export const blogPosts = [
       "A district-by-district breakdown of how the one-crore-jobs pledge is costed, funded and tracked in public dashboards.",
     date: "2026-08-02",
     category: "Latest News",
-    image: "https://picsum.photos/seed/blog-jobs/700/460",
+    image: "/placeholders/landscape.svg",
     author: "Lata Iyer",
   },
   {
@@ -228,7 +229,7 @@ export const blogPosts = [
       "Ground reporting from three states on how village-level grain committees are shaping our MSP policy.",
     date: "2026-07-24",
     category: "Latest News",
-    image: "https://picsum.photos/seed/blog-kisan/700/460",
+    image: "/placeholders/landscape.svg",
     author: "Field Desk",
   },
   {
@@ -237,7 +238,7 @@ export const blogPosts = [
       "An official statement with the complete audit trail of the Vidarbha irrigation project.",
     date: "2026-07-18",
     category: "Press Releases",
-    image: "https://picsum.photos/seed/blog-press1/700/460",
+    image: "/placeholders/landscape.svg",
     author: "Press Cell",
   },
   {
@@ -246,7 +247,7 @@ export const blogPosts = [
       "A milestone update on student organising ahead of the autumn campus tour.",
     date: "2026-07-09",
     category: "Latest News",
-    image: "https://picsum.photos/seed/blog-youth/700/460",
+    image: "/placeholders/landscape.svg",
     author: "Farhan Qureshi",
   },
   {
@@ -255,7 +256,7 @@ export const blogPosts = [
       "Our full compliance note and the steps every booth-level agent must follow this season.",
     date: "2026-06-30",
     category: "Press Releases",
-    image: "https://picsum.photos/seed/blog-press2/700/460",
+    image: "/placeholders/landscape.svg",
     author: "Press Cell",
   },
   {
@@ -263,7 +264,7 @@ export const blogPosts = [
     excerpt: "Sunita Rathore on the data behind the Mahila Shakti loan scheme.",
     date: "2026-06-21",
     category: "Latest News",
-    image: "https://picsum.photos/seed/blog-shg/700/460",
+    image: "/placeholders/landscape.svg",
     author: "Sunita Rathore",
   },
 ];
@@ -313,22 +314,22 @@ export const galleryVideos = [
   {
     title: "Manifesto 2026 — Full Announcement",
     duration: "12:44",
-    thumb: "https://picsum.photos/seed/vid1/700/420",
+    thumb: "/placeholders/landscape.svg",
   },
   {
     title: "Kisan Chaupal Highlights",
     duration: "4:18",
-    thumb: "https://picsum.photos/seed/vid2/700/420",
+    thumb: "/placeholders/landscape.svg",
   },
   {
     title: "Yuva Samvad — Campus Tour Reel",
     duration: "6:02",
-    thumb: "https://picsum.photos/seed/vid3/700/420",
+    thumb: "/placeholders/landscape.svg",
   },
   {
     title: "Padyatra Finale — Marine Drive",
     duration: "9:37",
-    thumb: "https://picsum.photos/seed/vid4/700/420",
+    thumb: "/placeholders/landscape.svg",
   },
 ];
 

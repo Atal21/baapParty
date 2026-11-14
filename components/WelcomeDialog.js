@@ -6,10 +6,13 @@ import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, HandHeart, HeartHandshake, UserPlus, UsersRound, X } from 'lucide-react';
 import { PARTY } from '@/data/party';
+import { useLang } from '@/context/LanguageContext';
 
 // Shown once per full page load, on the home page only, right after the splash loader finishes.
 // Step 1: Join Us / Donate.   Step 2 (after Join Us): As a Volunteer / As a Member.
 export default function WelcomeDialog() {
+  const { t, isHindi } = useLang();
+  const partyName = isHindi ? PARTY.hindiName : PARTY.fullName;
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState('main'); // main | join
@@ -57,7 +60,7 @@ export default function WelcomeDialog() {
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label={`Welcome to ${PARTY.fullName}`}
+            aria-label={t("Welcome to {name}", { name: partyName })}
             className="relative w-full max-w-md overflow-hidden rounded-3xl bg-ivory p-7 text-center shadow-card-hover sm:p-9"
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -70,7 +73,7 @@ export default function WelcomeDialog() {
             <button
               type="button"
               onClick={close}
-              aria-label="Close"
+              aria-label={t("Close")}
               className="absolute right-4 top-5 rounded-full p-1.5 text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink"
             >
               <X size={18} />
@@ -80,7 +83,7 @@ export default function WelcomeDialog() {
               <button
                 type="button"
                 onClick={() => setStep("main")}
-                aria-label="Back"
+                aria-label={t("Back")}
                 className="absolute left-4 top-5 rounded-full p-1.5 text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink"
               >
                 <ArrowLeft size={18} />
@@ -90,7 +93,7 @@ export default function WelcomeDialog() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/email-logo.png"
-              alt={`${PARTY.fullName} logo`}
+              alt={t("{name} logo", { name: partyName })}
               width={88}
               height={88}
               className="mx-auto mt-2 h-22 w-22 rounded-full bg-white object-contain p-1 shadow-card"
@@ -115,7 +118,7 @@ export default function WelcomeDialog() {
             {step === "main" ? (
               <>
                 <p className="mt-4 text-sm text-ink-soft">
-                  Aap hamare saath kaise judna chahte hain?
+                  {t("Aap hamare saath kaise judna chahte hain?")}
                 </p>
                 <div className="mt-5 grid gap-3">
                   <OptionButton
@@ -138,7 +141,7 @@ export default function WelcomeDialog() {
             ) : (
               <>
                 <p className="mt-4 text-sm text-ink-soft">
-                  Aap kis roop mein judna chahte hain?
+                  {t("Aap kis roop mein judna chahte hain?")}
                 </p>
                 <div className="mt-5 grid gap-3">
                   <OptionButton
@@ -182,6 +185,7 @@ const TONES = {
 };
 
 function Inner({ icon: Icon, title, text, badge }) {
+  const { t } = useLang();
   return (
     <>
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/20">
@@ -189,14 +193,14 @@ function Inner({ icon: Icon, title, text, badge }) {
       </span>
       <span className="min-w-0 flex-1 text-left">
         <span className="flex items-center gap-2 font-display text-base font-extrabold leading-tight">
-          {title}
+          {t(title)}
           {badge && (
             <span className="rounded-full bg-white/25 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide">
-              {badge}
+              {t(badge)}
             </span>
           )}
         </span>
-        <span className="mt-0.5 block text-xs font-medium text-white/85">{text}</span>
+        <span className="mt-0.5 block text-xs font-medium text-white/85">{t(text)}</span>
       </span>
     </>
   );

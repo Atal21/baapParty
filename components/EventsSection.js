@@ -8,10 +8,11 @@ import { Calendar, Clock, MapPin, PlayCircle } from 'lucide-react';
 import VideoLightbox from './VideoLightbox';
 import { getYouTubeThumbnail } from '@/lib/youtube';
 import { useContentFilter } from '@/context/FilterContext';
+import { useLang } from '@/context/LanguageContext';
 import InlineContentFilter, {defaultFilterValue,isFilterActive,matchesFilter,} from "./InlineContentFilter";
 
-const formatDate = (d) =>
-  new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+const formatDate = (d, locale) =>
+  new Date(d).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 
 // Each filtered block gets its own heading, so /events no longer shows
 // "Rallies & Conferences" twice (once for Rallies, once for Conferences).
@@ -21,6 +22,7 @@ const HEADINGS = {
 };
 
 export default function EventsSection({ full = false, filter }) {
+  const { t, locale } = useLang();
   const heading = HEADINGS[filter] || {
     eyebrow: 'Upcoming Schedule',
     title: 'Rallies & Conferences',
@@ -52,10 +54,10 @@ export default function EventsSection({ full = false, filter }) {
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="max-w-xl text-center sm:text-left">
             <span className="section-eyebrow text-xs font-bold uppercase text-saffron">
-              {heading.eyebrow}
+              {t(heading.eyebrow)}
             </span>
             <h2 className="mt-3 flex flex-wrap items-center justify-center gap-3 font-display text-3xl font-extrabold text-ink sm:text-4xl">
-              {heading.title}
+              {t(heading.title)}
               <InlineContentFilter
                 type="events"
                 value={locationFilter}
@@ -68,7 +70,7 @@ export default function EventsSection({ full = false, filter }) {
               href="/events"
               className="rounded-full border-2 border-ink/15 px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink transition-all hover:border-ink hover:bg-ink hover:text-ivory"
             >
-              View All Events
+              {t("View All Events")}
             </Link>
           )}
         </div>
@@ -76,8 +78,8 @@ export default function EventsSection({ full = false, filter }) {
         {shown.length === 0 && (
           <p className="mt-14 text-center text-sm text-ink-soft">
             {active
-              ? "No events match the selected filter."
-              : heading.empty}
+              ? t("No events match the selected filter.")
+              : t(heading.empty)}
           </p>
         )}
 
@@ -102,7 +104,7 @@ export default function EventsSection({ full = false, filter }) {
                   src={
                     e.image ||
                     getYouTubeThumbnail(e.videoUrl) ||
-                    "https://picsum.photos/seed/event-placeholder/700/500"
+                    "/placeholders/landscape.svg"
                   }
                   alt={e.title}
                   fill
@@ -114,7 +116,7 @@ export default function EventsSection({ full = false, filter }) {
                   </span>
                 )}
                 <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-saffron">
-                  {e.category}
+                  {t(e.category)}
                 </span>
               </div>
               <div className="p-6">
@@ -127,7 +129,7 @@ export default function EventsSection({ full = false, filter }) {
                 <div className="mt-5 space-y-2 border-t border-ink/8 pt-4 text-xs font-semibold text-ink-soft">
                   <p className="flex items-center gap-2">
                     <Calendar size={14} className="text-banyan" />{" "}
-                    {formatDate(e.date)}
+                    {formatDate(e.date, locale)}
                   </p>
                   <p className="flex items-center gap-2">
                     <Clock size={14} className="text-banyan" /> {e.time}
@@ -140,7 +142,7 @@ export default function EventsSection({ full = false, filter }) {
                   href={`/events/${e.id}`}
                   className="mt-4 inline-block text-sm font-bold text-saffron transition-colors hover:text-saffron-dark"
                 >
-                  Read More →
+                  {t("Read More →")}
                 </Link>
               </div>
             </motion.article>

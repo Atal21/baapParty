@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { CheckCircle2, Circle, Loader2, Lock, Search } from 'lucide-react';
 import { STATUS_FLOW } from '@/lib/grievanceConfig';
+import { useLang } from '@/context/LanguageContext';
 
-const fmt = (d) =>
-  new Date(d).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const fmt = (d, locale = 'en-IN') =>
+  new Date(d).toLocaleString(locale, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 const input = 'w-full rounded-xl border-2 border-ink/10 bg-ivory px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-saffron';
 
 export default function TrackForm({ otpEnabled = false }) {
+  const { t, locale } = useLang();
   const [ticketId, setTicketId] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,7 +27,7 @@ export default function TrackForm({ otpEnabled = false }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Could not send the code');
       setSent(true); setDev(data.devCode || '');
-    } catch (err) { setError(err.message); } finally { setLoading(false); }
+    } catch (err) { setError(t(err.message)); } finally { setLoading(false); }
   };
 
   const submit = async (e) => {
@@ -49,7 +51,7 @@ export default function TrackForm({ otpEnabled = false }) {
       if (!res.ok) throw new Error(data.error || 'Something went wrong');
       setResult(data);
     } catch (err) {
-      setError(err.message);
+      setError(t(err.message));
     } finally {
       setLoading(false);
     }
@@ -62,24 +64,24 @@ export default function TrackForm({ otpEnabled = false }) {
     <div className="space-y-8">
       <form onSubmit={submit} className="space-y-5 rounded-3xl bg-white p-6 shadow-card sm:p-8">
         <div>
-          <label className="mb-2 block text-sm font-bold text-ink">Ticket number</label>
-          <input value={ticketId} onChange={(e) => setTicketId(e.target.value)} placeholder="e.g. YW-UP-LKO-000124" className={`${input} font-mono uppercase`} />
+          <label className="mb-2 block text-sm font-bold text-ink">{t('Ticket number')}</label>
+          <input value={ticketId} onChange={(e) => setTicketId(e.target.value)} placeholder={t("e.g. YW-UP-LKO-000124")} className={`${input} font-mono uppercase`} />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-bold text-ink">Email address used to file the problem</label>
+          <label className="mb-2 block text-sm font-bold text-ink">{t('Email address used to file the problem')}</label>
           <input type="email" autoComplete="email" value={email} onChange={(e) => { setEmail(e.target.value); setSent(false); setCode(''); }} placeholder="you@example.com" className={input} />
         </div>
         {otpEnabled && sent && (
           <div>
-            <label className="mb-2 block text-sm font-bold text-ink">6-digit code we emailed you</label>
+            <label className="mb-2 block text-sm font-bold text-ink">{t('6-digit code we emailed you')}</label>
             <input inputMode="numeric" maxLength={6} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))} placeholder="123456" className={input} />
-            <p className="mt-1 text-xs text-ink-soft/70">If this email has a ticket, the code is on its way. Check spam too.</p>
-            {dev && <p className="mt-1 text-xs text-ink-soft/70">Test mode — your code is {dev}</p>}
+            <p className="mt-1 text-xs text-ink-soft/70">{t('If this email has a ticket, the code is on its way. Check spam too.')}</p>
+            {dev && <p className="mt-1 text-xs text-ink-soft/70">{t('Test mode — your code is')} {dev}</p>}
           </div>
         )}
-        {error && <p className="rounded-xl bg-saffron/10 px-4 py-3 text-sm font-semibold text-saffron-dark">{error}</p>}
+        {error && <p className="rounded-xl bg-saffron/10 px-4 py-3 text-sm font-semibold text-saffron-dark">{t(error)}</p>}
         <button type="submit" disabled={loading || !ticketId.trim() || !/^\S+@\S+\.\S+$/.test(email.trim()) || (otpEnabled && sent && code.length !== 6)} className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3 text-sm font-bold uppercase tracking-wide text-white hover:bg-saffron-dark disabled:opacity-60">
-          {loading ? <Loader2 size={16} className="animate-spin" /> : <Search size={16} />} {otpEnabled && !sent ? 'Send OTP' : 'Check status'}
+          {loading ? <Loader2 size={16} className="animate-spin" /> : <Search size={16} />} {otpEnabled && !sent ? t('Send OTP') : t('Check status')}
         </button>
       </form>
 
@@ -88,32 +90,32 @@ export default function TrackForm({ otpEnabled = false }) {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="font-mono text-lg font-bold tracking-wider text-ink">{result.ticketId}</p>
             <span className={`rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wide ${result.status === 'Resolved' ? 'bg-banyan/10 text-banyan' : pending ? 'bg-marigold/20 text-ink-soft' : 'bg-saffron/10 text-saffron-dark'}`}>
-              {result.status}
+              {t(result.status)}
             </span>
           </div>
           <p className="mt-2 flex items-center gap-1.5 text-sm text-ink-soft">
             {result.isSensitive && <Lock size={14} />}
-            {result.category}{result.district ? ` · ${result.district}, ${result.state}` : ''} · Filed {fmt(result.submittedAt)}
+            {t(result.category)}{result.district ? ` · ${result.district}, ${t(result.state)}` : ''} · {t('Filed')} {fmt(result.submittedAt, locale)}
           </p>
 
           <ol className="mt-7 grid grid-cols-5 gap-1 text-center">
             {STATUS_FLOW.map((s, i) => (
               <li key={s} className="flex flex-col items-center gap-2">
                 {i <= reached ? <CheckCircle2 size={22} className="text-banyan" /> : <Circle size={22} className="text-ink/20" />}
-                <span className={`text-[10px] font-bold uppercase tracking-wide sm:text-xs ${i <= reached ? 'text-ink' : 'text-ink/40'}`}>{s}</span>
+                <span className={`text-[10px] font-bold uppercase tracking-wide sm:text-xs ${i <= reached ? 'text-ink' : 'text-ink/40'}`}>{t(s)}</span>
               </li>
             ))}
           </ol>
-          {pending && <p className="mt-4 rounded-xl bg-marigold/15 px-4 py-3 text-sm text-ink-soft">This case is currently marked Pending — it is waiting on action or information. Our team will update it here.</p>}
+          {pending && <p className="mt-4 rounded-xl bg-marigold/15 px-4 py-3 text-sm text-ink-soft">{t('This case is currently marked Pending — it is waiting on action or information. Our team will update it here.')}</p>}
 
-          <h3 className="mt-8 font-display text-base font-bold text-ink">Updates</h3>
+          <h3 className="mt-8 font-display text-base font-bold text-ink">{t('Updates')}</h3>
           <ul className="mt-3 space-y-3">
-            {[...result.timeline].reverse().map((t, i) => (
+            {[...result.timeline].reverse().map((ev, i) => (
               <li key={i} className="rounded-xl border border-ink/8 p-4">
                 <div className="flex justify-between gap-3 text-xs font-bold uppercase tracking-wide text-ink-soft">
-                  <span>{t.status}</span><span>{fmt(t.at)}</span>
+                  <span>{t(ev.status)}</span><span>{fmt(ev.at, locale)}</span>
                 </div>
-                {t.message && <p className="mt-1.5 text-sm text-ink">{t.message}</p>}
+                {ev.message && <p className="mt-1.5 text-sm text-ink">{t(ev.message)}</p>}
               </li>
             ))}
           </ul>

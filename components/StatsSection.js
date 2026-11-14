@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { stats } from '@/data/content';
+import { useLang } from '@/context/LanguageContext';
 
 function Counter({ value, suffix }) {
+  const { locale } = useLang();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const [display, setDisplay] = useState(0);
@@ -25,13 +27,14 @@ function Counter({ value, suffix }) {
 
   return (
     <span ref={ref} className="font-mono">
-      {display.toLocaleString('en-IN')}
+      {display.toLocaleString(locale)}
       {suffix}
     </span>
   );
 }
 
 export default function StatsSection() {
+  const { t } = useLang();
   return (
     <section className="relative bg-ink py-20">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 lg:grid-cols-4 lg:px-8">
@@ -48,7 +51,7 @@ export default function StatsSection() {
               <Counter value={s.value} suffix={s.suffix} />
             </p>
             <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-ivory/60 sm:text-sm">
-              {s.label}
+              {t(s.label)}
             </p>
           </motion.div>
         ))}

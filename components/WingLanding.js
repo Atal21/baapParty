@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getT } from '@/lib/i18n-server';
 import {
   Briefcase, CalendarDays, FileText, GraduationCap, HeartPulse, MapPin, MessageSquareWarning,
   PhoneCall, Rocket, Scale, ShieldCheck, Trophy, Users, Lock,
@@ -8,22 +9,23 @@ import { TICKET_STEPS, sectionHref } from '@/data/wings';
 
 const ICONS = { Briefcase, CalendarDays, FileText, GraduationCap, HeartPulse, MapPin, MessageSquareWarning, Rocket, Scale, ShieldCheck, Trophy, Users };
 
-export default function WingLanding({ wing }) {
+export default async function WingLanding({ wing }) {
+  const { t, isHindi } = await getT();
   const isWomen = wing.slug === 'women';
   const accent = isWomen ? 'bg-banyan text-white hover:bg-banyan-dark' : 'bg-saffron text-white hover:bg-saffron-dark';
   const accentSoft = isWomen ? 'bg-banyan/10 text-banyan' : 'bg-saffron/10 text-saffron';
 
   return (
     <>
-      <PageHeader eyebrow={wing.hindi} title={wing.name} crumb={wing.name} />
+      <PageHeader eyebrow={isHindi ? t('Help Desk') : wing.hindi} title={t(wing.name)} crumb={t(wing.name)} />
 
       <section className="bg-ivory pb-8 pt-16">
         <div className="mx-auto max-w-5xl px-6 text-center lg:px-8">
           <h2 className="font-display text-3xl font-extrabold text-ink sm:text-4xl">
-            {wing.tagline}
+            {t(wing.tagline)}
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-ink-soft">
-            {wing.intro}
+            {t(wing.intro)}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
@@ -31,19 +33,19 @@ export default function WingLanding({ wing }) {
               className={`rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wide shadow-card transition-colors ${accent}`}
             >
               {/* अपनी समस्या दर्ज करें */}
-              Report Your Problem
+              {t('Report Your Problem')}
             </Link>
             <Link
               href="/volunteer"
               className="rounded-full border-2 border-ink/15 px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-ink hover:border-ink"
             >
-              Join as Volunteer
+              {t('Join as Volunteer')}
             </Link>
             <Link
               href="/track"
               className="rounded-full border-2 border-ink/15 px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-ink hover:border-ink"
             >
-              Track Ticket
+              {t('Track Ticket')}
             </Link>
           </div>
         </div>
@@ -55,16 +57,14 @@ export default function WingLanding({ wing }) {
             <div className="flex items-start gap-3 rounded-2xl border border-chakra/20 bg-chakra/5 p-5 text-sm text-ink">
               <PhoneCall size={20} className="mt-0.5 shrink-0 text-chakra" />
               <p>
-                In immediate danger? Call <b>112</b>. Women Helpline: <b>181</b>
-                . Cyber crime: <b>1930</b>. This website is not an emergency
-                service.
+                {t('In immediate danger? Call')} <b>112</b>. {t('Women Helpline:')} <b>181</b>
+                . {t('Cyber crime:')} <b>1930</b>. {t('This website is not an emergency service.')}
               </p>
             </div>
             <div className="flex items-start gap-3 rounded-2xl border border-banyan/20 bg-banyan/5 p-5 text-sm text-ink">
               <Lock size={20} className="mt-0.5 shrink-0 text-banyan" />
               <p>
-                Sensitive matter? Choose <b>“confidential”</b> in the form. It
-                stays off the public tracker and gets a private ticket number.
+                {t('Sensitive matter? Choose')} <b>“{t('confidential')}”</b> {t('in the form. It stays off the public tracker and gets a private ticket number.')}
               </p>
             </div>
           </div>
@@ -88,10 +88,10 @@ export default function WingLanding({ wing }) {
                     <Icon size={20} />
                   </span>
                   <h3 className="mt-4 font-display text-base font-bold text-ink group-hover:text-saffron">
-                    {s.title}
+                    {t(s.title)}
                   </h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                    {s.desc}
+                    {t(s.desc)}
                   </p>
                 </Link>
               );
@@ -124,12 +124,12 @@ export default function WingLanding({ wing }) {
             {wing.reportLabel}
           </Link> */}
           <p className="mt-5 text-sm text-ink-soft">
-            See how problems are being handled:{" "}
+            {t('See how problems are being handled:')}{" "}
             <Link
               href="/resolution-tracker"
               className="font-bold text-saffron hover:underline"
             >
-              Resolution Tracker
+              {t('Resolution Tracker')}
             </Link>
           </p>
         </div>
