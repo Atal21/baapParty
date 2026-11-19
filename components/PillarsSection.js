@@ -1,12 +1,14 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Apple, Ban, Equal, Flame, Gavel, HandHelping, HeartPulse, Eye, Lock,
   Megaphone, Pill, Plane, Shield, Sparkles, UserCheck, Vote, Wheat, Wrench,
 } from 'lucide-react';
 import Link from 'next/link';
-import { pillars } from '@/data/content';
+import { pillars as builtIn } from '@/data/content';
+import { localizeChapter } from '@/lib/chapterUtils';
 import { useLang } from '@/context/LanguageContext';
 
 const ICONS = {
@@ -31,7 +33,21 @@ const ICONS = {
 };
 
 export default function PillarsSection() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const [pillars, setPillars] = useState(builtIn);
+
+  // Chapters are managed in Admin -> Chapters; the built-in list is only the first paint / fallback.
+  useEffect(() => {
+    let alive = true;
+    fetch('/api/chapters')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => alive && Array.isArray(d) && d.length && setPillars(d))
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   return (
     <section className="bg-ivory py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -49,10 +65,10 @@ export default function PillarsSection() {
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {pillars.map((p, i) => {
-            const Icon = ICONS[p.icon];
+            const Icon = ICONS[p.icon] || Sparkles;
             return (
               <Link
-                key={p.title}
+                key={p.slug}
                 href={`/manifesto/${p.slug}`}
                 className="block h-full"
               >
@@ -70,7 +86,7 @@ export default function PillarsSection() {
                     {t("Chapter {number}", { number: p.number })}
                   </p>
                   <h3 className="mt-1 font-display text-lg font-bold text-ink">
-                    {t(p.title)}
+                    {localizeChapter(p, lang, t).title}
                   </h3>
                 </motion.div>
               </Link>
@@ -83,7 +99,7 @@ export default function PillarsSection() {
             href="/manifesto"
             className="inline-flex items-center gap-2 rounded-full bg-banyan px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-card transition-all hover:-translate-y-0.5 hover:bg-banyan-dark"
           >
-            {t("View All 18 Chapters")}
+            {t("View All Chapters")}
           </Link>
         </div>
       </div>

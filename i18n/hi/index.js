@@ -8,6 +8,7 @@ import forms from './forms';
 import wings from './wings';
 import dashboard from './dashboard';
 import content from './content';
+import chapters from './chapters';
 
-const hi = { ...common, ...home, ...about, ...manifesto, ...documents, ...forms, ...wings, ...dashboard, ...content };
+const hi = { ...common, ...home, ...about, ...manifesto, ...documents, ...forms, ...wings, ...dashboard, ...content, ...chapters };
 export default hi;

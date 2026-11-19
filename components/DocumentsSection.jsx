@@ -129,7 +129,7 @@ export default function DocumentsSection() {
                         </h3>
                         <div className="space-y-5 text-base leading-relaxed text-ink-soft">
                             <p>
-                                {t("The registration process of the organization under the name Bharatiya Avijit AawazParty is ongoing. Until registration is complete and the necessary confirmation is received from the relevant authority, the party will not be presented as a registered political party.")}
+                                {t("The registration process of the organization under the name Bharatiya Avijit Aawaz Party is ongoing. Until registration is complete and the necessary confirmation is received from the relevant authority, the party will not be presented as a registered political party.")}
                             </p>
                             <p>
                                 {t("The 18 chapters given on the website are the party's proposed ideas, resolves, and policy suggestions.")}

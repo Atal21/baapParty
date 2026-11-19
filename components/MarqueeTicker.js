@@ -6,7 +6,7 @@ const SLOGANS = [
   "Accountability to the People",
   "I do not want to be a leader; I want to create leadership",
   "18 Resolution for India",
-  "Bharatiya Avijit AawazParty (BAAP)",
+  "Bharatiya Avijit Aawaz Party (BAAP)",
 ];
 
 export default async function MarqueeTicker() {

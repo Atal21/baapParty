@@ -97,6 +97,17 @@ export default function Navbar() {
   // =====================================================
   // RESET MOBILE MENU ON DESKTOP RESIZE
   // =====================================================
+  // Publish the header's height (it shrinks on scroll) so sticky page headers can sit right below it.
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const set = () => document.documentElement.style.setProperty("--nav-h", `${el.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {

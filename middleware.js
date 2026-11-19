@@ -6,7 +6,7 @@ const PUBLIC_ADMIN_PATHS = new Set(['/admin/login']);
 // GETs that the public website itself needs (home page, /events, /blog, /gallery)
 // stay open. Everything else under these prefixes (create/update/delete) is
 // admin-only and requires the session cookie.
-const PUBLIC_GET_PREFIXES = ['/api/events', '/api/blog', '/api/gallery', '/api/upi-qr']; // upi-qr: public donate-page QR (UPI links only, rate-limited)
+const PUBLIC_GET_PREFIXES = ['/api/events', '/api/blog', '/api/gallery', '/api/chapters', '/api/upi-qr']; // upi-qr: public donate-page QR (UPI links only, rate-limited)
 
 // Public-facing forms (volunteer signup, donation pledge, contact form) must
 // stay open for POST so visitors can submit them without logging in.
@@ -48,13 +48,13 @@ async function getAdminPayload(request) {
 // Everyone except a super admin is limited to a few sections. This is the coarse first
 // gate; routes re-check the role against the database where it matters.
 //   youth_officer / women_officer -> Grievances only
-//   content_manager               -> Events, Blog / Press, Gallery (+ the media uploader)
+//   content_manager               -> Events, Blog / Press, Gallery, Chapters (+ the media uploader)
 const ROLE_ACCESS = {
   youth_officer: { pages: ['/admin/grievances'], apis: ['/api/grievances'], home: '/admin/grievances' },
   women_officer: { pages: ['/admin/grievances'], apis: ['/api/grievances'], home: '/admin/grievances' },
   content_manager: {
-    pages: ['/admin/events', '/admin/blog', '/admin/gallery'],
-    apis: ['/api/events', '/api/blog', '/api/gallery', '/api/upload'],
+    pages: ['/admin/events', '/admin/blog', '/admin/gallery', '/admin/chapters'],
+    apis: ['/api/events', '/api/blog', '/api/gallery', '/api/chapters', '/api/upload'],
     home: '/admin/events',
   },
 };

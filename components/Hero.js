@@ -27,16 +27,33 @@ export default function Hero() {
             {t("The People's Voice · The People's Right")}
           </span>
 
-          <h1 className="mt-6 font-display text-[2.2rem] font-extrabold leading-[1.1] text-ink sm:text-5xl lg:text-[3.3rem]">
+          {/* <h1 className="mt-6 font-display text-[2.2rem] font-extrabold leading-[1.1] text-ink sm:text-5xl lg:text-[3.3rem]">
             {t("Main neta nahi,")} <span className="text-banyan">{t("Netritva")}</span>
             <br />
             <span className="text-saffron">{t("Tayyar karna")}</span>
             <br />
             <span className="text-saffron">{t("Chahta hoon.")}</span>
+          </h1> */}
+
+          <h1 className="mt-6 font-display text-[2.2rem] font-extrabold leading-[1.1] text-ink sm:text-5xl lg:text-[3.3rem]">
+            {t("I do not want to be a ")}{" "}
+            <span className="text-banyan">{t("leader;")}</span>
+            <br />
+            <span className="text-saffron">{t("I want to create")}</span>
+            <br />
+            <span className="text-saffron">{t("leadership.")}</span>
           </h1>
 
+          {/* <p className="mt-6 max-w-xl text-xl font-medium leading-relaxed text-ink-soft sm:text">
+            {t(
+              "Hamara sankalp ek aise Bharat ka nirmaan hai jo surakshit, samriddh, nyaypoorn aur sammanit ho. Ek aisa rashtra jahan kisan, yuva aur har aam nagrik ko apne sapno ko poora karne ka pura adhikaar mile.",
+            )}
+          </p> */}
+
           <p className="mt-6 max-w-xl text-xl font-medium leading-relaxed text-ink-soft sm:text">
-            {t("Hamara sankalp ek aise Bharat ka nirmaan hai jo surakshit, samriddh, nyaypoorn aur sammanit ho. Ek aisa rashtra jahan kisan, yuva aur har aam nagrik ko apne sapno ko poora karne ka pura adhikaar mile.")}
+            {t(
+              "Our resolve is to build an India that is secure, prosperous, just, and respected—a nation where farmers, youth, and every ordinary citizen have the full right and opportunity to fulfil their dreams.",
+            )}
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -88,13 +105,14 @@ export default function Hero() {
           <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2.5rem] border-8 border-white shadow-card-hover">
             <ZoomableImage
               src={img}
-              alt={t("Bharatiya Avijit Aawaz Party rally with supporters holding flags")}
+              alt={t(
+                "Bharatiya Avijit Aawaz Party rally with supporters holding flags",
+              )}
               fill
               priority
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-            
           </div>
 
           <motion.div
