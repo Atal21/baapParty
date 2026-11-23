@@ -212,7 +212,7 @@ function LoginPageInner() {
               icon={Phone}
               type="tel"
               placeholder={t("10-digit mobile number")}
-              label={t("Phone (optional)")}
+              label={t("Phone")}
               value={signupForm.phone}
               onChange={(v) => setSignupForm((f) => ({ ...f, phone: v }))}
             />

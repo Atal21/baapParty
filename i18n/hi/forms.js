@@ -123,8 +123,8 @@ const hi = {
   "Email verified": "ईमेल सत्यापित हो गया",
   "Test mode — your code is": "टेस्ट मोड — आपका कोड है",
   "10-digit mobile": "10 अंकों का मोबाइल",
-  "5. Photos, videos or documents (optional)":
-    "5. फ़ोटो, वीडियो या दस्तावेज़ (वैकल्पिक)",
+  "5. Photos, videos or documents":
+    "5. फ़ोटो, वीडियो या दस्तावेज़",
   "Add up to {n} items. For a photo or a video you can either upload it from your device or paste a link.":
     "अधिकतम {n} फ़ाइलें जोड़ें। फ़ोटो या वीडियो के लिए आप अपने डिवाइस से अपलोड कर सकते हैं या लिंक चिपका सकते हैं।",
   Link: "लिंक",
@@ -209,7 +209,7 @@ const hi = {
     "पहचान प्रमाण (PDF, JPG या PNG, अधिकतम 5 MB)",
   "Used only to confirm your age. It is stored privately and can be opened only by the party's admin team.":
     "इसका उपयोग केवल आपकी आयु की पुष्टि के लिए होता है। यह निजी रूप से सुरक्षित रहता है और केवल पार्टी की एडमिन टीम ही इसे खोल सकती है।",
-  "Message (optional)": "संदेश (वैकल्पिक)",
+  "Message": "संदेश",
   "Tell us about any past organising experience...":
     "संगठन से जुड़े अपने किसी पुराने अनुभव के बारे में बताएँ...",
   "Preview & Continue": "पूर्वावलोकन करें और आगे बढ़ें",
@@ -335,7 +335,7 @@ const hi = {
     "पुष्टि के लिए हम एक बार का कोड ईमेल करेंगे। अपडेट और ट्रैकिंग इसी पते पर होंगे।",
   "Used for updates and to track your ticket.":
     "अपडेट और आपका टिकट ट्रैक करने के लिए उपयोग होता है।",
-  "Mobile number (optional)": "मोबाइल नंबर (वैकल्पिक)",
+  "Mobile number": "मोबाइल नंबर",
   "Only if you are happy for our team to call you.":
     "केवल तभी जब आप चाहें कि हमारी टीम आपको कॉल करे।",
   "No Desire for a Post": "पद की कोई इच्छा नहीं",
@@ -373,7 +373,7 @@ const hi = {
   "Amount (₹)": "राशि (₹)",
   "Payment Method": "भुगतान का तरीका",
   "Date of Payment": "भुगतान की तारीख",
-  "Transaction ID (optional)": "लेन-देन आईडी (वैकल्पिक)",
+  "Transaction ID": "लेन-देन आईडी",
   "Voices From the Ground": "ज़मीन से आवाज़ें",
   "What People Are Telling Us": "लोग हमें क्या कह रहे हैं",
   "Switch to English": "Switch to English",

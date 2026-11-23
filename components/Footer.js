@@ -39,7 +39,9 @@ export default function Footer() {
             </span>
           </Link>
           <p className="max-w-xs text-sm leading-relaxed text-ivory/60">
-            {t("The People's Voice | The People's Right | Accountability to the People.")}
+            {t(
+              "The People's Voice | The People's Right | Accountability to the People.",
+            )}
           </p>
           <div className="mt-5 flex gap-3">
             {socialLinks.map(({ icon: Icon, name, url }) => (
@@ -50,7 +52,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label={name}
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-ivory/15 text-ivory/70 transition-colors hover:border-marigold hover:text-marigold"
-              >          
+              >
                 {/* <img
                   width="17"
                   height="17"
@@ -160,11 +162,11 @@ export default function Footer() {
             </li>
             <li className="flex gap-2.5">
               <Phone size={17} className="mt-0.5 shrink-0 text-saffron" /> +91
-              11 2xxx 6xxx
+              7862988888
             </li>
             <li className="flex gap-2.5">
               <Mail size={17} className="mt-0.5 shrink-0 text-saffron" />{" "}
-              contact@bharatiyaavijitaawazparty.in
+              baapteamindia@gmail.com
             </li>
           </ul>
         </div>
@@ -173,9 +175,12 @@ export default function Footer() {
       <div className="h-[4px] w-full bg-tricolor-thread" />
       <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-5 text-xs text-ivory/45 sm:flex-row lg:px-8">
         <p>
-          &copy; {new Date().getFullYear()} {partyName}. {t("All Rights Reserved.")}
+          &copy; {new Date().getFullYear()} {partyName}.{" "}
+          {t("All Rights Reserved.")}
         </p>
-        <p>{t("Published on Behalf of")} {partyName}, {t("New Delhi")}.</p>
+        <p>
+          {t("Published on Behalf of")} {partyName}, {t("New Delhi")}.
+        </p>
       </div>
     </footer>
   );

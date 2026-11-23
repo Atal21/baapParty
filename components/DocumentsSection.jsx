@@ -85,7 +85,8 @@ export default function DocumentsSection() {
                                     </a>
                                 ) : (
                                     <Link
-                                        href={`/documents/${doc.slug}`}
+                                        // href={`/documents/${doc.slug}`}
+                                        href={"#"}
                                         className="group relative flex h-full flex-col rounded-2xl border border-ink/8 bg-white p-6 shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover"
                                     >
                                         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-ivory ring-2 ring-saffron/20 transition-colors group-hover:bg-saffron/10">

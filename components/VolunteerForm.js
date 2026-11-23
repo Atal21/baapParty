@@ -359,7 +359,7 @@ export default function VolunteerForm({ onSuccessChange }) {
       </div>
 
       <div className="mt-6">
-        <label className="mb-2 block text-sm font-bold text-ink">{t('Message (optional)')}</label>
+        <label className="mb-2 block text-sm font-bold text-ink">{t('Message')}</label>
         <LimitedTextarea
           rows={4}
           value={form.message}

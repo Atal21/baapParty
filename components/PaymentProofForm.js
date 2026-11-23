@@ -207,7 +207,7 @@ export default function PaymentProofForm() {
           />
         </Field>
         <div className="sm:col-span-2">
-          <Field label="Transaction ID (optional)">
+          <Field label="Transaction ID">
             <input
               type="text"
               value={form.transactionId}

@@ -120,7 +120,7 @@ const hi = {
   "First name": "पहला नाम",
   "Last name": "उपनाम",
   "10-digit mobile number": "10 अंकों का मोबाइल नंबर",
-  "Phone (optional)": "फ़ोन (वैकल्पिक)",
+  "Phone": "फ़ोन",
   "At least 6 characters": "कम से कम 6 अक्षर",
   "Creating account...": "खाता बनाया जा रहा है...",
   "Create Account": "खाता बनाएँ",

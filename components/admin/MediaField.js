@@ -217,7 +217,7 @@ export default function MediaField({
           )}
 
           <Field
-            label="Thumbnail Image (optional)"
+            label="Thumbnail Image"
             hint={
               uploadingThumb
                 ? 'Uploading...'

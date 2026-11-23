@@ -407,14 +407,14 @@ export default function GrievanceForm({ defaultWing = 'youth', defaultCategory =
           {otp.msg && <p className="mt-2 text-xs font-semibold text-ink-soft">{t(otp.msg)}</p>}
           {otp.dev && <p className="mt-1 text-xs text-ink-soft/70">{t('Test mode — your code is')} {otp.dev}</p>}
         </Field>
-        <Field label="Mobile number (optional)" error={errors.contactPhone} hint="Only if you are happy for our team to call you.">
+        <Field label="Mobile number" error={errors.contactPhone} hint="Only if you are happy for our team to call you.">
           <input inputMode="numeric" maxLength={10} value={form.contactPhone} onChange={(e) => setForm((f) => ({ ...f, contactPhone: e.target.value.replace(/\D/g, '').slice(0, 10) }))} placeholder={t('10-digit mobile')} className={input(errors.contactPhone)} />
         </Field>
       </div>
 
       {!form.isSensitive && (
         <div>
-          <p className="mb-1 text-sm font-bold text-ink">{t('5. Photos, videos or documents (optional)')}</p>
+          <p className="mb-1 text-sm font-bold text-ink">{t('5. Photos, videos or documents')}</p>
           <p className="mb-4 text-xs text-ink-soft/70">
             {t('Add up to {n} items. For a photo or a video you can either upload it from your device or paste a link.', { n: MAX_FILES })}
           </p>

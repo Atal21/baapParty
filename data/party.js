@@ -31,8 +31,11 @@ export const PARTY = {
     },
   ],
   socials: {
-    youtube: "https://www.youtube.com/watch?v=OLCnAQdvLn8",
-    email: "contact@baapparty.org",
+    youtube: "https://www.youtube.com/channel/UCRSNH9sVA8yjv28H3xJaSQg",
+    email: "baapteamindia@gmail.com",
+    facebook: "https://www.facebook.com/profile.php?id=61596647020017",
+    instagram: "https://www.instagram.com/baaphind/",
+    twitter: "https://x.com/BAAPHIND",
   },
   references: [
     {

@@ -35,7 +35,7 @@ export default function TopBar() {
             </span>
             <span className="flex items-center gap-2 border-l border-white/20 pl-4">
               <Link
-                href="#"
+                href={PARTY.socials.twitter}
                 aria-label="Twitter"
                 className="hover:text-marigold"
               >
@@ -49,7 +49,7 @@ export default function TopBar() {
               </Link>
 
               <Link
-                href="#"
+                href={PARTY.socials.instagram}
                 aria-label="Instagram"
                 className="hover:text-marigold"
               >
@@ -65,7 +65,7 @@ export default function TopBar() {
                 <Youtube size={20} />
               </Link>
               <Link
-                href="#"
+                href={PARTY.socials.facebook}
                 aria-label="Facebook"
                 className="hover:text-marigold"
               >

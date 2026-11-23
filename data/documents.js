@@ -5,7 +5,7 @@ export const documents = [
     title: "The Party's Constitution",
     short: "Core principles, structure and governance of the party.",
     icon: "ScrollText",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "/Party Savidhan.pdf",
     content: [
       "The Party Constitution defines the vision, mission, and foundational principles of the Bharatiya Avijit Aawaz Party (BAAP).",
       "It lays down the organizational structure — from the national level to the booth level — and the powers and duties of each office.",
@@ -19,7 +19,7 @@ export const documents = [
     title: "Policies & Programmes",
     short: "Our official policy positions and public programmes.",
     icon: "FileText",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "This document outlines the official policy positions of BAAP across governance, economy, agriculture, education, health, and social justice.",
       "Each policy is grounded in constitutional values and is aimed at making India safe, prosperous, just, and dignified.",
@@ -47,7 +47,7 @@ export const documents = [
     title: "Organizational Rulebook",
     short: "Rules governing every level of the organization.",
     icon: "Scroll",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "The Organizational Rulebook specifies the rules for enrolling members, forming committees, and conducting meetings at every level.",
       "It ensures discipline, transparency, and smooth functioning of the party structure.",
@@ -60,7 +60,7 @@ export const documents = [
     title: "List of Office-Bearers",
     short: "Current national, state and district office-bearers.",
     icon: "Users2",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "This document lists the names, roles, and responsibilities of the party’s current office-bearers across national, state, and district levels.",
       "It is updated periodically in line with organizational guidelines.",
@@ -73,7 +73,7 @@ export const documents = [
     title: "Code of Conduct",
     short: "The ethical and behavioural standards for all members.",
     icon: "ShieldCheck",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "The Code of Conduct lays out the ethical and behavioural expectations from every member and office-bearer of the party.",
       "It emphasizes integrity, respect, transparency, and accountability in public life.",
@@ -86,7 +86,7 @@ export const documents = [
     title: "Membership Rules",
     short: "Eligibility, application and verification process.",
     icon: "UserCheck",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "This document explains who is eligible to become a member, how to apply, and how membership applications are verified.",
       "It also describes the rights, duties, and renewal process of membership.",
@@ -99,7 +99,7 @@ export const documents = [
     title: "Official Press Releases",
     short: "Announcements, statements and media notes.",
     icon: "Megaphone",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "All official press releases issued by the party are archived here — from announcements to media statements.",
       "Journalists and citizens can reference these for accurate, on-record information.",
@@ -112,7 +112,7 @@ export const documents = [
     title: "Annual Activity Report",
     short: "A year-in-review of events, campaigns and impact.",
     icon: "BarChart3",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "The Annual Activity Report summarizes the party’s outreach, campaigns, events, and organizational milestones over the year.",
       "It is published at the end of each financial year.",
@@ -125,7 +125,7 @@ export const documents = [
     title: "Financial & Statutory Disclosures",
     short: "Public disclosures as required by law.",
     icon: "ReceiptIndianRupee",
-    pdfUrl: "/dummy.pdf",
+    pdfUrl: "",
     content: [
       "Where applicable, BAAP publishes its financial statements, funding sources, and statutory disclosures as required under Indian law.",
       "Transparency in finances is a core commitment of the party.",

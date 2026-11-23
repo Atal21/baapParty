@@ -268,23 +268,23 @@ export const faqs = [
 export const socialLinks = [
   {
     name: "Twitter",
-    icon: XIcon,
-    url: "https://twitter.com/yourusername",
+    icon: Twitter,
+    url: "https://x.com/BAAPHIND",
   },
   {
     name: "Instagram",
     icon: Instagram,
-    url: "https://instagram.com/yourusername",
+    url: "https://www.instagram.com/baaphind/",
   },
   {
     name: "YouTube",
     icon: Youtube,
-    url: "https://youtube.com/@yourusername",
+    url: "https://www.youtube.com/channel/UCRSNH9sVA8yjv28H3xJaSQg",
   },
   {
     name: "Facebook",
     icon: Facebook,
-    url: "https://facebook.com/yourusername",
+    url: "https://www.facebook.com/profile.php?id=61596647020017",
   },
 ];
 
