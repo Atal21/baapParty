@@ -56,7 +56,7 @@ export const nav = [
         href: "/blog",
         children: [
           { label: "Latest News", href: "/blog" },
-          { label: "Press Releases", href: "/blog#press" },
+          {label: "Press Releases", href: "/blog#press",},
         ],
       },
       {
@@ -86,15 +86,6 @@ export const stats = [
   { label: "Volunteers Enrolled", value: 96000, suffix: "+" },
 ];
 
-// 18 Chapters — full data lives in data/chapters.js
-import { chapters } from "./chapters";
-export { chapters };
-
-// Home page "18 Resolves for India" section
-export const pillars = chapters;
-
-// Manifesto page — the same 18 chapters
-export const manifestoDetails = chapters;
 
 // export const leaders = [
 //   {
@@ -156,182 +147,11 @@ export const leaders = [
   },
 ];
 
-export const events = [
-  {
-    title: "Jan Sabha — Lucknow Maidan",
-    date: "2026-09-14",
-    time: "4:00 PM",
-    location: "Ambedkar Maidan, Lucknow",
-    category: "Rally",
-    image: "/placeholders/landscape.svg",
-    desc: "A mega public rally addressing farmer distress and the new employment guarantee scheme.",
-  },
-  {
-    title: "Yuva Samvad — Campus Tour",
-    date: "2026-09-21",
-    time: "11:00 AM",
-    location: "Delhi University, North Campus",
-    category: "Conference",
-    image: "/placeholders/landscape.svg",
-    desc: "An open-mic dialogue with first-time voters on jobs, startups and campus safety.",
-  },
-  {
-    title: "Kisan Chaupal",
-    date: "2026-09-28",
-    time: "9:00 AM",
-    location: "Karnal Grain Market, Haryana",
-    category: "Rally",
-    image: "/placeholders/landscape.svg",
-    desc: "Village-level roundtable on MSP guarantees and cold-storage infrastructure.",
-  },
-  {
-    title: "Mahila Shakti Sammelan",
-    date: "2026-10-05",
-    time: "2:00 PM",
-    location: "Town Hall, Pune",
-    category: "Conference",
-    image: "/placeholders/landscape.svg",
-    desc: "Launch of the interest-free loan scheme for women-led self-help groups.",
-  },
-  {
-    title: "Manifesto Press Briefing",
-    date: "2026-10-11",
-    time: "5:30 PM",
-    location: "Party Headquarters, New Delhi",
-    category: "Conference",
-    image: "/placeholders/landscape.svg",
-    desc: "National media briefing unveiling the full election manifesto and costed roadmap.",
-  },
-  {
-    title: "Tiranga Padyatra Finale",
-    date: "2026-10-19",
-    time: "7:00 AM",
-    location: "Marine Drive, Mumbai",
-    category: "Rally",
-    image: "/placeholders/landscape.svg",
-    desc: "Closing leg of the 4,200 km foot march, culminating in a dawn tricolour rally.",
-  },
-];
 
-export const blogPosts = [
-  {
-    title: "Why Our Employment Guarantee Is Different This Time",
-    excerpt:
-      "A district-by-district breakdown of how the one-crore-jobs pledge is costed, funded and tracked in public dashboards.",
-    date: "2026-08-02",
-    category: "Latest News",
-    image: "/placeholders/landscape.svg",
-    author: "Lata Iyer",
-  },
-  {
-    title: "Inside the Kisan Chaupal Movement",
-    excerpt:
-      "Ground reporting from three states on how village-level grain committees are shaping our MSP policy.",
-    date: "2026-07-24",
-    category: "Latest News",
-    image: "/placeholders/landscape.svg",
-    author: "Field Desk",
-  },
-  {
-    title: "Party Responds to Allegations on Irrigation Funds",
-    excerpt:
-      "An official statement with the complete audit trail of the Vidarbha irrigation project.",
-    date: "2026-07-18",
-    category: "Press Releases",
-    image: "/placeholders/landscape.svg",
-    author: "Press Cell",
-  },
-  {
-    title: "Youth Wing Crosses 8,000 Campus Units",
-    excerpt:
-      "A milestone update on student organising ahead of the autumn campus tour.",
-    date: "2026-07-09",
-    category: "Latest News",
-    image: "/placeholders/landscape.svg",
-    author: "Farhan Qureshi",
-  },
-  {
-    title: "Statement on the Election Commission's New Guidelines",
-    excerpt:
-      "Our full compliance note and the steps every booth-level agent must follow this season.",
-    date: "2026-06-30",
-    category: "Press Releases",
-    image: "/placeholders/landscape.svg",
-    author: "Press Cell",
-  },
-  {
-    title: "What 900 Self-Help Groups Taught Us About Rural Credit",
-    excerpt: "Sunita Rathore on the data behind the Mahila Shakti loan scheme.",
-    date: "2026-06-21",
-    category: "Latest News",
-    image: "/placeholders/landscape.svg",
-    author: "Sunita Rathore",
-  },
-];
 
 // @/data/content.js
 
-export const galleryPhotos = [
-  {
-    src: "https://images.unsplash.com/photo-1661534424056-6589e239546b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjZ8fGluZGlhbiUyMGVsZWN0aW9ufGVufDB8fDB8fHww",
-    caption: "Booth-Level Worker Convention & Public Rally",
-    location: "Central Constituency",
-    category: "Rallies",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1707922788250-0ce29dd3fca2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjR8fGluZGlhbiUyMGVsZWN0aW9ufGVufDB8fDB8fHww",
-    caption: "Jan Ashirwad Padyatra with Local Citizens",
-    location: "District North",
-    category: "Padyatra",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1774437777794-ac071017d306?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nzh8fGluZGlhbiUyMGVsZWN0aW9ufGVufDB8fDB8fHww",
-    caption: "Youth Samvad and Employment Strategy Meeting",
-    location: "Sector 4 Auditorium",
-    category: "Youth",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1612511112842-f610f2dd4b86?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQ2fHxpbmRpYW4lMjBlbGVjdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
-    caption: "Core Committee Strategy & Booth Management",
-    location: "Campaign Headquarters",
-    category: "Meetings",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1722932581421-97fc3cc05188?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTc4fHxpbmRpYW4lMjBlbGVjdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
-    caption: "Mahila Shakti Sammelan and Ground Connect",
-    location: "South Zone",
-    category: "Rallies",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1632560957441-7fe921591ddc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzQ1fHxpbmRpYW4lMjBlbGVjdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
-    caption: "Door-to-Door Campaigning and Farmer Outreach",
-    location: "Rural Belt",
-    category: "Padyatra",
-  },
-];
 
-export const galleryVideos = [
-  {
-    title: "Manifesto 2026 — Full Announcement",
-    duration: "12:44",
-    thumb: "/placeholders/landscape.svg",
-  },
-  {
-    title: "Kisan Chaupal Highlights",
-    duration: "4:18",
-    thumb: "/placeholders/landscape.svg",
-  },
-  {
-    title: "Yuva Samvad — Campus Tour Reel",
-    duration: "6:02",
-    thumb: "/placeholders/landscape.svg",
-  },
-  {
-    title: "Padyatra Finale — Marine Drive",
-    duration: "9:37",
-    thumb: "/placeholders/landscape.svg",
-  },
-];
 
 export const testimonials = [
   {

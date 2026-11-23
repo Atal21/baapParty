@@ -7,7 +7,7 @@ export const PARTY = {
   registeredEntity:
     "Paras Parivaar Pvt. Ltd. (incorporated 2012) and Paras Parivaar Charitable Trust (established 2012)",
   address: "BK-1/54 Ground Floor Shalimar Bagh New Delhi 110088",
-  phone: "011 4268 8888",
+  phone: "7862988888",
   hours: "Open daily · Closes 6:00 PM",
   mapEmbedSrc:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.858566958761!2d77.1497625!3d28.693877100000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d02331836f011%3A0x20578a08551c0b8b!2sParas%20Parivaar!5e0!3m2!1sen!2sin!4v1786175742685!5m2!1sen!2sin",

@@ -1,15 +1,30 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import {
-  Apple, Ban, Equal, Flame, Gavel, HandHelping, HeartPulse, Eye, Lock,
-  Megaphone, Pill, Plane, Shield, Sparkles, UserCheck, Vote, Wheat, Wrench,
-} from 'lucide-react';
-import Link from 'next/link';
-import { pillars as builtIn } from '@/data/content';
-import { localizeChapter } from '@/lib/chapterUtils';
-import { useLang } from '@/context/LanguageContext';
+  Apple,
+  Ban,
+  Equal,
+  Flame,
+  Gavel,
+  HandHelping,
+  HeartPulse,
+  Eye,
+  Lock,
+  Megaphone,
+  Pill,
+  Plane,
+  Shield,
+  Sparkles,
+  UserCheck,
+  Vote,
+  Wheat,
+  Wrench,
+} from "lucide-react";
+import Link from "next/link";
+import { localizeChapter } from "@/lib/chapterUtils";
+import { useLang } from "@/context/LanguageContext";
 
 const ICONS = {
   apple: Apple,
@@ -20,33 +35,35 @@ const ICONS = {
   sparkles: Sparkles,
   plane: Plane,
   lock: Lock,
-  'user-check': UserCheck,
+  "user-check": UserCheck,
   pill: Pill,
   eye: Eye,
   megaphone: Megaphone,
   gavel: Gavel,
-  'heart-pulse': HeartPulse,
+  "heart-pulse": HeartPulse,
   wheat: Wheat,
-  'hand-helping': HandHelping,
+  "hand-helping": HandHelping,
   ban: Ban,
   equal: Equal,
 };
 
 export default function PillarsSection() {
   const { t, lang } = useLang();
-  const [pillars, setPillars] = useState(builtIn);
+  const [pillars, setPillars] = useState([]);
 
   // Chapters are managed in Admin -> Chapters; the built-in list is only the first paint / fallback.
   useEffect(() => {
     let alive = true;
-    fetch('/api/chapters')
+    fetch("/api/chapters")
       .then((r) => (r.ok ? r.json() : null))
-      .then((d) => alive && Array.isArray(d) && d.length && setPillars(d))
+      .then((d) => alive && Array.isArray(d) && setPillars(d))
       .catch(() => {});
     return () => {
       alive = false;
     };
   }, []);
+
+  if (!pillars.length) return null; // no chapters added yet
 
   return (
     <section className="bg-ivory py-24">
@@ -59,7 +76,9 @@ export default function PillarsSection() {
             {t("18 Resolution for India")}
           </h2>
           <p className="mt-4 text-ink-soft">
-            {t("We present 18 important challenges facing the country as 18 chapters. They form the basis of our ideas, policy proposals, and future action plan.")}
+            {t(
+              "We present 18 important challenges facing the country as 18 chapters. They form the basis of our ideas, policy proposals, and future action plan.",
+            )}
           </p>
         </div>
 

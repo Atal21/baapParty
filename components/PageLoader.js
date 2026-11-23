@@ -101,8 +101,12 @@ export default function PageLoader() {
           <span />
         </div>
 
-        <p className="baap-loader__tagline">
+        {/* <p className="baap-loader__tagline">
           {t("Welcome to the official website of the world's largest political party")}
+        </p> */}
+
+        <p className="baap-loader__tagline">
+          {t("अपनी और अपने परिवार की सुरक्षा के लिए BAAP को चुनें।",)}
         </p>
 
         <div className="baap-loader__bar" aria-hidden="true">
